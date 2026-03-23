@@ -31,30 +31,19 @@ def create_tables(app):
 
 def create_admin(app):
     with app.app_context():
-        print("\n── Create first admin account ───────────────────────────")
-
-        username = input("Admin username : ").strip()
-        email    = input("Admin email    : ").strip()
-        password = input("Admin password : ").strip()
-
-        if not username or not email or not password:
-            print("❌  All fields are required.")
-            return
-
-        if len(password) < 8:
-            print("❌  Password must be at least 8 characters.")
-            return
+        username = os.getenv("ADMIN_USERNAME", "admin")
+        email    = os.getenv("ADMIN_EMAIL",    "admin@example.com")
+        password = os.getenv("ADMIN_PASSWORD", "ChangeMe123!")
 
         if User.query.filter_by(username=username).first():
             print(f"⚠️   User '{username}' already exists — skipping.")
             return
 
-        admin = User(username=username, email=email, role="admin")
-        admin.set_password(password)
-        admin.is_verified = True   # admin doesn't need email verification
-        admin.is_active   = True
-
-        db.session.add(admin)
+        user = User(username=username, email=email, role="admin")
+        user.set_password(password)
+        user.is_verified = True
+        user.is_active   = True
+        db.session.add(user)
         db.session.commit()
         print(f"✅  Admin account '{username}' created.")
 
