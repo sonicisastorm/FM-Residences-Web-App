@@ -1,0 +1,52 @@
+# FM Residences — Python dependencies
+# Install with: pip install -r requirements.txt
+
+# ── Core Flask ────────────────────────────────────────────────────
+Flask==3.0.3
+Werkzeug==3.0.3
+itsdangerous==2.1.2
+Jinja2==3.1.4
+MarkupSafe==2.1.5
+click==8.1.7
+blinker==1.8.2
+
+# ── Database ──────────────────────────────────────────────────────
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.36
+greenlet>=3.0.0
+psycopg2-binary==2.9.9
+
+# ── Authentication & Security ─────────────────────────────────────
+Flask-Bcrypt==1.0.1
+Flask-JWT-Extended==4.5.3
+email-validator==2.0.0
+
+# ── Forms & CSRF ──────────────────────────────────────────────────
+Flask-WTF==1.2.2
+WTForms==3.1.2
+
+# ── Email ─────────────────────────────────────────────────────────
+Flask-Mail==0.9.1
+
+# ── Payments ──────────────────────────────────────────────────────
+stripe==6.5.0
+
+# ── Environment & Config ──────────────────────────────────────────
+python-dotenv==1.0.0
+
+# ── Session ───────────────────────────────────────────────────────
+Flask-Session==0.8.0
+cachelib==0.10.2
+
+# ── Utilities ─────────────────────────────────────────────────────
+python-dateutil==2.8.2
+pytz==2023.3
+tzdata==2023.3
+requests==2.31.0
+
+# ── Testing ───────────────────────────────────────────────────────
+pytest>=7.4.0
+pytest-flask>=1.3.0
+
+# ── WSGI server (required for Render) ────────────────────────────
+gunicorn==21.2.0

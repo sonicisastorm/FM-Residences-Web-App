@@ -1,0 +1,268 @@
+name: FM Residences CI/CD
+
+on:
+  push:
+    branches: [main, develop, templates]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+
+  # ── 1. Lint & Type-check ─────────────────────────────────────────────────
+  lint:
+    name: Lint & Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install lint deps
+        run: |
+          pip install --upgrade pip
+          pip install flake8 flake8-bugbear bandit[toml]
+
+      - name: Run flake8
+        run: |
+          flake8 src/ \
+            --max-line-length=110 \
+            --extend-ignore=E203,W503,E221,E222,E251,E272,W292 \
+            --exclude=__pycache__,migrations
+
+      - name: Run bandit (security linter)
+        run: |
+          bandit -r src/ \
+            -x src/__pycache__ \
+            --severity-level medium \
+            --confidence-level medium \
+            -f txt
+
+
+  # ── 2. Tests ─────────────────────────────────────────────────────────────
+  test:
+    name: Pytest (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    needs: lint
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    env:
+      SECRET_KEY:         test-secret-key-ci
+      JWT_SECRET_KEY:     test-jwt-secret-ci
+      DATABASE_URL:       "sqlite:///:memory:"
+      FLASK_ENV:          testing
+      MAIL_SUPPRESS_SEND: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-flask pytest-github-actions-annotate-failures
+
+      - name: Run tests
+        run: |
+          pytest tests/ \
+            --cov=src \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            --junit-xml=test-results-${{ matrix.python-version }}.xml \
+            -v
+        # Always run the next two steps even if tests fails
+        # so you can still see the report
+        continue-on-error: true
+        id: run_tests
+
+      # Shows a nice pass/fail table directly in the Actions summary
+      # and annotates failing tests on the Files tab of a PR
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: test-results-${{ matrix.python-version }}.xml
+          check_name: "Test Results (Python ${{ matrix.python-version }})"
+          comment_mode: always       # posts a comment on PRs
+          fail_on: test failures     # still marks the job red on failures
+
+      # Keeps the XML around so you can download it from the Actions run
+      - name: Upload test results artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-py${{ matrix.python-version }}
+          path: test-results-${{ matrix.python-version }}.xml
+          retention-days: 30
+
+      - name: Upload coverage to Codecov
+        if: matrix.python-version == env.PYTHON_VERSION
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      # Fail the job here after reports are published
+      - name: Enforce test pass
+        if: steps.run_tests.outcome == 'failure'
+        run: exit 1
+
+
+  # ── 3. Build & Docker smoke test ─────────────────────────────────────────
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image (smoke test only)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: fmresidences:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test — app starts
+        run: |
+          docker run --rm \
+            -e SECRET_KEY=ci-smoke-key \
+            -e JWT_SECRET_KEY=ci-jwt-smoke \
+            -e DATABASE_URL=sqlite:////tmp/smoke.db \
+            -e FLASK_ENV=testing \
+            fmresidences:${{ github.sha }} \
+            python -c "from src import create_app; app = create_app(); print('App OK')"
+
+
+  # ── 4. Deploy to staging (develop branch only) ───────────────────────────
+  deploy-staging:
+    name: Deploy — Staging
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment:
+      name: staging
+      url: https://staging.fmresidences.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push staging image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/fmresidences:staging
+            ghcr.io/${{ github.repository_owner }}/fmresidences:${{ github.sha }}
+
+      - name: Deploy to staging server
+        uses: appleboy/ssh-action@v1
+        with:
+          host:     ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key:      ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /opt/fmresidences
+            docker pull ghcr.io/${{ github.repository_owner }}/fmresidences:staging
+            docker compose -f docker-compose.staging.yml up -d --no-deps app
+            docker compose -f docker-compose.staging.yml exec -T app flask db upgrade || true
+            echo "Staging deployment complete"
+
+
+  # ── 5. Deploy to production (main branch only) ───────────────────────────
+  deploy-production:
+    name: Deploy — Production
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: https://fmresidences.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag & push production image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/fmresidences:latest
+            ghcr.io/${{ github.repository_owner }}/fmresidences:${{ github.sha }}
+
+      - name: Deploy to production server (zero-downtime)
+        uses: appleboy/ssh-action@v1
+        with:
+          host:     ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key:      ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd /opt/fmresidences
+            docker pull ghcr.io/${{ github.repository_owner }}/fmresidences:latest
+            docker compose exec -T app flask db upgrade || true
+            docker compose up -d --no-deps --scale app=2 app
+            sleep 10
+            docker compose up -d --no-deps --scale app=1 app
+            docker image prune -f
+            echo "Production deployment complete — ${{ github.sha }}"
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number || 1,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚨 **Production deploy failed** for commit `${{ github.sha }}`'
+            })

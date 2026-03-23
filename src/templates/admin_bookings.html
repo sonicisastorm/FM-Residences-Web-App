@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% set active_page = "bookings" %}
+{% block title %}Admin — Bookings{% endblock %}
+
+{% block main %}
+<div class="max-w-7xl mx-auto px-4 py-10 animate-fade-in">
+
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+        <div>
+            <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Admin Panel</p>
+            <h1 class="font-display text-4xl text-cream">Room Bookings</h1>
+        </div>
+        <a href="{{ url_for('admin.dashboard') }}" class="text-sm text-cream/50 hover:text-gold transition-colors">
+            ← Dashboard
+        </a>
+    </div>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+        {% for message in messages %}
+        <div class="px-4 py-3 bg-gold/10 border border-gold/30 text-gold rounded-xl text-sm">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div id="status-msg" class="hidden mb-4 px-4 py-3 rounded-xl text-sm"></div>
+
+    <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl overflow-hidden shadow-xl">
+        <div class="px-6 py-4 border-b border-charcoal-600">
+            <h2 class="font-display text-xl text-cream">All Bookings
+                <span class="text-sm font-sans text-cream/40 ml-2">({{ bookings|length }})</span>
+            </h2>
+        </div>
+
+        {% if bookings %}
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-charcoal-600">
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">#</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Guest</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Room</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Check-in</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Check-out</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Guests</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Total</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Status</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-charcoal-600">
+                    {% for b in bookings %}
+                    <tr class="hover:bg-charcoal-600/30 transition-colors">
+                        <td class="px-5 py-3 text-cream/50">{{ b.id }}</td>
+                        <td class="px-5 py-3 text-cream">{% if b.user %}{{ b.user.username }}{% else %}—{% endif %}</td>
+                        <td class="px-5 py-3 text-cream">{% if b.room %}{{ b.room.room_type }}{% else %}—{% endif %}</td>
+                        <td class="px-5 py-3 text-cream/70">{{ b.check_in_date }}</td>
+                        <td class="px-5 py-3 text-cream/70">{{ b.check_out_date }}</td>
+                        <td class="px-5 py-3 text-cream/70">{{ b.num_guests }}</td>
+                        <td class="px-5 py-3 text-gold font-medium">${{ "%.2f"|format(b.total_price) }}</td>
+                        <td class="px-5 py-3">
+                            <span class="px-2 py-0.5 rounded-full text-xs font-medium
+                                {% if b.status == 'confirmed' %}bg-green-900/40 text-green-400
+                                {% elif b.status == 'checked_in' %}bg-blue-900/40 text-blue-400
+                                {% elif b.status == 'checked_out' %}bg-cream/10 text-cream/50
+                                {% elif b.status == 'cancelled' %}bg-red-900/40 text-red-400
+                                {% else %}bg-amber-900/40 text-amber-400{% endif %}">
+                                {{ b.status.replace('_', ' ') }}
+                            </span>
+                        </td>
+                        <td class="px-5 py-3">
+                            {% if b.status == 'confirmed' %}
+                            <button onclick="updateBooking({{ b.id }}, 'checked_in')"
+                                    class="px-3 py-1 text-xs bg-blue-900/40 text-blue-400 border border-blue-700/40 hover:bg-blue-900/70 rounded-lg transition-colors mr-1">
+                                Check In
+                            </button>
+                            <button onclick="updateBooking({{ b.id }}, 'cancelled')"
+                                    class="px-3 py-1 text-xs border border-red-700/60 text-red-400 hover:bg-red-900/30 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            {% elif b.status == 'checked_in' %}
+                            <button onclick="updateBooking({{ b.id }}, 'checked_out')"
+                                    class="px-3 py-1 text-xs bg-charcoal-500 text-cream/70 border border-charcoal-500 hover:bg-charcoal-600 rounded-lg transition-colors">
+                                Check Out
+                            </button>
+                            {% elif b.status == 'pending_payment' %}
+                            <button onclick="updateBooking({{ b.id }}, 'cancelled')"
+                                    class="px-3 py-1 text-xs border border-red-700/60 text-red-400 hover:bg-red-900/30 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            {% else %}
+                            <span class="text-xs text-cream/20">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="px-6 py-16 text-center text-cream/30 text-sm">No bookings yet.</div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+const msgBox = document.getElementById('status-msg');
+
+function showMsg(text, ok) {
+    msgBox.textContent = text;
+    msgBox.className = `mb-4 px-4 py-3 rounded-xl text-sm ${ok
+        ? 'bg-green-900/30 border border-green-700/50 text-green-400'
+        : 'bg-red-900/30 border border-red-700/50 text-red-400'}`;
+    msgBox.classList.remove('hidden');
+    setTimeout(() => msgBox.classList.add('hidden'), 3000);
+}
+
+async function updateBooking(id, status) {
+    const token = sessionStorage.getItem('access_token');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    try {
+        const res = await fetch(`/admin/api/bookings/${id}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token ? 'Bearer ' + token : '',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({ status })
+        });
+        const data = await res.json();
+        if (res.ok) { showMsg(`Booking #${id} → ${status.replace('_',' ')}`, true); setTimeout(() => location.reload(), 1200); }
+        else showMsg(data.error || 'Update failed', false);
+    } catch { showMsg('Network error', false); }
+}
+</script>
+{% endblock %}

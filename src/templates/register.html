@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block main %}
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md animate-slide-up">
+
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="px-8 pt-8 pb-6 border-b border-charcoal-600">
+                <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">FM Residences</p>
+                <h2 class="font-display text-3xl text-cream">Create account</h2>
+                <p class="text-cream/40 text-sm mt-1">Join us for seamless bookings</p>
+            </div>
+
+            <div class="px-8 py-7">
+                <div id="reg-error"   class="hidden mb-4 px-4 py-3 bg-red-900/30 border border-red-700/50 text-red-400 rounded-xl text-sm"></div>
+                <div id="reg-success" class="hidden mb-4 px-4 py-3 bg-green-900/30 border border-green-700/50 text-green-400 rounded-xl text-sm"></div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Username</label>
+                        <input id="username" type="text" autocomplete="username" autofocus
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+                               placeholder="Choose a username">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Email</label>
+                        <input id="email" type="email" autocomplete="email"
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+                               placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Password</label>
+                        <input id="password" type="password" autocomplete="new-password"
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+                               placeholder="Min. 8 characters">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Confirm Password</label>
+                        <input id="confirm" type="password" autocomplete="new-password"
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
+                               placeholder="Repeat password">
+                    </div>
+                </div>
+
+                <button id="reg-btn"
+                        class="mt-6 w-full py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase">
+                    Create Account
+                </button>
+
+                <p class="mt-5 text-center text-sm text-cream/40">
+                    Already have an account?
+                    <a href="{{ url_for('auth.login_page') }}" class="text-gold hover:text-gold-light transition-colors">Sign in →</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const btn        = document.getElementById('reg-btn');
+const errBox     = document.getElementById('reg-error');
+const successBox = document.getElementById('reg-success');
+
+function showError(msg)   { errBox.textContent=msg; errBox.classList.remove('hidden'); successBox.classList.add('hidden'); }
+function showSuccess(msg) { successBox.textContent=msg; successBox.classList.remove('hidden'); errBox.classList.add('hidden'); }
+
+btn.addEventListener('click', async () => {
+    errBox.classList.add('hidden');
+    const username = document.getElementById('username').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm').value;
+    if (!username || !email || !password) return showError('All fields are required.');
+    if (password !== confirm) return showError('Passwords do not match.');
+    if (password.length < 8) return showError('Password must be at least 8 characters.');
+    btn.disabled=true; btn.textContent='Creating account…';
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const res = await fetch('/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({username, email, password})
+        });
+        const data = await res.json();
+        if (!res.ok) { showError(data.error || 'Registration failed.'); }
+        else { showSuccess('Account created! Check your email to verify, then sign in.'); btn.textContent='Done!'; return; }
+    } catch { showError('Network error. Please try again.'); }
+    btn.disabled=false; btn.textContent='Create Account';
+});
+</script>
+{% endblock %}

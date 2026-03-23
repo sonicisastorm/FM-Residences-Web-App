@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+{% block title %}My Bookings{% endblock %}
+
+{% block main %}
+{#
+  FIX BUG 22: Cancel button condition was:
+    {% if booking.status == 'pending_payment' %}
+      (cancel button)
+    {% elif booking.status == 'pending_payment' or booking.status == 'confirmed' %}
+      (cancel button)
+    {% endif %}
+
+  The first branch catches ALL pending_payment bookings, so the `elif`
+  can never fire. 'confirmed' bookings therefore never got a cancel button.
+
+  Fix: single `{% if %}` that covers both statuses cleanly.
+#}
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+    <div class="mb-8">
+        <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Your Account</p>
+        <h1 class="font-display text-4xl text-cream">My Bookings</h1>
+    </div>
+
+    <!-- ───────── ROOM BOOKINGS ───────── -->
+    <section class="mb-14">
+        <h2 class="text-sm text-cream/40 uppercase tracking-widest mb-5">Room Reservations</h2>
+
+        {% if bookings %}
+        <div class="space-y-4">
+        {% for booking in bookings %}
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5 shadow-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                <div class="space-y-1">
+                    <h3 class="font-display text-xl text-cream">
+                        {{ booking.room.room_type if booking.room else 'Room' }}
+                    </h3>
+                    <p class="text-cream/50 text-sm">
+                        <i class="bi bi-calendar3 mr-1 text-gold"></i>
+                        {{ booking.check_in_date.strftime('%d %b %Y') }} →
+                        {{ booking.check_out_date.strftime('%d %b %Y') }}
+                        <span class="text-cream/30 ml-1">({{ booking.total_nights }} night{{ 's' if booking.total_nights != 1 else '' }})</span>
+                    </p>
+                    <p class="text-cream/50 text-sm">
+                        <i class="bi bi-people mr-1 text-gold"></i>{{ booking.num_guests }} guest{{ 's' if booking.num_guests != 1 else '' }}
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-end gap-3">
+                    <div class="text-right">
+                        <div class="text-gold font-display text-2xl">${{ "%.2f"|format(booking.total_price) }}</div>
+                        <div class="text-cream/40 text-xs">
+                            {% if booking.status == 'pending_payment' %}
+                            <span class="px-2 py-0.5 bg-yellow-900/30 border border-yellow-700/40 text-yellow-400 rounded-lg">Pending Payment</span>
+                            {% elif booking.status == 'confirmed' %}
+                            <span class="px-2 py-0.5 bg-green-900/30 border border-green-700/40 text-green-400 rounded-lg">Confirmed</span>
+                            {% elif booking.status == 'checked_in' %}
+                            <span class="px-2 py-0.5 bg-blue-900/30 border border-blue-700/40 text-blue-400 rounded-lg">Checked In</span>
+                            {% elif booking.status == 'checked_out' %}
+                            <span class="px-2 py-0.5 bg-charcoal-500 text-cream/40 rounded-lg">Checked Out</span>
+                            {% elif booking.status == 'cancelled' %}
+                            <span class="px-2 py-0.5 bg-red-900/30 border border-red-700/40 text-red-400 rounded-lg">Cancelled</span>
+                            {% else %}
+                            <span class="px-2 py-0.5 bg-charcoal-500 text-cream/40 rounded-lg">{{ booking.status }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        {# FIX BUG 22: was two overlapping conditions — now one clean check #}
+                        {% if booking.status in ('pending_payment', 'confirmed') %}
+                        <form action="{{ url_for('bookings.cancel_booking', booking_id=booking.id) }}" method="post"
+                              onsubmit="return confirm('Cancel this booking?')">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit"
+                                    class="px-4 py-1.5 border border-red-700/50 text-red-400 hover:bg-red-900/30 text-xs rounded-xl transition-colors">
+                                Cancel
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        {% if booking.status == 'pending_payment' %}
+                        <a href="{{ url_for('bookings.checkout', booking_id=booking.id) }}"
+                           class="px-4 py-1.5 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-xl transition-colors">
+                            Complete Payment
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-10 text-center">
+            <i class="bi bi-calendar3 text-4xl text-cream/20 block mb-3"></i>
+            <p class="text-cream/40 text-sm mb-4">No room bookings yet.</p>
+            <a href="{{ url_for('index') }}"
+               class="inline-block px-5 py-2 bg-gold hover:bg-gold-light text-charcoal text-sm font-semibold rounded-xl transition-colors">
+                Book a Room →
+            </a>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- ───────── CAR RENTALS ───────── -->
+    <section>
+        <h2 class="text-sm text-cream/40 uppercase tracking-widest mb-5">Car Rentals</h2>
+
+        {% if rentals %}
+        <div class="space-y-4">
+        {% for rental in rentals %}
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5 shadow-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                <div class="space-y-1">
+                    <h3 class="font-display text-xl text-cream">
+                        {{ rental.car.model if rental.car else 'Car' }}
+                    </h3>
+                    <p class="text-cream/50 text-sm">
+                        <i class="bi bi-calendar3 mr-1 text-gold"></i>
+                        {{ rental.rental_date.strftime('%d %b %Y') }} →
+                        {{ rental.return_date.strftime('%d %b %Y') }}
+                        <span class="text-cream/30 ml-1">({{ rental.total_days }} day{{ 's' if rental.total_days != 1 else '' }})</span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-end gap-3">
+                    <div class="text-right">
+                        <div class="text-gold font-display text-2xl">${{ "%.2f"|format(rental.total_price) }}</div>
+                        <div class="text-cream/40 text-xs">
+                            {% if rental.status == 'pending_payment' %}
+                            <span class="px-2 py-0.5 bg-yellow-900/30 border border-yellow-700/40 text-yellow-400 rounded-lg">Pending Payment</span>
+                            {% elif rental.status == 'confirmed' %}
+                            <span class="px-2 py-0.5 bg-green-900/30 border border-green-700/40 text-green-400 rounded-lg">Confirmed</span>
+                            {% elif rental.status == 'active' %}
+                            <span class="px-2 py-0.5 bg-blue-900/30 border border-blue-700/40 text-blue-400 rounded-lg">Active</span>
+                            {% elif rental.status == 'returned' %}
+                            <span class="px-2 py-0.5 bg-charcoal-500 text-cream/40 rounded-lg">Returned</span>
+                            {% elif rental.status == 'cancelled' %}
+                            <span class="px-2 py-0.5 bg-red-900/30 border border-red-700/40 text-red-400 rounded-lg">Cancelled</span>
+                            {% else %}
+                            <span class="px-2 py-0.5 bg-charcoal-500 text-cream/40 rounded-lg">{{ rental.status }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        {% if rental.status in ('pending_payment', 'confirmed') %}
+                        <form action="{{ url_for('bookings.cancel_rental', rental_id=rental.id) }}" method="post"
+                              onsubmit="return confirm('Cancel this car rental?')">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit"
+                                    class="px-4 py-1.5 border border-red-700/50 text-red-400 hover:bg-red-900/30 text-xs rounded-xl transition-colors">
+                                Cancel
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        {% if rental.status == 'pending_payment' %}
+                        <a href="{{ url_for('bookings.checkout', rental_id=rental.id) }}"
+                           class="px-4 py-1.5 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-xl transition-colors">
+                            Complete Payment
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-10 text-center">
+            <i class="bi bi-car-front text-4xl text-cream/20 block mb-3"></i>
+            <p class="text-cream/40 text-sm mb-4">No car rentals yet.</p>
+            <a href="{{ url_for('bookings.available_cars') }}"
+               class="inline-block px-5 py-2 bg-gold hover:bg-gold-light text-charcoal text-sm font-semibold rounded-xl transition-colors">
+                Browse Cars →
+            </a>
+        </div>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+{% set active_page = "reservation" %}
+{% block title %}Luxury Stays & Residences{% endblock %}
+
+{% block main %}
+
+<!-- Hero Section -->
+<div class="relative min-h-[560px] flex items-center justify-center overflow-hidden bg-charcoal-800">
+
+    <!-- Background texture/overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-charcoal-800 via-charcoal/80 to-charcoal opacity-90"></div>
+    <div class="absolute inset-0 opacity-10"
+         style="background-image: url('/static/images/hero-bg.jpg'); background-size:cover; background-position:center;"></div>
+
+    <!-- Decorative gold lines -->
+    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-gold/20 to-transparent ml-12 hidden lg:block"></div>
+    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-gold/20 to-transparent mr-12 hidden lg:block"></div>
+
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in">
+        <p class="text-gold text-xs tracking-[0.3em] uppercase mb-3 font-medium">Welcome to</p>
+        <h1 class="font-display text-5xl md:text-7xl text-cream mb-4 leading-tight">
+            FM <span class="text-gold">Residences</span>
+        </h1>
+        <p class="text-cream/60 text-lg mb-12 max-w-xl mx-auto">
+            Exceptional stays in the heart of the city. Reserve your perfect room today.
+        </p>
+
+        <!-- Progress indicator -->
+        <div class="flex items-center justify-center gap-4 mb-8">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gold text-charcoal flex items-center justify-center text-sm font-bold">1</div>
+                <span class="text-gold text-sm font-medium hidden sm:block">Search</span>
+            </div>
+            <div class="h-px w-12 bg-charcoal-500"></div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full border border-charcoal-500 text-cream/40 flex items-center justify-center text-sm">2</div>
+                <span class="text-cream/40 text-sm hidden sm:block">Select</span>
+            </div>
+            <div class="h-px w-12 bg-charcoal-500"></div>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full border border-charcoal-500 text-cream/40 flex items-center justify-center text-sm">3</div>
+                <span class="text-cream/40 text-sm hidden sm:block">Confirm</span>
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <form action="{{ url_for('index') }}" method="post"
+              class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-6 shadow-2xl text-left animate-slide-up"
+              style="animation-delay: 0.15s">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <!-- Check In -->
+                <div class="dates">
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Check In</label>
+                    <div class="relative">
+                        <input type="text" id="checkin" name="checkin" placeholder="dd-mm-yyyy"
+                               required autocomplete="off"
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors cursor-pointer">
+                        <i class="bi bi-calendar3 absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <!-- Check Out -->
+                <div class="dates">
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Check Out</label>
+                    <div class="relative">
+                        <input type="text" id="checkout" name="checkout" placeholder="dd-mm-yyyy"
+                               required autocomplete="off"
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors cursor-pointer">
+                        <i class="bi bi-calendar3 absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <!-- Rooms -->
+                <div>
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Rooms</label>
+                    <select name="rooms" required
+                            class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                        <option value="" disabled selected>Select</option>
+                        <option value="1">1 Room</option>
+                        <option value="2">2 Rooms</option>
+                        <option value="3">3 Rooms</option>
+                    </select>
+                </div>
+
+                <!-- Adults -->
+                <div>
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Adults</label>
+                    <select name="adults"
+                            class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                        <option value="" disabled selected>Select</option>
+                        {% for i in range(1, 7) %}
+                        <option value="{{ i }}">{{ i }} {{ 'Person' if i == 1 else 'People' }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Children row (shown conditionally) -->
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Children</label>
+                    <select name="children" id="children-select"
+                            class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                        <option value="none" selected>None</option>
+                        <option value="one">1 Child</option>
+                        <option value="two">2 Children</option>
+                    </select>
+                </div>
+                <div class="one_child hidden">
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Child 1 Age</label>
+                    <select name="first_child" class="required1 w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                        <option value="">Select age</option>
+                        <option value="0-2">0 – 2 years</option>
+                        <option value="2-6">2 – 6 years</option>
+                        <option value="7-12">7 – 11 years</option>
+                    </select>
+                </div>
+                <div class="two_children hidden">
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Child 2 Age</label>
+                    <select name="second_child" class="required2 w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                        <option value="">Select age</option>
+                        <option value="0-2">0 – 2 years</option>
+                        <option value="2-6">2 – 6 years</option>
+                        <option value="7-12">7 – 11 years</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-5 flex justify-end">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit"
+                        class="px-10 py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase">
+                    Search Availability
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Features strip -->
+<div class="bg-charcoal-700 border-b border-charcoal-600 py-5">
+    <div class="max-w-5xl mx-auto px-4 flex flex-wrap justify-center gap-8 text-sm text-cream/50">
+        <span class="flex items-center gap-2"><i class="bi bi-shield-check text-gold"></i> Secure Payments</span>
+        <span class="flex items-center gap-2"><i class="bi bi-arrow-repeat text-gold"></i> Free Cancellation</span>
+        <span class="flex items-center gap-2"><i class="bi bi-wifi text-gold"></i> Free Wi-Fi</span>
+        <span class="flex items-center gap-2"><i class="bi bi-car-front text-gold"></i> Car Rentals Available</span>
+        <span class="flex items-center gap-2"><i class="bi bi-headset text-gold"></i> 24/7 Concierge</span>
+    </div>
+</div>
+
+{% endblock %}

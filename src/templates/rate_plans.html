@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% set active_page = "rate_plans" %}
+
+{% block title %}Rate Plans{% endblock %}
+
+{% block main %}
+<div class="max-w-5xl mx-auto px-4 py-10">
+
+    <div class="flex items-center gap-3 mb-8">
+        <div class="h-px flex-1 bg-charcoal-600"></div>
+        <h2 class="font-display text-2xl text-gold uppercase tracking-widest whitespace-nowrap">Rate Plans</h2>
+        <div class="h-px flex-1 bg-charcoal-600"></div>
+    </div>
+
+    <form action="{{ url_for('rate_plans') }}" method="post" id="rate_plans_form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-xl p-8 space-y-8">
+
+            <!-- Plan name -->
+            <div class="max-w-sm">
+                <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Rate Plan Name *</label>
+                <input type="text" id="rate_plan_name" name="rate_plan_name" required autocomplete="off"
+                       placeholder="e.g. Double-Room-BB"
+                       class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
+            </div>
+
+            <!-- Period 1 (always visible) -->
+            {% for period_num in [1, 2, 3, 4] %}
+            <div class="period-block {% if period_num > 1 %}hidden{% endif %} border border-charcoal-600 rounded-xl p-6 space-y-5"
+                 id="period_{{ period_num }}">
+                <h4 class="font-display text-base text-gold">Date Period {{ period_num }}{% if period_num == 1 %} *{% endif %}</h4>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Start Date</label>
+                        <input type="text" id="start_date_{{ period_num }}" name="start_date_{{ period_num }}"
+                               placeholder="dd-mm-yyyy" autocomplete="off"
+                               {% if period_num == 1 %}required{% endif %}
+                               class="calendar_rate_plan w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">End Date</label>
+                        <input type="text" id="end_date_{{ period_num }}" name="end_date_{{ period_num }}"
+                               placeholder="dd-mm-yyyy" autocomplete="off"
+                               {% if period_num == 1 %}required{% endif %}
+                               class="calendar_rate_plan w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Adult Price/Day *</label>
+                        <input type="text" id="price_per_day_adult_{{ period_num }}" name="price_per_day_adult_{{ period_num }}"
+                               placeholder="Adult price" autocomplete="off"
+                               {% if period_num == 1 %}required{% endif %}
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Single Adult/Day *</label>
+                        <input type="text" id="price_per_day_single_adult_{{ period_num }}" name="price_per_day_single_adult_{{ period_num }}"
+                               placeholder="Single adult" autocomplete="off"
+                               {% if period_num == 1 %}required{% endif %}
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Child &lt;12 Regular Bed *</label>
+                        <input type="text" id="price_per_day_child_under_12_regular_bed_{{ period_num }}" name="price_per_day_child_under_12_regular_bed_{{ period_num }}"
+                               placeholder="0–11.99 y.o" autocomplete="off"
+                               {% if period_num == 1 %}required{% endif %}
+                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-xs text-cream/40 uppercase tracking-wider mb-3">
+                        Children prices for extra beds
+                        <span class="text-gold/60 normal-case">(leave blank if N/A)</span>
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs text-cream/40 mb-1.5">7–11.99 y.o</label>
+                            <input type="text" id="price_per_day_child_under_12_{{ period_num }}" name="price_per_day_child_under_12_{{ period_num }}"
+                                   placeholder="optional" autocomplete="off"
+                                   class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-cream/40 mb-1.5">2–6.99 y.o</label>
+                            <input type="text" id="price_per_day_child_under_7_{{ period_num }}" name="price_per_day_child_under_7_{{ period_num }}"
+                                   placeholder="optional" autocomplete="off"
+                                   class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-cream/40 mb-1.5">0–1.99 y.o</label>
+                            <input type="text" id="price_per_day_child_under_2_{{ period_num }}" name="price_per_day_child_under_2_{{ period_num }}"
+                                   placeholder="optional" autocomplete="off"
+                                   class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Period management buttons -->
+            <div class="flex flex-wrap gap-3 pt-2">
+                <button type="button" id="add_rate_plan"
+                        class="px-5 py-2.5 border border-gold/50 text-gold hover:bg-gold/10 rounded-xl transition-colors text-sm uppercase tracking-wide">
+                    + Add Date Period
+                </button>
+                <button type="button" id="remove_rate_plan"
+                        class="px-5 py-2.5 border border-red-700/50 text-red-400 hover:bg-red-900/20 rounded-xl transition-colors text-sm uppercase tracking-wide">
+                    − Remove Period
+                </button>
+                <button type="submit" id="create"
+                        class="px-8 py-2.5 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm uppercase tracking-wide ml-auto">
+                    Create Rate Plan
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+// Show/hide date periods
+let visiblePeriods = 1;
+const totalPeriods = 4;
+
+document.getElementById('add_rate_plan').addEventListener('click', function() {
+    if (visiblePeriods < totalPeriods) {
+        visiblePeriods++;
+        document.getElementById('period_' + visiblePeriods).classList.remove('hidden');
+    }
+});
+
+document.getElementById('remove_rate_plan').addEventListener('click', function() {
+    if (visiblePeriods > 1) {
+        document.getElementById('period_' + visiblePeriods).classList.add('hidden');
+        // Clear inputs in hidden period
+        document.querySelectorAll('#period_' + visiblePeriods + ' input').forEach(i => i.value = '');
+        visiblePeriods--;
+    }
+});
+
+$(function () {
+    $('.calendar_rate_plan').datepicker({ format: 'dd-mm-yyyy', autoclose: true, todayHighlight: true });
+});
+</script>
+{% endblock %}

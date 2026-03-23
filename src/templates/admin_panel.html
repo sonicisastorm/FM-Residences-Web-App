@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% set active_page = "dashboard" %}
+{% block title %}Admin Panel{% endblock %}
+
+{% block main %}
+<div class="max-w-7xl mx-auto px-4 py-10 animate-fade-in">
+
+    <div class="mb-10">
+        <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Admin Panel</p>
+        <h1 class="font-display text-4xl text-cream">Management Panel</h1>
+        <p class="text-cream/40 mt-2 text-sm">Full control over rooms, cars, users and settings</p>
+    </div>
+
+    <!-- Management sections -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Rooms -->
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-6 hover:border-gold/30 transition-colors">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center"><i class="bi bi-building text-gold"></i></div>
+                <h2 class="font-display text-xl text-cream">Rooms</h2>
+            </div>
+            <p class="text-cream/40 text-sm mb-5">Create, edit or remove hotel rooms and set pricing.</p>
+            <div class="flex flex-wrap gap-2">
+                <a href="/create_rooms" class="px-4 py-2 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-lg transition-colors">Add Room</a>
+                <a href="/availability" class="px-4 py-2 bg-charcoal-600 border border-charcoal-500 hover:border-gold/40 text-cream text-xs rounded-lg transition-colors">Availability</a>
+            </div>
+        </div>
+
+        <!-- Bookings -->
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-6 hover:border-gold/30 transition-colors">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center"><i class="bi bi-calendar-check text-gold"></i></div>
+                <h2 class="font-display text-xl text-cream">Bookings</h2>
+            </div>
+            <p class="text-cream/40 text-sm mb-5">Review and manage all room reservations.</p>
+            <div class="flex flex-wrap gap-2">
+                <a href="/admin/bookings" class="px-4 py-2 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-lg transition-colors">View Bookings</a>
+            </div>
+        </div>
+
+        <!-- Car Rentals -->
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-6 hover:border-gold/30 transition-colors">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center"><i class="bi bi-car-front text-gold"></i></div>
+                <h2 class="font-display text-xl text-cream">Car Rentals</h2>
+            </div>
+            <p class="text-cream/40 text-sm mb-5">Manage your fleet and all car rental records.</p>
+            <div class="flex flex-wrap gap-2">
+                <a href="/admin/cars"    class="px-4 py-2 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-lg transition-colors">Manage Cars</a>
+                <a href="/admin/rentals" class="px-4 py-2 bg-charcoal-600 border border-charcoal-500 hover:border-gold/40 text-cream text-xs rounded-lg transition-colors">View Rentals</a>
+            </div>
+        </div>
+
+        <!-- Users -->
+        <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-6 hover:border-gold/30 transition-colors">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center"><i class="bi bi-people text-gold"></i></div>
+                <h2 class="font-display text-xl text-cream">Users</h2>
+            </div>
+            <p class="text-cream/40 text-sm mb-5">Manage guest accounts, roles and access levels.</p>
+            <div class="flex flex-wrap gap-2">
+                <a href="/admin/users"            class="px-4 py-2 bg-gold hover:bg-gold-light text-charcoal text-xs font-semibold rounded-lg transition-colors">All Users</a>
+                <a href="/admin/register"         class="px-4 py-2 bg-charcoal-600 border border-charcoal-500 hover:border-gold/40 text-cream text-xs rounded-lg transition-colors">Add Staff</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Go to dashboard -->
+    <div class="mt-8 text-center">
+        <a href="/admin/dashboard" class="inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light transition-colors">
+            <i class="bi bi-speedometer2"></i> Open Dashboard →
+        </a>
+    </div>
+</div>
+{% endblock %}
