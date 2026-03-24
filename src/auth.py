@@ -345,7 +345,7 @@ def change_password():
 
 def _send_verification_email(user: User, token: str):
     import threading
-    
+
     def send():
         try:
             verify_url = url_for("auth.verify_email", token=token, _external=True)
