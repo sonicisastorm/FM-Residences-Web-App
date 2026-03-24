@@ -72,6 +72,7 @@ def create_app() -> Flask:
     app.config["MAIL_USE_TLS"]        = os.getenv("MAIL_USE_TLS", "false").lower() == "true"
     app.config["MAIL_USE_SSL"]        = os.getenv("MAIL_USE_SSL", "true").lower()  == "true"
     app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
+    app.config["MAIL_TIMEOUT"]        = 10
 
     # ── Stripe ────────────────────────────────────────────────────────────────
     app.config["STRIPE_SECRET_KEY"]      = os.getenv("STRIPE_SECRET_KEY")
