@@ -17,13 +17,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ── Children age selects (search form) ──────────────────────────────────────
+// FIX: was $('option').click(...) which is unreliable — browsers fire the
+// option click event inconsistently, causing the newly-shown div to flicker
+// and immediately disappear. The correct event is 'change' on the <select>.
 $(function toggle_display() {
-    $('option').click(function () {
+    function applyChildrenState(total_children) {
         const one_child    = document.querySelector('.one_child');
         const two_children = document.querySelector('.two_children');
         if (!one_child || !two_children) return;
-
-        const total_children = $(this).val();
 
         if (total_children === 'one') {
             one_child.style.display    = 'block';
@@ -41,6 +42,11 @@ $(function toggle_display() {
             $('.required1').prop('required', false);
             $('.required2').prop('required', false);
         }
+    }
+
+    // Listen on the select's change event (reliable across all browsers)
+    $('#children-select').on('change', function () {
+        applyChildrenState($(this).val());
     });
 
     // ── Rate plan period show/hide ───────────────────────────────────────────

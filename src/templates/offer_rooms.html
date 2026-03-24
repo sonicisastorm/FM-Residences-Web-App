@@ -12,6 +12,29 @@
 #}
 <div class="max-w-6xl mx-auto px-4 py-12 animate-fade-in">
 
+    <!-- ── Progress indicator – Step 2 active ───────────────────────────── -->
+    <div class="flex items-center justify-center gap-4 mb-10">
+        <div class="flex items-center gap-2">
+            <!-- Step 1: completed (gold ring + checkmark) -->
+            <div class="w-8 h-8 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center text-sm">
+                <i class="bi bi-check text-sm font-bold"></i>
+            </div>
+            <span class="text-gold/60 text-sm hidden sm:block">Search</span>
+        </div>
+        <div class="h-px w-12 bg-gold/40"></div>
+        <div class="flex items-center gap-2">
+            <!-- Step 2: active -->
+            <div class="w-8 h-8 rounded-full bg-gold text-charcoal flex items-center justify-center text-sm font-bold shadow-[0_0_12px_rgba(201,168,76,0.4)]">2</div>
+            <span class="text-gold text-sm font-medium hidden sm:block">Select</span>
+        </div>
+        <div class="h-px w-12 bg-charcoal-500"></div>
+        <div class="flex items-center gap-2">
+            <!-- Step 3: upcoming -->
+            <div class="w-8 h-8 rounded-full border border-charcoal-500 text-cream/40 flex items-center justify-center text-sm">3</div>
+            <span class="text-cream/40 text-sm hidden sm:block">Confirm</span>
+        </div>
+    </div>
+
     <!-- Header + search summary -->
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>

@@ -94,11 +94,10 @@
                         <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Check-out</th>
                         <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Total</th>
                         <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Status</th>
-                        <th class="px-5 py-3"></th>
                     </tr>
                 </thead>
                 <tbody id="bookings-tbody" class="divide-y divide-charcoal-600">
-                    <tr><td colspan="8" class="px-5 py-8 text-center text-cream/30 text-sm">Loading…</td></tr>
+                    <tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">Loading…</td></tr>
                 </tbody>
             </table>
         </div>
@@ -167,6 +166,10 @@ async function loadDashboard() {
 
         const bTbody = document.getElementById('bookings-tbody');
         if (data.recent_bookings && data.recent_bookings.length) {
+            // FIX: removed the trailing "View →" column — it linked to
+            // /admin/bookings/<id> which renders admin_booking_detail.html,
+            // a template that does not exist. Full details are available
+            // via the "View all →" link above the table.
             bTbody.innerHTML = data.recent_bookings.map(b => `
                 <tr class="hover:bg-charcoal-600/50 transition-colors">
                     <td class="px-5 py-3 text-cream/40">${b.id}</td>
@@ -176,12 +179,9 @@ async function loadDashboard() {
                     <td class="px-5 py-3 text-cream/70">${b.check_out || '—'}</td>
                     <td class="px-5 py-3 text-gold font-semibold">$${Number(b.total_price||0).toFixed(2)}</td>
                     <td class="px-5 py-3">${badge(b.status)}</td>
-                    <td class="px-5 py-3 text-right">
-                        <a href="/admin/bookings/${b.id}" class="text-xs text-gold hover:text-gold-light transition-colors">View →</a>
-                    </td>
                 </tr>`).join('');
         } else {
-            bTbody.innerHTML = '<tr><td colspan="8" class="px-5 py-8 text-center text-cream/30 text-sm">No bookings yet.</td></tr>';
+            bTbody.innerHTML = '<tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">No bookings yet.</td></tr>';
         }
 
         const rTbody = document.getElementById('rentals-tbody');

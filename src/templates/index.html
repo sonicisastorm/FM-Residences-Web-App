@@ -57,7 +57,12 @@
                         <input type="text" id="checkin" name="checkin" placeholder="dd-mm-yyyy"
                                required autocomplete="off"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors cursor-pointer">
-                        <i class="bi bi-calendar3 absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 pointer-events-none"></i>
+                        <!-- Icon is now a clickable button that focuses the input -->
+                        <button type="button"
+                                onclick="document.getElementById('checkin').focus()"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 hover:text-gold transition-colors cursor-pointer p-0 bg-transparent border-0">
+                            <i class="bi bi-calendar3"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -68,7 +73,11 @@
                         <input type="text" id="checkout" name="checkout" placeholder="dd-mm-yyyy"
                                required autocomplete="off"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors cursor-pointer">
-                        <i class="bi bi-calendar3 absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 pointer-events-none"></i>
+                        <button type="button"
+                                onclick="document.getElementById('checkout').focus()"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gold/60 hover:text-gold transition-colors cursor-pointer p-0 bg-transparent border-0">
+                            <i class="bi bi-calendar3"></i>
+                        </button>
                     </div>
                 </div>
 
