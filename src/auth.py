@@ -344,27 +344,30 @@ def change_password():
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _send_verification_email(user: User, token: str):
-    try:
-        verify_url = url_for("auth.verify_email", token=token, _external=True)
-        msg = Message(
-            subject    = "FM Residences — Verify your email",
-            recipients = [user.email],
-            html       = f"""
-                <h2>Welcome to FM Residences, {user.username}!</h2>
-                <p>Click the button below to verify your email address:</p>
-                <a href="{verify_url}"
-                   style="background:#C9A84C;color:#000;padding:12px 24px;
-                          text-decoration:none;border-radius:6px;font-weight:bold;">
-                   Verify Email
-                </a>
-                <p style="color:#666;margin-top:16px;">
-                  Link expires in 24 hours.
-                </p>
-            """,
-        )
-        mail.send(msg)
-    except Exception:
-        pass   # Don't block registration if email is misconfigured in dev
+    import threading
+    def send():
+        try:
+            verify_url = url_for("auth.verify_email", token=token, _external=True)
+            msg = Message(
+                subject    = "FM Residences — Verify your email",
+                recipients = [user.email],
+                html       = f"""
+                    <h2>Welcome to FM Residences, {user.username}!</h2>
+                    <p>Click the button below to verify your email address:</p>
+                    <a href="{verify_url}"
+                       style="background:#C9A84C;color:#000;padding:12px 24px;
+                              text-decoration:none;border-radius:6px;font-weight:bold;">
+                       Verify Email
+                    </a>
+                    <p style="color:#666;margin-top:16px;">
+                      Link expires in 24 hours.
+                    </p>
+                """,
+            )
+            mail.send(msg)
+        except Exception:
+            pass
+    threading.Thread(target=send, daemon=True).start()
 
 
 def _send_reset_email(user: User, token: str):
