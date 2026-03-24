@@ -18,7 +18,7 @@ jwt    = JWTManager()
 csrf   = CSRFProtect()
 mail   = Mail()
 
-# In-memory JWT blocklist — reloaded from DB on startup
+# In-memory JWT blocklist — reloaded from DB on startupp
 jwt_blocklist: set = set()
 
 
