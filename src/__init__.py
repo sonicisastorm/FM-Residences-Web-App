@@ -33,7 +33,11 @@ def create_app() -> Flask:
     # ── Database ──────────────────────────────────────────────────────────────
     basedir    = os.path.abspath(os.path.dirname(__file__))
     default_db = "sqlite:///" + os.path.join(basedir, "hotel.db")
-    app.config["SQLALCHEMY_DATABASE_URI"]        = os.getenv("DATABASE_URL", default_db)
+    database_url = os.getenv("DATABASE_URL", default_db)
+    # Fix Render's postgres:// → postgresql:// for SQLAlchemy 2.x
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"]        = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # ── JWT ───────────────────────────────────────────────────────────────────
