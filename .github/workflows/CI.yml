@@ -161,7 +161,7 @@ jobs:
             python -c "from src import create_app; app = create_app(); print('App OK')"
 
 
-  # ── 4. Deploy to production (main branch only) ───────────────────────────
+  # ── 4. Deploy to production (main branch onlyy) ───────────────────────────
   deploy-production:
     name: Deploy — Production
     runs-on: ubuntu-latest
