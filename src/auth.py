@@ -93,7 +93,7 @@ def _zerobounce_validate(email: str) -> tuple[bool, str]:
         params  = urllib.parse.urlencode({"api_key": api_key, "email": email, "ip_address": ""})
         url     = f"https://api.zerobounce.net/v2/validate?{params}"
         req     = urllib.request.Request(url, headers={"User-Agent": "FM-Residences/1.0"})
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=5) as resp:  # nosec B310
             data = json.loads(resp.read().decode())
 
         status  = data.get("status", "").lower()
