@@ -14,12 +14,17 @@ FIXES APPLIED:
   - FIX:    helpers.py redirect target corrected to auth.login_page
   - FIX:    POST /auth/logout now requires a valid JWT (returns 401 when missing),
             while GET /auth/logout still does a session-only clear + redirect.
+  - FIX:    Gmail SMTP (port 465) is blocked on Render. Switched to Brevo SMTP
+            (smtp-relay.brevo.com, port 587, STARTTLS) which works on all cloud hosts.
+  - FIX:    ZeroBounce API validation added at registration to reject invalid /
+            disposable / catch-all email addresses before the account is created.
+            Validation is skipped gracefully if ZEROBOUNCE_API_KEY is not set.
 """
 
 from datetime import datetime, timezone
 
 from flask import (Blueprint, request, jsonify, session, redirect,
-                   url_for, render_template, flash)
+                   url_for, render_template, flash, current_app)
 from flask_jwt_extended import (
     create_access_token, create_refresh_token,
     jwt_required, get_jwt_identity, get_jwt,
@@ -53,6 +58,65 @@ def register_page():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+#  ZeroBounce email validation helper
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _zerobounce_validate(email: str) -> tuple[bool, str]:
+    """
+    Validate an email address with the ZeroBounce API.
+
+    Returns (is_ok: bool, reason: str).
+    - is_ok=True  → email is safe to use
+    - is_ok=False → email should be rejected; reason explains why
+
+    If ZEROBOUNCE_API_KEY is not configured, or if the API call fails for
+    any reason, we return (True, "") so registration is never blocked by a
+    network hiccup.
+
+    ZeroBounce status codes we reject:
+      invalid      – address doesn't exist
+      disposable   – throwaway inbox (Mailinator etc.)
+      abuse        – known spam/complaint source
+      do_not_mail  – role address or bounced previously
+      unknown      – completely unresolvable (we allow these — too aggressive
+                     to block; some real addresses resolve as unknown)
+    """
+    import urllib.request
+    import urllib.parse
+    import json
+
+    api_key = current_app.config.get("ZEROBOUNCE_API_KEY", "")
+    if not api_key:
+        return True, ""   # validation not configured — allow through
+
+    try:
+        params  = urllib.parse.urlencode({"api_key": api_key, "email": email, "ip_address": ""})
+        url     = f"https://api.zerobounce.net/v2/validate?{params}"
+        req     = urllib.request.Request(url, headers={"User-Agent": "FM-Residences/1.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode())
+
+        status  = data.get("status", "").lower()
+        sub     = data.get("sub_status", "").lower()
+
+        REJECT_STATUSES = {"invalid", "disposable", "abuse", "do_not_mail"}
+        if status in REJECT_STATUSES:
+            human = {
+                "invalid":     "That email address doesn't exist or cannot receive mail.",
+                "disposable":  "Disposable / temporary email addresses are not allowed.",
+                "abuse":       "That email address has a history of abuse and cannot be used.",
+                "do_not_mail": "That email address cannot receive mail (role address or previously bounced).",
+            }.get(status, "That email address is not accepted.")
+            return False, human
+
+        return True, ""
+
+    except Exception:
+        # Network error / timeout / unexpected response — don't block registration
+        return True, ""
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 #  Register
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -64,6 +128,7 @@ def register():
     if not all(data.get(f) for f in ("username", "email", "password")):
         return jsonify({"error": "Username, email, and password are required"}), 400
 
+    # Basic format check (fast, no network)
     try:
         email = validate_email(data["email"], check_deliverability=False).normalized
     except EmailNotValidError as e:
@@ -77,8 +142,13 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "Email already registered"}), 409
 
+    # ZeroBounce deliverability check (network, uses a credit)
+    zb_ok, zb_reason = _zerobounce_validate(email)
+    if not zb_ok:
+        return jsonify({"error": zb_reason}), 400
+
     try:
-        user = User(username=data["username"], email=email, role="user")
+        user  = User(username=data["username"], email=email, role="user")
         user.set_password(data["password"])
         token = user.generate_verification_token()
         db.session.add(user)
@@ -343,31 +413,79 @@ def change_password():
 #  Email helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _email_base(title: str, body_html: str) -> str:
+    """Wrap content in a minimal, styled HTML email shell."""
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0A0A0A;font-family:'DM Sans',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0"
+             style="background:#1E1E1E;border:1px solid #2A2A2A;border-radius:16px;overflow:hidden;max-width:560px;width:100%;">
+        <!-- Header -->
+        <tr>
+          <td style="background:#141414;border-bottom:1px solid #2A2A2A;padding:24px 32px;">
+            <span style="font-size:22px;font-weight:600;color:#C9A84C;letter-spacing:0.05em;">
+              FM Residences
+            </span>
+          </td>
+        </tr>
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px;">
+            <h2 style="margin:0 0 16px;font-size:22px;color:#F5F0E8;font-weight:600;">{title}</h2>
+            {body_html}
+          </td>
+        </tr>
+        <!-- Footer -->
+        <tr>
+          <td style="background:#141414;border-top:1px solid #2A2A2A;padding:16px 32px;
+                     font-size:11px;color:#3A3A3A;text-align:center;">
+            &copy; FM Residences. If you did not request this email, you can safely ignore it.
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
+
+
 def _send_verification_email(user: User, token: str):
     import threading
 
     def send():
         try:
             verify_url = url_for("auth.verify_email", token=token, _external=True)
+            body = f"""
+              <p style="color:#F5F0E8;line-height:1.6;margin:0 0 24px;">
+                Hi <strong style="color:#C9A84C;">{user.username}</strong>,<br>
+                Thanks for signing up. Click the button below to verify your email address
+                and activate your account.
+              </p>
+              <a href="{verify_url}"
+                 style="display:inline-block;background:#C9A84C;color:#141414;
+                        padding:14px 28px;text-decoration:none;border-radius:10px;
+                        font-weight:700;font-size:14px;letter-spacing:0.05em;">
+                Verify Email Address
+              </a>
+              <p style="color:#666;font-size:12px;margin:20px 0 0;">
+                This link expires in <strong>24 hours</strong>.<br>
+                If the button doesn't work, paste this URL into your browser:<br>
+                <a href="{verify_url}" style="color:#C9A84C;word-break:break-all;">{verify_url}</a>
+              </p>
+            """
             msg = Message(
                 subject    = "FM Residences — Verify your email",
                 recipients = [user.email],
-                html       = f"""
-                    <h2>Welcome to FM Residences, {user.username}!</h2>
-                    <p>Click the button below to verify your email address:</p>
-                    <a href="{verify_url}"
-                       style="background:#C9A84C;color:#000;padding:12px 24px;
-                              text-decoration:none;border-radius:6px;font-weight:bold;">
-                       Verify Email
-                    </a>
-                    <p style="color:#666;margin-top:16px;">
-                      Link expires in 24 hours.
-                    </p>
-                """,
+                html       = _email_base("Verify your email", body),
             )
             mail.send(msg)
-        except Exception:
-            pass
+        except Exception as exc:
+            # Log but don't crash — user can request a resend
+            current_app.logger.error("Verification email failed: %s", exc)
+
     threading.Thread(target=send, daemon=True).start()
 
 
@@ -375,22 +493,30 @@ def _send_reset_email(user: User, token: str):
     try:
         # FIX BUG 9: token goes in query param, not URL path
         reset_url = url_for("auth.reset_password_page", token=token, _external=True)
+        body = f"""
+          <p style="color:#F5F0E8;line-height:1.6;margin:0 0 24px;">
+            Hi <strong style="color:#C9A84C;">{user.username}</strong>,<br>
+            We received a request to reset your password. Click the button below.
+          </p>
+          <a href="{reset_url}"
+             style="display:inline-block;background:#C9A84C;color:#141414;
+                    padding:14px 28px;text-decoration:none;border-radius:10px;
+                    font-weight:700;font-size:14px;letter-spacing:0.05em;">
+            Reset Password
+          </a>
+          <p style="color:#666;font-size:12px;margin:20px 0 0;">
+            This link expires in <strong>1 hour</strong>.<br>
+            If you didn't request a password reset, you can ignore this email — your
+            account is safe.<br><br>
+            If the button doesn't work, paste this URL into your browser:<br>
+            <a href="{reset_url}" style="color:#C9A84C;word-break:break-all;">{reset_url}</a>
+          </p>
+        """
         msg = Message(
             subject    = "FM Residences — Password Reset",
             recipients = [user.email],
-            html       = f"""
-                <h2>Password Reset Request</h2>
-                <p>Click below to reset your password. This link expires in 1 hour.</p>
-                <a href="{reset_url}"
-                   style="background:#C9A84C;color:#000;padding:12px 24px;
-                          text-decoration:none;border-radius:6px;font-weight:bold;">
-                   Reset Password
-                </a>
-                <p style="color:#666;margin-top:16px;">
-                  If you didn't request this, ignore this email.
-                </p>
-            """,
+            html       = _email_base("Reset your password", body),
         )
         mail.send(msg)
-    except Exception:
-        pass
+    except Exception as exc:
+        current_app.logger.error("Reset email failed: %s", exc)

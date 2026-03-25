@@ -18,7 +18,7 @@ jwt    = JWTManager()
 csrf   = CSRFProtect()
 mail   = Mail()
 
-# In-memory JWT blocklist — reloaded from DB on startupp
+# In-memory JWT blocklist — reloaded from DB on startup
 jwt_blocklist: set = set()
 
 
@@ -64,15 +64,25 @@ def create_app() -> Flask:
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
     app.config["ALLOWED_EXTENSIONS"] = {"png", "jpg", "jpeg", "gif"}
 
-    # ── Email ─────────────────────────────────────────────────────────────────
-    app.config["MAIL_SERVER"]         = os.getenv("MAIL_SERVER",  "smtp.gmail.com")
-    app.config["MAIL_PORT"]           = int(os.getenv("MAIL_PORT", 465))
-    app.config["MAIL_USERNAME"]       = os.getenv("MAIL_USERNAME")
-    app.config["MAIL_PASSWORD"]       = os.getenv("MAIL_PASSWORD")
-    app.config["MAIL_USE_TLS"]        = os.getenv("MAIL_USE_TLS", "false").lower() == "true"
-    app.config["MAIL_USE_SSL"]        = os.getenv("MAIL_USE_SSL", "true").lower()  == "true"
-    app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
-    app.config["MAIL_TIMEOUT"]        = 10
+    # ── Email (Brevo SMTP — works on Render, port 465/SSL is blocked) ─────────
+    # Brevo uses port 587 with STARTTLS.  Gmail port 465 (SSL) is blocked by
+    # most cloud providers including Render's free tier.
+    app.config["MAIL_SERVER"]         = os.getenv("MAIL_SERVER",   "smtp-relay.brevo.com")
+    app.config["MAIL_PORT"]           = int(os.getenv("MAIL_PORT", 587))
+    app.config["MAIL_USERNAME"]       = os.getenv("MAIL_USERNAME")   # your Brevo login email
+    app.config["MAIL_PASSWORD"]       = os.getenv("MAIL_PASSWORD")   # your Brevo SMTP key
+    app.config["MAIL_USE_TLS"]        = os.getenv("MAIL_USE_TLS",  "true").lower()  == "true"
+    app.config["MAIL_USE_SSL"]        = os.getenv("MAIL_USE_SSL",  "false").lower() == "true"
+    app.config["MAIL_DEFAULT_SENDER"] = (
+        os.getenv("MAIL_SENDER_NAME", "FM Residences"),
+        os.getenv("MAIL_USERNAME", ""),
+    )
+    app.config["MAIL_TIMEOUT"]        = 15
+
+    # ── ZeroBounce (optional email validation at registration) ────────────────
+    # Sign up at zerobounce.net → API → copy your API key.
+    # If this var is not set, ZeroBounce validation is silently skipped.
+    app.config["ZEROBOUNCE_API_KEY"]  = os.getenv("ZEROBOUNCE_API_KEY", "")
 
     # ── Stripe ────────────────────────────────────────────────────────────────
     app.config["STRIPE_SECRET_KEY"]      = os.getenv("STRIPE_SECRET_KEY")
@@ -128,8 +138,6 @@ def create_app() -> Flask:
         from src.auth     import auth_bp
         from src.payments import payments_bp
         from src.admin    import admin_bp
-        # FIX #1: was `from src.bookings` but file was named booking.py
-        # File has been renamed to bookings.py
         from src.bookings import bookings_bp
 
         app.register_blueprint(auth_bp)       # /auth/...
