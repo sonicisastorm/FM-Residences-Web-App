@@ -97,7 +97,6 @@ def _zerobounce_validate(email: str) -> tuple[bool, str]:
             data = json.loads(resp.read().decode())
 
         status  = data.get("status", "").lower()
-        sub     = data.get("sub_status", "").lower()
 
         REJECT_STATUSES = {"invalid", "disposable", "abuse", "do_not_mail"}
         if status in REJECT_STATUSES:
@@ -422,7 +421,8 @@ def _email_base(title: str, body_html: str) -> str:
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#0A0A0A;padding:40px 0;">
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0"
-             style="background:#1E1E1E;border:1px solid #2A2A2A;border-radius:16px;overflow:hidden;max-width:560px;width:100%;">
+             style="background:#1E1E1E;border:1px solid #2A2A2A;border-radius:16px;"
+                    "overflow:hidden;max-width:560px;width:100%;">
         <!-- Header -->
         <tr>
           <td style="background:#141414;border-bottom:1px solid #2A2A2A;padding:24px 32px;">
