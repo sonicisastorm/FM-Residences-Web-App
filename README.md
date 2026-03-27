@@ -1,6 +1,8 @@
 # FM Residences
 
-A full-stack hotel management web application built with Flask. Guests can search and book rooms, rent cars, and pay via Stripe. Staff manage inventory and reservations through an admin panel.
+A full-stack hotel management web application built with Flask. Guests can search and book rooms, rent cars, and pay securely via Stripe. Staff manage inventory and reservations through an admin panel.
+
+**Live:** [https://fm-residences-web-app.onrender.com](https://fm-residences-web-app.onrender.com)
 
 ---
 
@@ -8,62 +10,74 @@ A full-stack hotel management web application built with Flask. Guests can searc
 
 | Layer | Technology |
 |---|---|
-| Backend | Python 3.11+, Flask 2.3 |
-| ORM | SQLAlchemy 2.0 + Flask-SQLAlchemy |
-| Auth | Flask-JWT-Extended (tokens) + Flask session (server-rendered pages) |
+| Backend | Python 3.11, Flask 3.0 |
+| ORM | SQLAlchemy 2.0 + Flask-SQLAlchemy 3.1 |
+| Auth | Flask-JWT-Extended (API tokens) + Flask session (server-rendered pages) |
 | Payments | Stripe (PaymentIntents API) |
-| Email | Flask-Mail |
-| Templates | Jinja2 + Tailwind CSS (CDN) |
-| Database | PostgreSQL (prod) / SQLite (dev/test) |
-| Tests | pytest |
+| Email | Brevo SMTP (port 587 / STARTTLS) via Flask-Mail |
+| Email Validation | ZeroBounce API (optional — rejects invalid/disposable addresses) |
+| Templates | Jinja2 + Tailwind CSS (CDN) + Bootstrap Icons |
+| Database | PostgreSQL (production) / SQLite (local dev & tests) |
+| Tests | pytest + pytest-flask |
+| CI/CD | GitHub Actions → Render deploy hook |
+| Hosting | Render (web service + managed PostgreSQL) |
 
 ---
 
 ## Project Structure
 
 ```
-FM-Residences/
+FM-Residences-Web-App/
 ├── src/
-│   ├── __init__.py          # App factory, extensions, context processors
-│   ├── models.py            # SQLAlchemy models: User, Room, RoomAvailability,
-│   │                        #   Booking, Cars, CarRental, Payment, JWTToken
-│   ├── auth.py              # Auth blueprint: register, login, logout,
-│   │                        #   email verification, forgot/reset password
-│   ├── bookings.py          # Booking blueprint: room search, bookings, car rentals,
-│   │                        #   checkout page, my-bookings page
-│   ├── admin.py             # Admin blueprint: dashboard, room/car/user CRUD,
-│   │                        #   staff registration, booking management
-│   ├── payments.py          # Payments blueprint: Stripe intent creation, webhook
-│   ├── helpers.py           # Auth decorators: login_required, admin_required
+│   ├── __init__.py          # App factory, extensions, blueprints, context processors
+│   ├── models.py            # User, Room, RoomAvailability, Booking,
+│   │                        #   Cars, CarRental, Payment, JWTToken
+│   ├── auth.py              # Register, login, logout, email verification,
+│   │                        #   forgot/reset password, ZeroBounce validation
+│   ├── bookings.py          # Room search, bookings, car rentals,
+│   │                        #   checkout, my-bookings
+│   ├── admin.py             # Dashboard, room/car/user CRUD,
+│   │                        #   staff registration, booking & rental management
+│   ├── payments.py          # Stripe PaymentIntent creation, webhook,
+│   │                        #   direct confirm (no-webhook fallback), refunds
+│   ├── helpers.py           # Auth decorators
 │   ├── room_search.py       # Availability search logic
-│   ├── static/              # CSS, JS, uploaded images
+│   ├── static/              # Uploaded images, JS
 │   └── templates/
-│       ├── layout.html      # Base template (nav, footer)
-│       ├── index.html       # Landing page + search form
-│       ├── offer_rooms.html # Room search results
-│       ├── Cars.html        # Car fleet listing + rental form
-│       ├── checkout.html    # Stripe payment form
-│       ├── My_bookings.html # User booking history
-│       ├── login.html       # Login page
-│       ├── register.html    # Guest registration
-│       ├── Forget_password.html
-│       ├── Reset_password.html
-│       ├── admin_dashboard.html
-│       ├── admin_bookings.html
-│       ├── admin_rentals.html
-│       ├── admin_users.html
-│       ├── admin_cars.html
-│       └── admin_register.html
+│       ├── layout.html              # Base template (nav with mobile menu, footer)
+│       ├── index.html               # Landing page + date picker search form
+│       ├── offer_rooms.html         # Room search results (step 2 progress bar)
+│       ├── checkout.html            # Stripe payment form (step 3)
+│       ├── confirmation.html        # Booking confirmed page
+│       ├── Cars.html                # Car fleet listing + rental form
+│       ├── My_bookings.html         # User booking & rental history
+│       ├── login.html               # Login
+│       ├── register.html            # Guest registration
+│       ├── Forget_password.html     # Forgot password
+│       ├── Reset_password.html      # Reset password
+│       ├── admin_dashboard.html     # Admin dashboard (stats + quick actions)
+│       ├── admin_bookings.html      # All bookings + status actions
+│       ├── admin_rentals.html       # All rentals + status actions
+│       ├── admin_users.html         # User management + promote/demote/delete
+│       ├── manage_cars.html         # Add / delete cars
+│       ├── create_rooms.html        # Add / delete rooms
+│       ├── availability.html        # 14-day availability grid
+│       └── admin_register.html      # Create staff account
 ├── tests/
-│   ├── Conftest.py          # Fixtures: app, db, client, users, rooms, cars
-│   ├── test_bookings.py
-│   ├── test_admin.py
-│   ├── test_payments.py
-│   └── test_models.py
-├── db_setup.py              # Creates tables + seeds initial admin account
-├── requirements.txt         # App dependencies
-├── requirements-prod.txt    # Production-only (meinheld, gunicorn)
-├── .env.example
+│   ├── conftest.py          # Fixtures: app, db, client, users, rooms, cars
+│   ├── Test_auth.py
+│   ├── Test_admin.py
+│   ├── Test_bookings.py
+│   ├── Test_models.py
+│   ├── Test_payments.py
+│   └── Test_security.py
+├── .github/
+│   └── workflows/
+│       └── CI.yml           # Lint → Test (py3.10/3.11/3.12) → Docker → Deploy
+├── db_setup.py              # Creates tables + seeds admin account, rooms, cars
+├── Dockerfile               # Multi-stage build, gunicorn entrypoint
+├── runtime.txt              # python-3.11.0
+├── requirements.txt
 └── README.md
 ```
 
@@ -74,8 +88,8 @@ FM-Residences/
 ### 1. Clone and create a virtual environment
 
 ```bash
-git clone https://github.com/your-org/fm-residences.git
-cd fm-residences
+git clone https://github.com/sonicisastorm/FM-Residences-Web-App.git
+cd FM-Residences-Web-App
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -83,53 +97,56 @@ pip install -r requirements.txt
 
 ### 2. Configure environment variables
 
-Copy `.env.example` to `.env` and fill in every value:
-
-```bash
-cp .env.example .env
-```
+Create a `.env` file in the project root:
 
 ```env
 # Flask
 SECRET_KEY=your-random-secret-key-here
+JWT_SECRET_KEY=another-random-secret-key
 FLASK_ENV=development
-DATABASE_URL=sqlite:///fm_residences.db
 
-# JWT
-JWT_SECRET_KEY=another-random-secret
+# Database (SQLite for local dev)
+DATABASE_URL=sqlite:///dev.db
 
-# Stripe
+# Stripe (test keys from dashboard.stripe.com)
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
-# Email (use Mailtrap for dev)
-MAIL_SERVER=smtp.mailtrap.io
+# Email — Brevo SMTP (free at brevo.com, 300 emails/day)
+MAIL_SERVER=smtp-relay.brevo.com
 MAIL_PORT=587
-MAIL_USERNAME=your-mailtrap-user
-MAIL_PASSWORD=your-mailtrap-pass
-MAIL_DEFAULT_SENDER=noreply@fmresidences.com
+MAIL_USERNAME=your_brevo_login@example.com
+MAIL_PASSWORD=your_brevo_smtp_key
+MAIL_USE_TLS=true
+MAIL_USE_SSL=false
+MAIL_SENDER_NAME=FM Residences
 
-# File uploads
-UPLOAD_FOLDER=src/static/uploads
+# ZeroBounce email validation (optional — zerobounce.net)
+# Leave blank to skip validation
+ZEROBOUNCE_API_KEY=
+
+# Admin account created by db_setup.py
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=ChangeMe123!
 ```
 
-### 3. Create tables and seed initial admin account
+### 3. Create tables and seed data
 
 ```bash
 python db_setup.py
 ```
 
-This creates all database tables and inserts an admin user:
-- **Username:** `admin`
-- **Password:** `Admin@123456` *(change immediately after first login)*
+This creates all database tables and seeds:
+- An admin account (credentials from `.env` above)
+- 3 sample rooms with 365 days of availability
+- 3 sample cars
 
 ### 4. Run the development server
 
 ```bash
-flask run
-# or
-python -m flask run --debug
+python run.py
 ```
 
 Visit [http://localhost:5000](http://localhost:5000)
@@ -141,29 +158,31 @@ Visit [http://localhost:5000](http://localhost:5000)
 ### Guest — book a room
 
 1. Visit the home page
-2. Select check-in / check-out dates, number of rooms and adults
-3. Click **Search** → available rooms appear
-4. Click **Select Room** → redirected to login if not authenticated
-5. After login, redirected to the Stripe checkout page
-6. Enter card details (use `4242 4242 4242 4242` in test mode) → payment confirmed
-7. View the booking in **My Bookings**
+2. Click the date inputs to open the calendar picker — select check-in and check-out
+3. Choose number of rooms and adults, click **Search Availability**
+4. Available rooms appear (step 2) — click **Select Room →**
+5. If not logged in, redirected to login first
+6. Stripe checkout page (step 3) — enter card details
+7. Test card: `4242 4242 4242 4242` · any future date · any CVC
+8. Payment confirmed → booking appears in **My Bookings**
 
 ### Guest — rent a car
 
 1. Click **Cars** in the nav
 2. Choose a car, enter pickup and return dates, click **Rent This Car**
-3. Redirected to the Stripe checkout page
-4. Complete payment
-5. Rental appears in **My Bookings** under Car Rentals
+3. Complete payment on the Stripe checkout page
+4. Rental appears in **My Bookings** under Car Rentals
 
 ### Admin — manage inventory
 
-1. Log in with an admin account → redirected to `/admin/dashboard`
-2. **Rooms** → add, edit, toggle active/inactive, seed availability calendars
-3. **Cars** → add, edit, toggle availability
-4. **Bookings** → view all reservations, update status (confirmed → checked-in → checked-out)
-5. **Rentals** → view all rentals, mark as active / returned
-6. **Users** → manage guest accounts, promote to staff
+1. Log in with an admin account → `/admin/dashboard`
+2. **Add Room** → form with room type, number, price, capacity, image
+   - 365 days of availability auto-seeded on creation
+3. **Manage Cars** → add new car or delete existing ones
+4. **Availability** → 14-day calendar grid showing rooms left to sell per day
+5. **All Bookings** → view every reservation, check in / check out / cancel
+6. **All Rentals** → mark rentals as active or returned
+7. **Manage Users** → promote users to staff, demote staff, delete accounts
 
 ---
 
@@ -171,67 +190,86 @@ Visit [http://localhost:5000](http://localhost:5000)
 
 The app uses a **hybrid** auth strategy:
 
-- **JWT tokens** are issued on login and must be sent as `Authorization: Bearer <token>` headers for all JSON API calls.
-- **Flask session** is also set on login so server-rendered HTML pages can show the correct nav and gate page routes.
+- **JWT tokens** are issued on login and sent as `Authorization: Bearer <token>` headers for JSON API calls (dashboard data, status updates, payment intents).
+- **Flask session** is set on login so server-rendered HTML pages (nav, admin pages, checkout) work without tokens.
 
-Token refresh: `POST /auth/refresh` with the refresh token (standard JWT refresh flow).
+Both expire independently — the session lasts the browser session, JWT access tokens expire after 30 minutes (configurable via `JWT_ACCESS_EXPIRES_MINUTES`).
 
 ---
 
-## API Reference (Admin)
+## Email Verification
 
-All JSON API endpoints require `Authorization: Bearer <admin_token>`.
+New user accounts require email verification before login. The verification email is sent via **Brevo SMTP** (port 587 / STARTTLS) in a background thread so registration responds instantly.
 
-### Dashboard
+Before creating the account, the email is optionally validated by **ZeroBounce** which rejects:
+- Invalid addresses (don't exist)
+- Disposable / throwaway inboxes (Mailinator etc.)
+- Known abuse/spam sources
 
-| Method | Path | Description |
-|---|---|---|
-| GET | `/admin/dashboard-data` | Stats: total bookings, rentals, revenue, users; recent items |
+If `ZEROBOUNCE_API_KEY` is not set, validation is skipped and all format-valid addresses are accepted.
 
-### Rooms
+---
 
-| Method | Path | Description |
-|---|---|---|
-| GET | `/admin/rooms` | List all rooms |
-| POST | `/admin/rooms` | Create room (multipart or JSON) |
-| PATCH | `/admin/rooms/<id>` | Edit room fields |
-| DELETE | `/admin/rooms/<id>` | Delete room (blocks if active bookings) |
-| PATCH | `/admin/rooms/<id>/toggle` | Activate / deactivate |
-| POST | `/admin/rooms/<id>/availability` | Seed availability for date range |
+## API Reference
 
-### Cars
+All JSON API endpoints require `Authorization: Bearer <token>`. Admin endpoints additionally require role `admin` or `staff`.
+
+### Auth
 
 | Method | Path | Description |
 |---|---|---|
-| GET | `/admin/api/cars` | List all cars |
-| POST | `/admin/api/cars` | Add car |
-| PATCH | `/admin/api/cars/<id>` | Edit car |
-| DELETE | `/admin/api/cars/<id>` | Delete car |
-| PATCH | `/admin/api/cars/<id>/toggle` | Toggle availability |
+| POST | `/auth/register` | Register new user account |
+| POST | `/auth/login` | Login → returns JWT tokens + sets session |
+| GET | `/auth/logout` | Session logout → redirects to home |
+| POST | `/auth/logout` | API logout → blocklists JWT |
+| GET | `/auth/verify-email/<token>` | Verify email address |
+| POST | `/auth/forgot-password` | Request password reset email |
+| POST | `/auth/reset-password` | Reset password with token |
+| POST | `/auth/refresh` | Refresh access token |
 
-### Bookings
-
-| Method | Path | Description |
-|---|---|---|
-| GET | `/admin/api/bookings` | List bookings (filter by status, room, user, date) |
-| PATCH | `/admin/api/bookings/<id>/status` | Update booking status |
-| DELETE | `/admin/api/bookings/<id>` | Delete booking |
-
-### Rentals
+### Admin — Dashboard
 
 | Method | Path | Description |
 |---|---|---|
-| GET | `/admin/api/rentals` | List rentals |
-| PATCH | `/admin/api/rentals/<id>/status` | Update rental status |
+| GET | `/admin/dashboard-data` | Stats + recent bookings & rentals (session auth) |
 
-### Users
+### Admin — Rooms
 
 | Method | Path | Description |
 |---|---|---|
-| GET | `/admin/api/users` | List users (filter by role, active, search) |
+| GET | `/admin/create-room` | Add room page |
+| POST | `/admin/create-room` | Create room + auto-seed 365 days availability |
+| POST | `/admin/delete-room` | Delete room |
+| GET | `/admin/availability` | 14-day availability grid |
+| POST | `/admin/rooms/<id>/availability` | Seed availability for date range (API) |
+| PATCH | `/admin/rooms/<id>/toggle` | Activate / deactivate room (API) |
+
+### Admin — Cars
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/admin/manage-cars` | Manage cars page |
+| POST | `/admin/create-car` | Add car |
+| POST | `/admin/delete-car` | Delete car |
+| PATCH | `/admin/api/cars/<id>/toggle` | Toggle availability (API) |
+
+### Admin — Bookings & Rentals
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/admin/bookings` | All bookings page |
+| PATCH | `/admin/api/bookings/<id>/status` | Update status (confirmed→checked_in→checked_out) |
+| GET | `/admin/rentals` | All rentals page |
+| PATCH | `/admin/api/rentals/<id>/status` | Update status (confirmed→active→returned) |
+
+### Admin — Users
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/admin/users` | Manage users page |
+| POST | `/admin/users/<id>/delete` | Delete user account |
+| PATCH | `/admin/api/users/<id>/role` | Promote / demote role |
 | POST | `/admin/register` | Create staff/admin account |
-| PATCH | `/admin/api/users/<id>/role` | Change user role |
-| PATCH | `/admin/api/users/<id>/toggle` | Activate/deactivate account |
 
 ### Payments
 
@@ -239,124 +277,63 @@ All JSON API endpoints require `Authorization: Bearer <admin_token>`.
 |---|---|---|
 | POST | `/payments/create-intent/booking/<id>` | Create Stripe PaymentIntent for booking |
 | POST | `/payments/create-intent/car-rental/<id>` | Create Stripe PaymentIntent for rental |
+| POST | `/payments/confirm-payment` | Confirm payment directly (webhook fallback) |
 | POST | `/payments/webhook` | Stripe webhook receiver |
 | POST | `/payments/refund/<id>` | Issue full refund (admin only) |
-| GET | `/payments/status/<id>` | Check payment status |
 
 ---
 
-## Room Availability Seeding
+## CI/CD Pipeline
 
-Before rooms appear in search results, their availability must be seeded:
+GitHub Actions runs on every push:
 
-```bash
-# Via API (admin token required)
-curl -X POST http://localhost:5000/admin/rooms/1/availability \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"from_date": "2026-03-01", "to_date": "2026-12-31"}'
-```
+1. **Lint** — flake8 (style) + bandit (security)
+2. **Test** — pytest across Python 3.10, 3.11, 3.12 with SQLite in-memory DB
+3. **Docker** — builds image + smoke tests app starts correctly
+4. **Deploy** — triggers Render deploy hook (main branch only)
 
-Or run a one-off script:
-
-```python
-from src import create_app, db
-from src.models import Room, RoomAvailability
-from datetime import date, timedelta
-
-app = create_app()
-with app.app_context():
-    rooms = Room.query.all()
-    start = date.today()
-    end   = start + timedelta(days=365)
-    for room in rooms:
-        current = start
-        while current < end:
-            if not RoomAvailability.query.filter_by(room_id=room.id, date=current).first():
-                db.session.add(RoomAvailability(
-                    room_id=room.id, date=current,
-                    total_rooms=room.total_of_this_type,
-                    booked=0, left_to_sell=room.total_of_this_type,
-                    is_available=True,
-                ))
-            current += timedelta(days=1)
-    db.session.commit()
-    print("Done")
-```
+Render auto-deploys on every successful push to `main`. The build command runs `db_setup.py` on each deploy (idempotent — skips existing data).
 
 ---
 
-## Stripe Webhook (local dev)
+## Deployment (Render)
 
-Install the Stripe CLI and forward events to the local server:
+### Requirements
 
-```bash
-stripe listen --forward-to localhost:5000/payments/webhook
-```
+- Render account (free tier works)
+- PostgreSQL database on Render (Frankfurt region recommended)
+- Brevo account for email (free, 300/day)
+- Stripe account (test keys for staging, live keys for production)
 
-Copy the webhook signing secret the CLI prints and set it as `STRIPE_WEBHOOK_SECRET` in `.env`.
+### Steps
 
-Key events handled:
-
-| Event | Effect |
-|---|---|
-| `payment_intent.succeeded` | Booking/rental → `confirmed`, car → unavailable |
-| `payment_intent.payment_failed` | Payment → `failed` |
-| `charge.refunded` | Payment → `refunded`, booking/rental → `cancelled` |
+1. **Create PostgreSQL** on Render → copy the Internal Database URL
+2. **Create Web Service** → connect GitHub repo, branch `main`
+   - Runtime: Python 3.11
+   - Build command: `pip install -r requirements.txt && python db_setup.py`
+   - Start command: `gunicorn --bind 0.0.0.0:$PORT --timeout 120 run:app`
+3. **Set environment variables** in Render dashboard (see `.env` section above, plus `DATABASE_URL` from step 1)
+4. **Set Stripe webhook** → Stripe dashboard → Webhooks → endpoint `https://your-app.onrender.com/payments/webhook`
+   - Events: `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded`
+   - Copy signing secret → `STRIPE_WEBHOOK_SECRET` in Render
+5. **Add deploy hook** to GitHub → repo Settings → Secrets → `RENDER_DEPLOY_HOOK_URL`
 
 ---
 
-## Running Tests
+## Testing
 
 ```bash
 pytest tests/ -v
 ```
 
-The test suite uses an in-memory SQLite database. Each test function runs in a rolled-back transaction so tests don't interfere with each other.
-
-To run a specific test file:
+Tests use an in-memory SQLite database and never touch your real database or Stripe.
 
 ```bash
-pytest tests/test_bookings.py -v
-pytest tests/test_admin.py -v
-pytest tests/test_payments.py -v
-pytest tests/test_models.py -v
-```
+# Run a specific test file
+pytest tests/Test_auth.py -v
 
----
-
-## Docker (Production)
-
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt requirements-prod.txt ./
-RUN pip install --no-cache-dir -r requirements.txt -r requirements-prod.txt
-COPY . .
-EXPOSE 8000
-CMD ["meinheld", "-b", "0.0.0.0:8000", "src:create_app()"]
-```
-
-```yaml
-# docker-compose.yml
-services:
-  web:
-    build: .
-    env_file: .env
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: fm_residences
-      POSTGRES_USER: fm
-      POSTGRES_PASSWORD: fm_secret
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata:
+# With coverage
+pytest tests/ --cov=src --cov-report=term-missing
 ```
 
 ---
@@ -365,30 +342,23 @@ volumes:
 
 | Variable | Required | Description |
 |---|---|---|
-| `SECRET_KEY` | Yes | Flask session signing key |
-| `JWT_SECRET_KEY` | Yes | JWT token signing key |
-| `DATABASE_URL` | Yes | SQLAlchemy connection string |
-| `STRIPE_SECRET_KEY` | Yes | Stripe secret key (`sk_live_` / `sk_test_`) |
-| `STRIPE_PUBLISHABLE_KEY` | Yes | Stripe publishable key (sent to frontend) |
-| `STRIPE_WEBHOOK_SECRET` | Yes | Webhook signature secret (`whsec_`) |
-| `MAIL_SERVER` | Yes | SMTP host |
-| `MAIL_PORT` | Yes | SMTP port (usually 587) |
-| `MAIL_USERNAME` | Yes | SMTP username |
-| `MAIL_PASSWORD` | Yes | SMTP password |
-| `MAIL_DEFAULT_SENDER` | Yes | From address for outgoing emails |
-| `UPLOAD_FOLDER` | No | Path for uploaded images (default: `src/static/uploads`) |
-| `FLASK_ENV` | No | `development` / `production` |
-
----
-
-## Context Processor
-
-`src/__init__.py` must register a context processor so templates can use `{{ now.year }}` in the footer:
-
-```python
-from datetime import datetime
-
-@app.context_processor
-def inject_now():
-    return {"now": datetime.now()}
-```
+| `SECRET_KEY` | Yes | Flask session secret |
+| `JWT_SECRET_KEY` | Yes | JWT signing secret |
+| `DATABASE_URL` | Yes | PostgreSQL or SQLite URL |
+| `FLASK_ENV` | Yes | `development` or `production` |
+| `STRIPE_SECRET_KEY` | Yes | Stripe secret key (`sk_test_` or `sk_live_`) |
+| `STRIPE_PUBLISHABLE_KEY` | Yes | Stripe publishable key |
+| `STRIPE_WEBHOOK_SECRET` | Yes | Stripe webhook signing secret (`whsec_`) |
+| `MAIL_SERVER` | Yes | SMTP server (`smtp-relay.brevo.com`) |
+| `MAIL_PORT` | Yes | SMTP port (`587`) |
+| `MAIL_USERNAME` | Yes | Brevo login email |
+| `MAIL_PASSWORD` | Yes | Brevo SMTP key |
+| `MAIL_USE_TLS` | Yes | `true` for Brevo |
+| `MAIL_USE_SSL` | Yes | `false` for Brevo |
+| `MAIL_SENDER_NAME` | No | Display name in emails (default: `FM Residences`) |
+| `ZEROBOUNCE_API_KEY` | No | ZeroBounce API key — skipped if blank |
+| `ADMIN_USERNAME` | Yes | Admin username for db_setup.py |
+| `ADMIN_EMAIL` | Yes | Admin email for db_setup.py |
+| `ADMIN_PASSWORD` | Yes | Admin password for db_setup.py |
+| `JWT_ACCESS_EXPIRES_MINUTES` | No | JWT lifetime in minutes (default: 30) |
+| `RENDER_DEPLOY_HOOK_URL` | CI only | Render deploy hook URL (GitHub secret) |
