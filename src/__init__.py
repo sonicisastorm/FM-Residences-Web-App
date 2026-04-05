@@ -125,7 +125,6 @@ def create_app() -> Flask:
     @app.context_processor
     def inject_globals():
         from datetime import datetime, timezone
-        from flask_babel import get_locale as babel_get_locale
         return {
             "now":                datetime.now(timezone.utc),
             "current_lang":       session.get("lang", DEFAULT_LANGUAGE),
