@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% set active_page = "dashboard" %}
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}{{ _('Admin Dashboard') }}{% endblock %}
 
 {% block main %}
 <div class="max-w-7xl mx-auto px-4 py-10 animate-fade-in">
@@ -8,8 +8,8 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
         <div>
-            <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Admin Panel</p>
-            <h1 class="font-display text-4xl text-cream">Dashboard</h1>
+            <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">{{ _('Admin Panel') }}</p>
+            <h1 class="font-display text-4xl text-cream">{{ _('Dashboard') }}</h1>
         </div>
         <div class="text-sm text-cream/40">
             <i class="bi bi-clock text-gold mr-1"></i>
@@ -21,83 +21,83 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-xs text-cream/40 uppercase tracking-wider">Total Bookings</span>
+                <span class="text-xs text-cream/40 uppercase tracking-wider">{{ _('Total Bookings') }}</span>
                 <i class="bi bi-calendar-check text-gold text-lg"></i>
             </div>
             <div class="font-display text-3xl text-cream" id="stat-bookings">—</div>
         </div>
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-xs text-cream/40 uppercase tracking-wider">Total Rentals</span>
+                <span class="text-xs text-cream/40 uppercase tracking-wider">{{ _('Total Rentals') }}</span>
                 <i class="bi bi-car-front text-gold text-lg"></i>
             </div>
             <div class="font-display text-3xl text-cream" id="stat-rentals">—</div>
         </div>
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-xs text-cream/40 uppercase tracking-wider">Total Revenue</span>
+                <span class="text-xs text-cream/40 uppercase tracking-wider">{{ _('Total Revenue') }}</span>
                 <i class="bi bi-currency-dollar text-gold text-lg"></i>
             </div>
             <div class="font-display text-3xl text-gold" id="stat-revenue">—</div>
         </div>
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-xs text-cream/40 uppercase tracking-wider">Total Users</span>
+                <span class="text-xs text-cream/40 uppercase tracking-wider">{{ _('Total Users') }}</span>
                 <i class="bi bi-people text-gold text-lg"></i>
             </div>
             <div class="font-display text-3xl text-cream" id="stat-users">—</div>
         </div>
     </div>
 
-    <!-- Quick actions — 6 tiles: Rooms, Cars, Users, Availability, Bookings, Rentals -->
+    <!-- Quick actions -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
         <a href="{{ url_for('admin.create_room_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-plus-circle text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">Add Room</span>
+            <span class="text-cream/70 text-sm">{{ _('Add Room') }}</span>
         </a>
         <a href="{{ url_for('admin.manage_cars_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-car-front text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">Manage Cars</span>
+            <span class="text-cream/70 text-sm">{{ _('Manage Cars') }}</span>
         </a>
         <a href="{{ url_for('admin.users_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-person-plus text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">Manage Users</span>
+            <span class="text-cream/70 text-sm">{{ _('Manage Users') }}</span>
         </a>
         <a href="{{ url_for('admin.availability_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-calendar3 text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">Availability</span>
+            <span class="text-cream/70 text-sm">{{ _('Availability') }}</span>
         </a>
         <a href="{{ url_for('admin.bookings_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-list-check text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">All Bookings</span>
+            <span class="text-cream/70 text-sm">{{ _('All Bookings') }}</span>
         </a>
         <a href="{{ url_for('admin.rentals_page') }}" class="bg-charcoal-700 border border-charcoal-600 hover:border-gold/40 rounded-xl p-4 text-center transition-colors group">
             <i class="bi bi-truck text-gold text-xl block mb-2 group-hover:scale-110 transition-transform"></i>
-            <span class="text-cream/70 text-sm">All Rentals</span>
+            <span class="text-cream/70 text-sm">{{ _('All Rentals') }}</span>
         </a>
     </div>
 
     <!-- Recent bookings -->
     <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl overflow-hidden shadow-xl mb-8">
         <div class="px-6 py-4 border-b border-charcoal-600 flex items-center justify-between">
-            <h2 class="font-display text-xl text-cream">Recent Room Bookings</h2>
-            <a href="{{ url_for('admin.bookings_page') }}" class="text-sm text-gold hover:text-gold-light transition-colors">View all →</a>
+            <h2 class="font-display text-xl text-cream">{{ _('Recent Room Bookings') }}</h2>
+            <a href="{{ url_for('admin.bookings_page') }}" class="text-sm text-gold hover:text-gold-light transition-colors">{{ _('View all →') }}</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-charcoal-600">
                         <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">#</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Guest</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Room</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Check-in</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Check-out</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Total</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Status</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Guest') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Room') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Check-in') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Check-out') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Total') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody id="bookings-tbody" class="divide-y divide-charcoal-600">
-                    <tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">Loading…</td></tr>
+                    <tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">{{ _('Loading…') }}</td></tr>
                 </tbody>
             </table>
         </div>
@@ -106,24 +106,24 @@
     <!-- Recent rentals -->
     <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl overflow-hidden shadow-xl">
         <div class="px-6 py-4 border-b border-charcoal-600 flex items-center justify-between">
-            <h2 class="font-display text-xl text-cream">Recent Car Rentals</h2>
-            <a href="{{ url_for('admin.rentals_page') }}" class="text-sm text-gold hover:text-gold-light transition-colors">View all →</a>
+            <h2 class="font-display text-xl text-cream">{{ _('Recent Car Rentals') }}</h2>
+            <a href="{{ url_for('admin.rentals_page') }}" class="text-sm text-gold hover:text-gold-light transition-colors">{{ _('View all →') }}</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b border-charcoal-600">
                         <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">#</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Guest</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Car</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Pickup</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Return</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Total</th>
-                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">Status</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Guest') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Car') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Pickup') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Return') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Total') }}</th>
+                        <th class="px-5 py-3 text-left text-xs text-cream/40 uppercase tracking-wider">{{ _('Status') }}</th>
                     </tr>
                 </thead>
                 <tbody id="rentals-tbody" class="divide-y divide-charcoal-600">
-                    <tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">Loading…</td></tr>
+                    <tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">{{ _('Loading…') }}</td></tr>
                 </tbody>
             </table>
         </div>
@@ -131,6 +131,13 @@
 </div>
 
 <script>
+{# Inject translated strings for JS-generated table rows #}
+const I18N = {
+    loading:        {{ _('Loading…')           | tojson }},
+    noBookings:     {{ _('No bookings yet.')   | tojson }},
+    noRentals:      {{ _('No rentals yet.')    | tojson }},
+};
+
 (function tick() {
     const el = document.getElementById('live-time');
     if (el) el.textContent = new Date().toLocaleString();
@@ -162,14 +169,11 @@ async function loadDashboard() {
         document.getElementById('stat-bookings').textContent = data.total_bookings ?? '—';
         document.getElementById('stat-rentals').textContent  = data.total_rentals  ?? '—';
         document.getElementById('stat-users').textContent    = data.total_users    ?? '—';
-        document.getElementById('stat-revenue').textContent  = data.total_revenue  != null ? '$' + Number(data.total_revenue).toFixed(2) : '—';
+        document.getElementById('stat-revenue').textContent  = data.total_revenue  != null
+            ? '$' + Number(data.total_revenue).toFixed(2) : '—';
 
         const bTbody = document.getElementById('bookings-tbody');
         if (data.recent_bookings && data.recent_bookings.length) {
-            // FIX: removed the trailing "View →" column — it linked to
-            // /admin/bookings/<id> which renders admin_booking_detail.html,
-            // a template that does not exist. Full details are available
-            // via the "View all →" link above the table.
             bTbody.innerHTML = data.recent_bookings.map(b => `
                 <tr class="hover:bg-charcoal-600/50 transition-colors">
                     <td class="px-5 py-3 text-cream/40">${b.id}</td>
@@ -181,7 +185,7 @@ async function loadDashboard() {
                     <td class="px-5 py-3">${badge(b.status)}</td>
                 </tr>`).join('');
         } else {
-            bTbody.innerHTML = '<tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">No bookings yet.</td></tr>';
+            bTbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">${I18N.noBookings}</td></tr>`;
         }
 
         const rTbody = document.getElementById('rentals-tbody');
@@ -197,7 +201,7 @@ async function loadDashboard() {
                     <td class="px-5 py-3">${badge(r.status)}</td>
                 </tr>`).join('');
         } else {
-            rTbody.innerHTML = '<tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">No rentals yet.</td></tr>';
+            rTbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-cream/30 text-sm">${I18N.noRentals}</td></tr>`;
         }
 
     } catch (e) { console.error('Dashboard load error:', e); }

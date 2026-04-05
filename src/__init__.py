@@ -1,10 +1,11 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for, request
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_wtf import CSRFProtect
 from flask_mail import Mail
+from flask_babel import Babel
 from datetime import timedelta
 
 from src.models import db
@@ -17,9 +18,27 @@ bcrypt = Bcrypt()
 jwt    = JWTManager()
 csrf   = CSRFProtect()
 mail   = Mail()
+babel  = Babel()
+
+# Supported languages — add more here later (e.g. "tr", "ar")
+SUPPORTED_LANGUAGES = ["en", "az", "ru"]
+DEFAULT_LANGUAGE    = "en"
 
 # In-memory JWT blocklist — reloaded from DB on startup
 jwt_blocklist: set = set()
+
+
+def get_locale():
+    """
+    Language priority:
+      1. Whatever is stored in the user's session  (set by /set-lang/<lang>)
+      2. Best match from the browser's Accept-Language header
+      3. Fall back to English
+    """
+    lang = session.get("lang")
+    if lang in SUPPORTED_LANGUAGES:
+        return lang
+    return request.accept_languages.best_match(SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE)
 
 
 def create_app() -> Flask:
@@ -65,14 +84,12 @@ def create_app() -> Flask:
     app.config["ALLOWED_EXTENSIONS"] = {"png", "jpg", "jpeg", "gif"}
 
     # ── Email (Brevo SMTP — works on Render, port 465/SSL is blocked) ─────────
-    # Brevo uses port 587 with STARTTLS.  Gmail port 465 (SSL) is blocked by
-    # most cloud providers including Render's free tier.
     app.config["MAIL_SERVER"]         = os.getenv("MAIL_SERVER",   "smtp-relay.brevo.com")
     app.config["MAIL_PORT"]           = int(os.getenv("MAIL_PORT", 587))
-    app.config["MAIL_USERNAME"]       = os.getenv("MAIL_USERNAME")   # your Brevo login email
-    app.config["MAIL_PASSWORD"]       = os.getenv("MAIL_PASSWORD")   # your Brevo SMTP key
+    app.config["MAIL_USERNAME"]       = os.getenv("MAIL_USERNAME")
+    app.config["MAIL_PASSWORD"]       = os.getenv("MAIL_PASSWORD")
     app.config["MAIL_USE_TLS"]        = os.getenv("MAIL_USE_TLS",  "true").lower()  == "true"
-    app.config["MAIL_USE_SSL"]        = os.getenv("MAIL_USE_SSL",  "false").lower() == "true"
+    app.config["MAIL_USE_SSL"]        = os.getenv("MAIL_USE_SSL",  "false").lower() == "false"
     app.config["MAIL_DEFAULT_SENDER"] = (
         os.getenv("MAIL_SENDER_NAME", "FM Residences"),
         os.getenv("MAIL_USERNAME", ""),
@@ -80,8 +97,6 @@ def create_app() -> Flask:
     app.config["MAIL_TIMEOUT"]        = 15
 
     # ── ZeroBounce (optional email validation at registration) ────────────────
-    # Sign up at zerobounce.net → API → copy your API key.
-    # If this var is not set, ZeroBounce validation is silently skipped.
     app.config["ZEROBOUNCE_API_KEY"]  = os.getenv("ZEROBOUNCE_API_KEY", "")
 
     # ── Stripe ────────────────────────────────────────────────────────────────
@@ -89,23 +104,39 @@ def create_app() -> Flask:
     app.config["STRIPE_PUBLISHABLE_KEY"] = os.getenv("STRIPE_PUBLISHABLE_KEY")
     app.config["STRIPE_WEBHOOK_SECRET"]  = os.getenv("STRIPE_WEBHOOK_SECRET")
 
+    # ── Babel (i18n) ──────────────────────────────────────────────────────────
+    app.config["BABEL_DEFAULT_LOCALE"]   = DEFAULT_LANGUAGE
+    app.config["BABEL_SUPPORTED_LOCALES"] = SUPPORTED_LANGUAGES
+
     # ── Bind extensions ───────────────────────────────────────────────────────
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
     csrf.init_app(app)
     mail.init_app(app)
+    babel.init_app(app, locale_selector=get_locale)
 
     # ── JWT blocklist ─────────────────────────────────────────────────────────
     @jwt.token_in_blocklist_loader
     def check_if_token_revoked(jwt_header, jwt_payload):
         return jwt_payload["jti"] in jwt_blocklist
 
-    # ── Inject `now` into every template ─────────────────────────────────────
+    # ── Inject helpers into every template ───────────────────────────────────
     @app.context_processor
-    def inject_now():
+    def inject_globals():
         from datetime import datetime, timezone
-        return {"now": datetime.now(timezone.utc)}
+        from flask_babel import get_locale as babel_get_locale
+        return {
+            "now":                datetime.now(timezone.utc),
+            "current_lang":       session.get("lang", DEFAULT_LANGUAGE),
+            "supported_languages": SUPPORTED_LANGUAGES,
+            # Human-readable language names for the switcher UI
+            "language_names": {
+                "en": "English",
+                "az": "Azərbaycanca",
+                "ru": "Русский",
+            },
+        }
 
     # ── Security headers ──────────────────────────────────────────────────────
     @app.after_request
@@ -116,18 +147,14 @@ def create_app() -> Flask:
         response.headers["Referrer-Policy"]        = "strict-origin-when-cross-origin"
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; "
-            # Tailwind CDN, Stripe, jQuery, Bootstrap Datepicker, DataTables, FontAwesome
             "script-src 'self' 'unsafe-inline' https://js.stripe.com https://code.jquery.com "
             "https://cdn.jsdelivr.net https://cdnjs.cloudflare.com "
             "https://cdn.datatables.net https://cdn.tailwindcss.com; "
             "frame-src https://js.stripe.com; "
-            # Tailwind CDN injects a <style> tag — needs 'unsafe-inline'
-            # Google Fonts stylesheet must be allowed explicitly
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net "
             "https://cdnjs.cloudflare.com https://cdn.datatables.net "
             "https://fonts.googleapis.com; "
             "img-src 'self' data:; "
-            # Google Fonts serves font files from fonts.gstatic.com
             "font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com "
             "https://fonts.gstatic.com https://cdn.jsdelivr.net;"
         )
@@ -148,12 +175,23 @@ def create_app() -> Flask:
         # FIX: Exempt the Stripe webhook from CSRF — Stripe posts raw bytes, no token
         csrf.exempt(payments_bp)
 
+        # ── Language switcher route ───────────────────────────────────────────
+        @app.route("/set-lang/<lang>")
+        def set_language(lang):
+            """
+            Store the chosen language in the session, then send the user
+            back to wherever they came from (or home if no referrer).
+            Example: <a href="/set-lang/az">AZ</a>
+            """
+            if lang in SUPPORTED_LANGUAGES:
+                session["lang"] = lang
+            return redirect(request.referrer or url_for("index"))
+
         # ── Index route ───────────────────────────────────────────────────────
         @app.route("/", methods=["GET", "POST"])
         def index():
-            from flask import request, redirect, url_for
             if request.method == "POST":
-                return redirect(url_for("bookings.search"), code=307)  # 307 preserves POST body
+                return redirect(url_for("bookings.search"), code=307)
             return render_template("index.html")
 
         # ── Create all DB tables ──────────────────────────────────────────────

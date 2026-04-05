@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Admin Login{% endblock %}
+{% block title %}{{ _('Admin Login') }}{% endblock %}
 
 {% block main %}
 <div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
@@ -7,82 +7,88 @@
         <div class="bg-charcoal-700 border border-gold/20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="px-8 pt-8 pb-6 border-b border-charcoal-600">
                 <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">FM Residences</p>
-                <h2 class="font-display text-3xl text-cream">Admin Access</h2>
-                <p class="text-cream/40 text-sm mt-1">Restricted to authorized staff only</p>
+                <h2 class="font-display text-3xl text-cream">{{ _('Admin Access') }}</h2>
+                <p class="text-cream/40 text-sm mt-1">{{ _('Restricted to authorized staff only') }}</p>
             </div>
             <div class="px-8 py-7">
                 <div id="login-error" class="hidden mb-5 px-4 py-3 bg-red-900/30 border border-red-700/50 text-red-400 rounded-xl text-sm"></div>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Username</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Username') }}</label>
                         <input id="username" type="text" autocomplete="username" autofocus
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Admin username">
+                               placeholder="{{ _('Admin username') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Password</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Password') }}</label>
                         <input id="password" type="password" autocomplete="current-password"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Admin password">
+                               placeholder="{{ _('Admin password') }}">
                     </div>
                 </div>
                 <button id="login-btn"
                         class="mt-6 w-full py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase">
-                    Sign In to Admin
+                    {{ _('Sign In to Admin') }}
                 </button>
                 <p class="mt-5 text-center text-xs text-cream/20">
-                    <i class="bi bi-shield-lock mr-1"></i>All admin actions are logged.
+                    <i class="bi bi-shield-lock mr-1"></i>{{ _('All admin actions are logged.') }}
                 </p>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+const I18N = {
+    enterCredentials:  {{ _('Enter credentials.')      | tojson }},
+    signingIn:         {{ _('Signing in…')              | tojson }},
+    signInToAdmin:     {{ _('Sign In to Admin')         | tojson }},
+    loginFailed:       {{ _('Login failed.')            | tojson }},
+    accessDenied:      {{ _('Access denied. Admin only.')| tojson }},
+    networkError:      {{ _('Network error.')           | tojson }},
+};
+
 const btn      = document.getElementById('login-btn');
 const errorBox = document.getElementById('login-error');
 
 async function doLogin() {
     errorBox.classList.add('hidden');
-    btn.disabled=true; btn.textContent='Signing in…';
+    btn.disabled=true; btn.textContent=I18N.signingIn;
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     if (!username || !password) {
-        errorBox.textContent='Enter credentials.';
+        errorBox.textContent=I18N.enterCredentials;
         errorBox.classList.remove('hidden');
-        btn.disabled=false; btn.textContent='Sign In to Admin';
+        btn.disabled=false; btn.textContent=I18N.signInToAdmin;
         return;
     }
     try {
-        // FIX: added X-CSRFToken header (same fix applied to login.html)
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         const res  = await fetch('/auth/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
             body: JSON.stringify({username, password})
         });
         const data = await res.json();
         if (!res.ok) {
-            errorBox.textContent = data.error || 'Login failed.';
+            errorBox.textContent = data.error || I18N.loginFailed;
             errorBox.classList.remove('hidden');
-            btn.disabled=false; btn.textContent='Sign In to Admin';
+            btn.disabled=false; btn.textContent=I18N.signInToAdmin;
             return;
         }
         if (!['admin','staff'].includes(data.role)) {
-            errorBox.textContent='Access denied. Admin only.';
+            errorBox.textContent=I18N.accessDenied;
             errorBox.classList.remove('hidden');
-            btn.disabled=false; btn.textContent='Sign In to Admin';
+            btn.disabled=false; btn.textContent=I18N.signInToAdmin;
             return;
         }
         sessionStorage.setItem('access_token',  data.access_token);
         sessionStorage.setItem('refresh_token', data.refresh_token);
         window.location.href = '/admin/dashboard';
     } catch {
-        errorBox.textContent='Network error.';
+        errorBox.textContent=I18N.networkError;
         errorBox.classList.remove('hidden');
-        btn.disabled=false; btn.textContent='Sign In to Admin';
+        btn.disabled=false; btn.textContent=I18N.signInToAdmin;
     }
 }
 

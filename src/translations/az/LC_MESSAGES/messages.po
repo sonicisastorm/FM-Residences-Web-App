@@ -1,0 +1,1006 @@
+# FM Residences — Azerbaijani translations
+# Language: Azerbaijani (az)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FM Residences 1.0\n"
+"PO-Revision-Date: 2026-04-04 00:00+0000\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ── Navigation ────────────────────────────────────────────────────────────────
+msgid "Rooms"
+msgstr "Otaqlar"
+
+msgid "Cars"
+msgstr "Avtomobillər"
+
+msgid "My Bookings"
+msgstr "Sifarişlərim"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Login"
+msgstr "Daxil ol"
+
+msgid "Register"
+msgstr "Qeydiyyat"
+
+msgid "Logout"
+msgstr "Çıxış"
+
+msgid "Language"
+msgstr "Dil"
+
+msgid "Signed in as"
+msgstr "Daxil olub:"
+
+# ── Footer ────────────────────────────────────────────────────────────────────
+msgid "Privacy"
+msgstr "Məxfilik"
+
+msgid "Terms"
+msgstr "Şərtlər"
+
+msgid "Contact"
+msgstr "Əlaqə"
+
+msgid "All rights reserved."
+msgstr "Bütün hüquqlar qorunur."
+
+# ── Index / Search form ───────────────────────────────────────────────────────
+msgid "Welcome to"
+msgstr "Xoş gəlmisiniz"
+
+msgid "Exceptional stays in the heart of the city. Reserve your perfect room today."
+msgstr "Şəhərin mərkəzində mükəmməl qalma. Bu gün ideal otağınızı rezerv edin."
+
+msgid "Search"
+msgstr "Axtarış"
+
+msgid "Select"
+msgstr "Seçin"
+
+msgid "Confirm"
+msgstr "Təsdiq"
+
+msgid "Check In"
+msgstr "Giriş tarixi"
+
+msgid "Check Out"
+msgstr "Çıxış tarixi"
+
+msgid "Adults"
+msgstr "Yetkinlər"
+
+msgid "Children"
+msgstr "Uşaqlar"
+
+msgid "None"
+msgstr "Yox"
+
+msgid "1 Child"
+msgstr "1 Uşaq"
+
+msgid "2 Children"
+msgstr "2 Uşaq"
+
+msgid "Child 1 Age"
+msgstr "1-ci Uşağın Yaşı"
+
+msgid "Child 2 Age"
+msgstr "2-ci Uşağın Yaşı"
+
+msgid "Select age"
+msgstr "Yaş seçin"
+
+msgid "0 – 2 years"
+msgstr "0 – 2 yaş"
+
+msgid "2 – 6 years"
+msgstr "2 – 6 yaş"
+
+msgid "7 – 11 years"
+msgstr "7 – 11 yaş"
+
+msgid "Search Availability"
+msgstr "Mövcudluğu Yoxla"
+
+msgid "Person"
+msgstr "Nəfər"
+
+msgid "People"
+msgstr "Nəfər"
+
+# ── Features strip ────────────────────────────────────────────────────────────
+msgid "Secure Payments"
+msgstr "Təhlükəsiz Ödəniş"
+
+msgid "Free Cancellation"
+msgstr "Pulsuz Ləğv"
+
+msgid "Free Wi-Fi"
+msgstr "Pulsuz Wi-Fi"
+
+msgid "Car Rentals Available"
+msgstr "Avtomobil Kirayəsi Mövcuddur"
+
+msgid "24/7 Concierge"
+msgstr "24/7 Konsyerj"
+
+# ── Login page ────────────────────────────────────────────────────────────────
+msgid "Sign In"
+msgstr "Daxil ol"
+
+msgid "Welcome back"
+msgstr "Xoş gəldiniz"
+
+msgid "Sign in to manage your reservations"
+msgstr "Rezervasiyalarınızı idarə etmək üçün daxil olun"
+
+msgid "Username"
+msgstr "İstifadəçi adı"
+
+msgid "Your username"
+msgstr "İstifadəçi adınız"
+
+msgid "Password"
+msgstr "Şifrə"
+
+msgid "Your password"
+msgstr "Şifrəniz"
+
+msgid "Forgot password?"
+msgstr "Şifrəni unutmusunuz?"
+
+msgid "Create account →"
+msgstr "Hesab yarat →"
+
+msgid "Please enter your username and password."
+msgstr "Zəhmət olmasa istifadəçi adı və şifrənizi daxil edin."
+
+msgid "Login failed."
+msgstr "Daxil olma uğursuz oldu."
+
+msgid "Network error. Please try again."
+msgstr "Şəbəkə xətası. Yenidən cəhd edin."
+
+msgid "Signing in…"
+msgstr "Daxil olunur…"
+
+# ── Register page ─────────────────────────────────────────────────────────────
+msgid "Create Account"
+msgstr "Hesab Yarat"
+
+msgid "Create account"
+msgstr "Hesab yarat"
+
+msgid "Join us for seamless bookings"
+msgstr "Rahat rezervasiyalar üçün qoşulun"
+
+msgid "Email"
+msgstr "E-poçt"
+
+msgid "Confirm Password"
+msgstr "Şifrəni Təsdiq Et"
+
+msgid "Choose a username"
+msgstr "İstifadəçi adı seçin"
+
+msgid "your@email.com"
+msgstr "sizin@email.com"
+
+msgid "Min. 8 characters"
+msgstr "Ən az 8 simvol"
+
+msgid "Repeat password"
+msgstr "Şifrəni təkrarlayın"
+
+msgid "Already have an account?"
+msgstr "Artıq hesabınız var?"
+
+msgid "Sign in →"
+msgstr "Daxil ol →"
+
+msgid "All fields are required."
+msgstr "Bütün sahələr tələb olunur."
+
+msgid "Passwords do not match."
+msgstr "Şifrələr uyğun gəlmir."
+
+msgid "Password must be at least 8 characters."
+msgstr "Şifrə ən az 8 simvol olmalıdır."
+
+msgid "Creating account…"
+msgstr "Hesab yaradılır…"
+
+msgid "Account created! Check your email to verify, then sign in."
+msgstr "Hesab yaradıldı! E-poçtunuzu yoxlayın, sonra daxil olun."
+
+msgid "Done!"
+msgstr "Hazır!"
+
+msgid "Registration failed."
+msgstr "Qeydiyyat uğursuz oldu."
+
+# ── Forgot password page ──────────────────────────────────────────────────────
+msgid "Forgot Password"
+msgstr "Şifrəni Unutdum"
+
+msgid "Reset Password"
+msgstr "Şifrəni Sıfırla"
+
+msgid "We'll send a reset link to your email"
+msgstr "E-poçtunuza sıfırlama linki göndərəcəyik"
+
+msgid "Email Address"
+msgstr "E-poçt Ünvanı"
+
+msgid "Send Reset Link"
+msgstr "Sıfırlama Linkini Göndər"
+
+msgid "Remembered it?"
+msgstr "Yadınıza düşdü?"
+
+msgid "Please enter your email."
+msgstr "Zəhmət olmasa e-poçtunuzu daxil edin."
+
+msgid "Sending…"
+msgstr "Göndərilir…"
+
+msgid "If that email exists, a reset link has been sent."
+msgstr "O e-poçt mövcuddursa, sıfırlama linki göndərilib."
+
+msgid "Email Sent"
+msgstr "E-poçt Göndərildi"
+
+msgid "Failed. Please try again."
+msgstr "Uğursuz oldu. Yenidən cəhd edin."
+
+# ── Reset password page ───────────────────────────────────────────────────────
+msgid "Set New Password"
+msgstr "Yeni Şifrə Təyin Et"
+
+msgid "Choose a strong password you haven't used before."
+msgstr "Əvvəllər istifadə etmədiyiniz güclü bir şifrə seçin."
+
+msgid "New Password"
+msgstr "Yeni Şifrə"
+
+msgid "At least 8 characters"
+msgstr "Ən az 8 simvol"
+
+msgid "Repeat your new password"
+msgstr "Yeni şifrənizi təkrarlayın"
+
+msgid "Back to login"
+msgstr "Girişə qayıt"
+
+msgid "This reset link is invalid or has expired."
+msgstr "Bu sıfırlama linki etibarsız və ya vaxtı keçib."
+
+msgid "Request a new link"
+msgstr "Yeni link tələb edin"
+
+msgid "Please enter a new password."
+msgstr "Zəhmət olmasa yeni şifrə daxil edin."
+
+msgid "Resetting…"
+msgstr "Sıfırlanır…"
+
+msgid "Reset failed. Please try again."
+msgstr "Sıfırlama uğursuz oldu. Yenidən cəhd edin."
+
+# ── booking_form.html ─────────────────────────────────────────────────────────
+msgid "Submit Reservation"
+msgstr "Rezervasiyanı Göndər"
+
+msgid "Reservation Summary"
+msgstr "Rezervasiya Xülasəsi"
+
+msgid "Room type"
+msgstr "Otaq növü"
+
+msgid "Total rooms"
+msgstr "Ümumi otaqlar"
+
+msgid "Check-in"
+msgstr "Giriş tarixi"
+
+msgid "Check-out"
+msgstr "Çıxış tarixi"
+
+msgid "Total days"
+msgstr "Ümumi günlər"
+
+msgid "Price per day"
+msgstr "Gündəlik qiymət"
+
+msgid "Total Price"
+msgstr "Ümumi Qiymət"
+
+msgid "Guest Details"
+msgstr "Qonaq Məlumatları"
+
+msgid "First Name"
+msgstr "Ad"
+
+msgid "First name"
+msgstr "Adınız"
+
+msgid "Last Name"
+msgstr "Soyad"
+
+msgid "Last name"
+msgstr "Soyadınız"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "I confirm all reservation data is correct"
+msgstr "Bütün rezervasiya məlumatlarının düzgün olduğunu təsdiq edirəm"
+
+msgid "Book Now"
+msgstr "İndi Rezerv Et"
+
+# ── checkout.html ─────────────────────────────────────────────────────────────
+msgid "Complete Payment"
+msgstr "Ödənişi Tamamla"
+
+msgid "Secured by Stripe. Your card details never touch our servers."
+msgstr "Stripe tərəfindən qorunur. Kart məlumatlarınız serverlərimizə çatmır."
+
+msgid "Room Booking Summary"
+msgstr "Otaq Rezervasiyası Xülasəsi"
+
+msgid "Car Rental Summary"
+msgstr "Avtomobil Kirayəsi Xülasəsi"
+
+msgid "Room"
+msgstr "Otaq"
+
+msgid "Nights"
+msgstr "Gecələr"
+
+msgid "Guests"
+msgstr "Qonaqlar"
+
+msgid "Car"
+msgstr "Avtomobil"
+
+msgid "Pickup"
+msgstr "Götürmə"
+
+msgid "Return"
+msgstr "Qaytarma"
+
+msgid "Days"
+msgstr "Günlər"
+
+msgid "Total"
+msgstr "Cəmi"
+
+msgid "Card Details"
+msgstr "Kart Məlumatları"
+
+msgid "Pay"
+msgstr "Ödə"
+
+msgid "256-bit SSL encryption. Powered by Stripe."
+msgstr "256-bit SSL şifrələmə. Stripe tərəfindən işlədilir."
+
+msgid "Could not initialise payment."
+msgstr "Ödəniş başladıla bilmədi."
+
+msgid "Processing…"
+msgstr "Emal edilir…"
+
+msgid "Payment failed. Please try again."
+msgstr "Ödəniş uğursuz oldu. Yenidən cəhd edin."
+
+msgid "Pay again"
+msgstr "Yenidən ödə"
+
+msgid "Payment successful! Confirming booking…"
+msgstr "Ödəniş uğurlu oldu! Rezervasiya təsdiqlənir…"
+
+msgid "Payment successful! Redirecting…"
+msgstr "Ödəniş uğurlu oldu! Yönləndirilir…"
+
+# ── confirmation.html ─────────────────────────────────────────────────────────
+msgid "Booking Confirmed"
+msgstr "Rezervasiya Təsdiqləndi"
+
+msgid "Rental Confirmed"
+msgstr "Kirayə Təsdiqləndi"
+
+msgid "Booking Confirmed!"
+msgstr "Rezervasiya Təsdiqləndi!"
+
+msgid "Rental Confirmed!"
+msgstr "Kirayə Təsdiqləndi!"
+
+msgid "A confirmation has been sent to your email."
+msgstr "E-poçtunuza təsdiq göndərildi."
+
+msgid "Booking #"
+msgstr "Rezervasiya №"
+
+msgid "Rental #"
+msgstr "Kirayə №"
+
+msgid "Total Paid"
+msgstr "Ödənilən Məbləğ"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "View My Bookings"
+msgstr "Sifarişlərimi Gör"
+
+msgid "Back to Home"
+msgstr "Ana Səhifəyə Qayıt"
+
+# ── Cars.html ─────────────────────────────────────────────────────────────────
+msgid "Car Rentals"
+msgstr "Avtomobil Kirayəsi"
+
+msgid "Rent a Car"
+msgstr "Avtomobil Kirayələ"
+
+msgid "Choose from our fleet. All cars include full insurance."
+msgstr "Parkımızdan seçin. Bütün avtomobillər tam sığorta daxildir."
+
+msgid "Plate"
+msgstr "Nömrə"
+
+msgid "per day"
+msgstr "gündə"
+
+msgid "Full Insurance"
+msgstr "Tam Sığorta"
+
+msgid "Free Pickup"
+msgstr "Pulsuz Götürmə"
+
+msgid "Pickup Date"
+msgstr "Götürmə Tarixi"
+
+msgid "Return Date"
+msgstr "Qaytarma Tarixi"
+
+msgid "Rent This Car →"
+msgstr "Bu Avtomobili Kirayələ →"
+
+msgid "No cars available right now"
+msgstr "Hal-hazırda mövcud avtomobil yoxdur"
+
+msgid "Check back soon — our fleet is always growing."
+msgstr "Tezliklə yoxlayın — parkımız daim genişlənir."
+
+msgid "← Back to Home"
+msgstr "← Ana Səhifəyə"
+
+# ── My_bookings.html ──────────────────────────────────────────────────────────
+msgid "Your Account"
+msgstr "Hesabınız"
+
+msgid "Room Reservations"
+msgstr "Otaq Rezervasiyaları"
+
+msgid "night"
+msgstr "gecə"
+
+msgid "nights"
+msgstr "gecə"
+
+msgid "guest"
+msgstr "qonaq"
+
+msgid "guests"
+msgstr "qonaq"
+
+msgid "Pending Payment"
+msgstr "Ödəniş Gözlənilir"
+
+msgid "Confirmed"
+msgstr "Təsdiqləndi"
+
+msgid "Checked In"
+msgstr "Giriş Edildi"
+
+msgid "Checked Out"
+msgstr "Çıxış Edildi"
+
+msgid "Cancelled"
+msgstr "Ləğv Edildi"
+
+msgid "Cancel this booking?"
+msgstr "Bu rezervasiyanı ləğv edirsiniz?"
+
+msgid "Cancel"
+msgstr "Ləğv Et"
+
+msgid "No room bookings yet."
+msgstr "Hələ heç bir otaq rezervasiyası yoxdur."
+
+msgid "Book a Room →"
+msgstr "Otaq Rezerv Et →"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Returned"
+msgstr "Qaytarıldı"
+
+msgid "Cancel this car rental?"
+msgstr "Bu avtomobil kirayəsini ləğv edirsiniz?"
+
+msgid "No car rentals yet."
+msgstr "Hələ heç bir avtomobil kirayəsi yoxdur."
+
+msgid "Browse Cars →"
+msgstr "Avtomobillərə Bax →"
+
+msgid "day"
+msgstr "gün"
+
+msgid "days"
+msgstr "gün"
+
+# ── admin_login.html ──────────────────────────────────────────────────────────
+msgid "Admin Login"
+msgstr "Admin Girişi"
+
+msgid "Admin Access"
+msgstr "Admin Girişi"
+
+msgid "Restricted to authorized staff only"
+msgstr "Yalnız səlahiyyətli işçilər üçün"
+
+msgid "Admin username"
+msgstr "Admin istifadəçi adı"
+
+msgid "Admin password"
+msgstr "Admin şifrəsi"
+
+msgid "Sign In to Admin"
+msgstr "Admin Panelinə Daxil Ol"
+
+msgid "All admin actions are logged."
+msgstr "Bütün admin əməliyyatları qeydə alınır."
+
+msgid "Enter credentials."
+msgstr "Giriş məlumatlarını daxil edin."
+
+msgid "Signing in…"
+msgstr "Daxil olunur…"
+
+msgid "Access denied. Admin only."
+msgstr "Giriş rədd edildi. Yalnız adminlər üçün."
+
+msgid "Network error."
+msgstr "Şəbəkə xətası."
+
+# ── admin_register.html ───────────────────────────────────────────────────────
+msgid "Register Staff"
+msgstr "İşçi Qeydiyyatı"
+
+msgid "Admin Panel"
+msgstr "Admin Paneli"
+
+msgid "Add Staff Account"
+msgstr "İşçi Hesabı Əlavə Et"
+
+msgid "Create a new admin or staff member"
+msgstr "Yeni admin və ya işçi üzvü yarat"
+
+msgid "Staff username"
+msgstr "İşçi istifadəçi adı"
+
+msgid "Role"
+msgstr "Rol"
+
+msgid "Staff"
+msgstr "İşçi"
+
+msgid "Create Staff Account"
+msgstr "İşçi Hesabı Yarat"
+
+msgid "Staff accounts have elevated access."
+msgstr "İşçi hesabları yüksəlmiş giriş hüququna malikdir."
+
+msgid "Creating…"
+msgstr "Yaradılır…"
+
+msgid "Failed to create account."
+msgstr "Hesab yaratmaq uğursuz oldu."
+
+# ── admin_dashboard.html ──────────────────────────────────────────────────────
+msgid "Admin Dashboard"
+msgstr "Admin İdarə Paneli"
+
+msgid "Dashboard"
+msgstr "İdarə Paneli"
+
+msgid "Total Bookings"
+msgstr "Ümumi Rezervasiyalar"
+
+msgid "Total Rentals"
+msgstr "Ümumi Kirayələr"
+
+msgid "Total Revenue"
+msgstr "Ümumi Gəlir"
+
+msgid "Total Users"
+msgstr "Ümumi İstifadəçilər"
+
+msgid "Add Room"
+msgstr "Otaq Əlavə Et"
+
+msgid "Manage Users"
+msgstr "İstifadəçiləri İdarə Et"
+
+msgid "All Bookings"
+msgstr "Bütün Rezervasiyalar"
+
+msgid "All Rentals"
+msgstr "Bütün Kirayələr"
+
+msgid "Recent Room Bookings"
+msgstr "Son Otaq Rezervasiyaları"
+
+msgid "Recent Car Rentals"
+msgstr "Son Avtomobil Kirayələri"
+
+msgid "View all →"
+msgstr "Hamısına bax →"
+
+msgid "Guest"
+msgstr "Qonaq"
+
+msgid "Loading…"
+msgstr "Yüklənir…"
+
+msgid "No bookings yet."
+msgstr "Hələ rezervasiya yoxdur."
+
+msgid "No rentals yet."
+msgstr "Hələ kirayə yoxdur."
+
+# ── admin_panel.html ──────────────────────────────────────────────────────────
+msgid "Management Panel"
+msgstr "İdarəetmə Paneli"
+
+msgid "Full control over rooms, cars, users and settings"
+msgstr "Otaqlar, avtomobillər, istifadəçilər və parametrlər üzərində tam nəzarət"
+
+msgid "Create, edit or remove hotel rooms and set pricing."
+msgstr "Otel otaqlarını yarat, redaktə et və ya sil, qiymət təyin et."
+
+msgid "Availability"
+msgstr "Mövcudluq"
+
+msgid "Review and manage all room reservations."
+msgstr "Bütün otaq rezervasiyalarını nəzərdən keçir və idarə et."
+
+msgid "View Bookings"
+msgstr "Rezervasiyalara Bax"
+
+msgid "Manage your fleet and all car rental records."
+msgstr "Parkınızı və bütün avtomobil kirayəsi qeydlərini idarə edin."
+
+msgid "View Rentals"
+msgstr "Kirayələrə Bax"
+
+msgid "Manage guest accounts, roles and access levels."
+msgstr "Qonaq hesablarını, rolları və giriş səviyyələrini idarə edin."
+
+msgid "All Users"
+msgstr "Bütün İstifadəçilər"
+
+msgid "Add Staff"
+msgstr "İşçi Əlavə Et"
+
+msgid "Open Dashboard →"
+msgstr "İdarə Panelinə Keç →"
+
+# ── admin_bookings.html ───────────────────────────────────────────────────────
+msgid "Admin — Bookings"
+msgstr "Admin — Rezervasiyalar"
+
+msgid "Room Bookings"
+msgstr "Otaq Rezervasiyaları"
+
+msgid "← Dashboard"
+msgstr "← İdarə Paneli"
+
+msgid "Action"
+msgstr "Əməliyyat"
+
+msgid "Check In"
+msgstr "Giriş"
+
+msgid "Check Out"
+msgstr "Çıxış"
+
+msgid "Update failed"
+msgstr "Yeniləmə uğursuz oldu"
+
+# ── admin_rentals.html ────────────────────────────────────────────────────────
+msgid "Admin — Car Rentals"
+msgstr "Admin — Avtomobil Kirayələri"
+
+msgid "All Rentals"
+msgstr "Bütün Kirayələr"
+
+msgid "Mark Active"
+msgstr "Aktiv Et"
+
+msgid "Mark Returned"
+msgstr "Qaytarıldı Et"
+
+# ── admin_users.html ──────────────────────────────────────────────────────────
+msgid "registered user"
+msgstr "qeydiyyatdan keçmiş istifadəçi"
+
+msgid "registered users"
+msgstr "qeydiyyatdan keçmiş istifadəçi"
+
+msgid "← Back to Dashboard"
+msgstr "← İdarə Panelinə Qayıt"
+
+msgid "Verified"
+msgstr "Təsdiqlənib"
+
+msgid "Joined"
+msgstr "Qoşulub"
+
+msgid "Last Login"
+msgstr "Son Giriş"
+
+msgid "Actions"
+msgstr "Əməliyyatlar"
+
+msgid "Never"
+msgstr "Heç vaxt"
+
+msgid "admin"
+msgstr "admin"
+
+msgid "staff"
+msgstr "işçi"
+
+msgid "user"
+msgstr "istifadəçi"
+
+msgid "→ Staff"
+msgstr "→ İşçi"
+
+msgid "→ User"
+msgstr "→ İstifadəçi"
+
+msgid "This cannot be undone."
+msgstr "Bu əməliyyat geri alına bilməz."
+
+msgid "No users registered yet."
+msgstr "Hələ heç bir istifadəçi qeydiyyatdan keçməyib."
+
+msgid "promote to Staff"
+msgstr "İşçiyə yüksəlt"
+
+msgid "demote to User"
+msgstr "İstifadəçiyə endirt"
+
+msgid "is now"
+msgstr "indi"
+
+# ── offer_rooms.html ──────────────────────────────────────────────────────────
+msgid "Available Rooms"
+msgstr "Mövcud Otaqlar"
+
+msgid "← Modify search"
+msgstr "← Axtarışı dəyiş"
+
+msgid "room"
+msgstr "otaq"
+
+msgid "rooms"
+msgstr "otaq"
+
+msgid "per night"
+msgstr "gecəyə"
+
+msgid "Up to"
+msgstr "Maks."
+
+msgid "adult"
+msgstr "yetkin"
+
+msgid "adults"
+msgstr "yetkin"
+
+msgid "Climate Control"
+msgstr "İqlim Nəzarəti"
+
+msgid "total for"
+msgstr "cəmi"
+
+msgid "Select Room →"
+msgstr "Otaq Seç →"
+
+msgid "No rooms available"
+msgstr "Mövcud otaq yoxdur"
+
+msgid "Try different dates or fewer rooms."
+msgstr "Fərqli tarixlər və ya az otaq sayı ilə cəhd edin."
+
+msgid "← Modify Search"
+msgstr "← Axtarışı Dəyiş"
+
+# ── create_rooms.html ─────────────────────────────────────────────────────────
+msgid "Create Rooms"
+msgstr "Otaqlar Yarat"
+
+msgid "Create New Room"
+msgstr "Yeni Otaq Yarat"
+
+msgid "Room Type"
+msgstr "Otaq Növü"
+
+msgid "Room Number"
+msgstr "Otaq Nömrəsi"
+
+msgid "Price Per Night ($)"
+msgstr "Gecəlik Qiymət ($)"
+
+msgid "Total Rooms of This Type"
+msgstr "Bu Növdən Ümumi Otaq Sayı"
+
+msgid "Max Guests"
+msgstr "Maks. Qonaq"
+
+msgid "Min Guests"
+msgstr "Min. Qonaq"
+
+msgid "Max Children"
+msgstr "Maks. Uşaq"
+
+msgid "Room Image"
+msgstr "Otaq Şəkli"
+
+msgid "Room Description"
+msgstr "Otaq Təsviri"
+
+msgid "Describe the room amenities, view, size…"
+msgstr "Otağın imkanlarını, mənzərəsini, ölçüsünü təsvir edin…"
+
+msgid "Create Room"
+msgstr "Otaq Yarat"
+
+msgid "Created Rooms"
+msgstr "Yaradılmış Otaqlar"
+
+msgid "Total of type"
+msgstr "Bu növdən cəmi"
+
+msgid "Delete Room"
+msgstr "Otağı Sil"
+
+# ── manage_cars.html ──────────────────────────────────────────────────────────
+msgid "Add New Car"
+msgstr "Yeni Avtomobil Əlavə Et"
+
+msgid "Car Model"
+msgstr "Avtomobil Modeli"
+
+msgid "Plate Number"
+msgstr "Nömrə Nişanı"
+
+msgid "Price Per Day ($)"
+msgstr "Gündəlik Qiymət ($)"
+
+msgid "e.g. Comfortable family SUV with full insurance included…"
+msgstr "məs. Tam sığortalı rahat ailə SUV-u…"
+
+msgid "Car Image"
+msgstr "Avtomobil Şəkli"
+
+msgid "Add Car"
+msgstr "Avtomobil Əlavə Et"
+
+msgid "Fleet"
+msgstr "Park"
+
+msgid "Available"
+msgstr "Mövcuddur"
+
+msgid "Unavailable"
+msgstr "Mövcud deyil"
+
+msgid "No cars in the fleet yet. Add one above."
+msgstr "Parkda hələ avtomobil yoxdur. Yuxarıdan əlavə edin."
+
+msgid "Delete Car"
+msgstr "Avtomobili Sil"
+
+# ── availability.html ─────────────────────────────────────────────────────────
+msgid "Room Availability"
+msgstr "Otaq Mövcudluğu"
+
+msgid "14-day availability grid. Green = available, Red = sold out."
+msgstr "14 günlük mövcudluq cədvəli. Yaşıl = mövcud, Qırmızı = satılıb."
+
+msgid "left"
+msgstr "qalıb"
+
+msgid "sold"
+msgstr "satılıb"
+
+msgid "Rooms available (number = count remaining)"
+msgstr "Mövcud otaqlar (rəqəm = qalan say)"
+
+msgid "Sold out"
+msgstr "Satılıb"
+
+msgid "Not configured"
+msgstr "Konfiqurasiya edilməyib"
+
+msgid "No rooms configured"
+msgstr "Heç bir otaq konfiqurasiya edilməyib"
+
+msgid "Add rooms first, then seed their availability."
+msgstr "Əvvəlcə otaqlar əlavə edin, sonra mövcudluqlarını təyin edin."
+
+# ── rate_plans.html / view_rate_plans.html ────────────────────────────────────
+msgid "Rate Plans"
+msgstr "Tarif Planları"
+
+msgid "Rate Plan Name"
+msgstr "Tarif Planının Adı"
+
+msgid "Date Period"
+msgstr "Tarix Dövrü"
+
+msgid "Start Date"
+msgstr "Başlama Tarixi"
+
+msgid "End Date"
+msgstr "Bitmə Tarixi"
+
+msgid "Adult Price/Day"
+msgstr "Yetkin Qiyməti/Gün"
+
+msgid "Adult price"
+msgstr "Yetkin qiyməti"
+
+msgid "Single Adult/Day"
+msgstr "Tək Yetkin/Gün"
+
+msgid "Single adult"
+msgstr "Tək yetkin"
+
+msgid "Child <12 Regular Bed"
+msgstr "12 yaşdan kiçik uşaq (normal çarpayı)"
+
+msgid "Children prices for extra beds"
+msgstr "Əlavə çarpayılar üçün uşaq qiymətləri"
+
+msgid "leave blank if N/A"
+msgstr "tətbiq olunmursa boş buraxın"
+
+msgid "optional"
+msgstr "isteğe bağlı"
+
+msgid "+ Add Date Period"
+msgstr "+ Tarix Dövrü Əlavə Et"
+
+msgid "− Remove Period"
+msgstr "− Dövrü Sil"
+
+msgid "Create Rate Plan"
+msgstr "Tarif Planı Yarat"

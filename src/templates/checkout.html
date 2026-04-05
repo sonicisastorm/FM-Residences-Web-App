@@ -1,42 +1,38 @@
 {% extends "layout.html" %}
-{% block title %}Complete Payment{% endblock %}
+{% block title %}{{ _('Complete Payment') }}{% endblock %}
 
 {% block main %}
 <div class="min-h-[70vh] flex flex-col items-center justify-start px-4 py-12">
 
-    <!-- ── Progress indicator – Step 3 active ───────────────────────────── -->
+    <!-- Progress indicator – Step 3 active -->
     <div class="flex items-center justify-center gap-4 mb-10 w-full max-w-lg">
         <div class="flex items-center gap-2">
-            <!-- Step 1: completed -->
             <div class="w-8 h-8 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center text-sm">
                 <i class="bi bi-check text-sm font-bold"></i>
             </div>
-            <span class="text-gold/60 text-sm hidden sm:block">Search</span>
+            <span class="text-gold/60 text-sm hidden sm:block">{{ _('Search') }}</span>
         </div>
         <div class="h-px w-12 bg-gold/40"></div>
         <div class="flex items-center gap-2">
-            <!-- Step 2: completed -->
             <div class="w-8 h-8 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center text-sm">
                 <i class="bi bi-check text-sm font-bold"></i>
             </div>
-            <span class="text-gold/60 text-sm hidden sm:block">Select</span>
+            <span class="text-gold/60 text-sm hidden sm:block">{{ _('Select') }}</span>
         </div>
         <div class="h-px w-12 bg-gold/40"></div>
         <div class="flex items-center gap-2">
-            <!-- Step 3: active -->
             <div class="w-8 h-8 rounded-full bg-gold text-charcoal flex items-center justify-center text-sm font-bold shadow-[0_0_12px_rgba(201,168,76,0.4)]">3</div>
-            <span class="text-gold text-sm font-medium hidden sm:block">Confirm</span>
+            <span class="text-gold text-sm font-medium hidden sm:block">{{ _('Confirm') }}</span>
         </div>
     </div>
 
     <div class="w-full max-w-lg animate-slide-up">
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-2xl overflow-hidden">
 
-            <!-- Header -->
             <div class="px-8 pt-8 pb-6 border-b border-charcoal-600">
                 <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">FM Residences</p>
-                <h2 class="font-display text-3xl text-cream">Complete Payment</h2>
-                <p class="text-cream/40 text-sm mt-1">Secured by Stripe. Your card details never touch our servers.</p>
+                <h2 class="font-display text-3xl text-cream">{{ _('Complete Payment') }}</h2>
+                <p class="text-cream/40 text-sm mt-1">{{ _('Secured by Stripe. Your card details never touch our servers.') }}</p>
             </div>
 
             <div class="px-8 py-7">
@@ -44,66 +40,72 @@
                 <!-- Order summary -->
                 <div class="bg-charcoal-600 rounded-xl p-4 mb-6">
                     {% if booking %}
-                    <h3 class="text-sm text-cream/60 uppercase tracking-wider mb-3">Room Booking Summary</h3>
+                    <h3 class="text-sm text-cream/60 uppercase tracking-wider mb-3">{{ _('Room Booking Summary') }}</h3>
                     <div class="space-y-1.5 text-sm">
-                        <div class="flex justify-between"><span class="text-cream/50">Room</span><span class="text-cream">{{ booking.room.room_type }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Check-in</span><span class="text-cream">{{ booking.check_in_date.strftime('%d %B %Y') }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Check-out</span><span class="text-cream">{{ booking.check_out_date.strftime('%d %B %Y') }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Nights</span><span class="text-cream">{{ booking.total_nights }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Guests</span><span class="text-cream">{{ booking.num_guests }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Room') }}</span><span class="text-cream">{{ booking.room.room_type }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Check-in') }}</span><span class="text-cream">{{ booking.check_in_date.strftime('%d %B %Y') }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Check-out') }}</span><span class="text-cream">{{ booking.check_out_date.strftime('%d %B %Y') }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Nights') }}</span><span class="text-cream">{{ booking.total_nights }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Guests') }}</span><span class="text-cream">{{ booking.num_guests }}</span></div>
                         <hr class="border-charcoal-500 my-2">
                         <div class="flex justify-between text-base font-semibold">
-                            <span class="text-gold">Total</span>
+                            <span class="text-gold">{{ _('Total') }}</span>
                             <span class="text-gold">${{ "%.2f"|format(booking.total_price) }}</span>
                         </div>
                     </div>
                     {% elif rental %}
-                    <h3 class="text-sm text-cream/60 uppercase tracking-wider mb-3">Car Rental Summary</h3>
+                    <h3 class="text-sm text-cream/60 uppercase tracking-wider mb-3">{{ _('Car Rental Summary') }}</h3>
                     <div class="space-y-1.5 text-sm">
-                        <div class="flex justify-between"><span class="text-cream/50">Car</span><span class="text-cream">{{ rental.car.model }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Pickup</span><span class="text-cream">{{ rental.rental_date.strftime('%d %B %Y') }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Return</span><span class="text-cream">{{ rental.return_date.strftime('%d %B %Y') }}</span></div>
-                        <div class="flex justify-between"><span class="text-cream/50">Days</span><span class="text-cream">{{ rental.total_days }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Car') }}</span><span class="text-cream">{{ rental.car.model }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Pickup') }}</span><span class="text-cream">{{ rental.rental_date.strftime('%d %B %Y') }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Return') }}</span><span class="text-cream">{{ rental.return_date.strftime('%d %B %Y') }}</span></div>
+                        <div class="flex justify-between"><span class="text-cream/50">{{ _('Days') }}</span><span class="text-cream">{{ rental.total_days }}</span></div>
                         <hr class="border-charcoal-500 my-2">
                         <div class="flex justify-between text-base font-semibold">
-                            <span class="text-gold">Total</span>
+                            <span class="text-gold">{{ _('Total') }}</span>
                             <span class="text-gold">${{ "%.2f"|format(rental.total_price) }}</span>
                         </div>
                     </div>
                     {% endif %}
                 </div>
 
-                <!-- Error / success messages -->
                 <div id="payment-error"   class="hidden mb-4 px-4 py-3 bg-red-900/30 border border-red-700/50 text-red-400 rounded-xl text-sm"></div>
                 <div id="payment-success" class="hidden mb-4 px-4 py-3 bg-green-900/30 border border-green-700/50 text-green-400 rounded-xl text-sm"></div>
 
-                <!-- Stripe card element -->
                 <div class="mb-5">
-                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Card Details</label>
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Card Details') }}</label>
                     <div id="card-element"
                          class="bg-charcoal-600 border border-charcoal-500 rounded-xl px-4 py-3.5 focus-within:border-gold transition-colors">
-                        <!-- Stripe.js injects the card input here -->
                     </div>
                 </div>
 
                 <button id="pay-btn"
                         class="w-full py-3.5 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase flex items-center justify-center gap-2">
                     <i class="bi bi-lock-fill text-sm"></i>
-                    Pay ${% if booking %}{{ "%.2f"|format(booking.total_price) }}{% elif rental %}{{ "%.2f"|format(rental.total_price) }}{% endif %}
+                    {{ _('Pay') }} ${% if booking %}{{ "%.2f"|format(booking.total_price) }}{% elif rental %}{{ "%.2f"|format(rental.total_price) }}{% endif %}
                 </button>
 
                 <p class="mt-4 text-center text-xs text-cream/30 flex items-center justify-center gap-1">
                     <i class="bi bi-shield-check text-gold"></i>
-                    256-bit SSL encryption. Powered by Stripe.
+                    {{ _('256-bit SSL encryption. Powered by Stripe.') }}
                 </p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Stripe.js -->
 <script src="https://js.stripe.com/v3/"></script>
 <script>
+const I18N = {
+    couldNotInit:      {{ _('Could not initialise payment.')         | tojson }},
+    networkError:      {{ _('Network error. Please try again.')      | tojson }},
+    processing:        {{ _('Processing…')                           | tojson }},
+    paymentFailed:     {{ _('Payment failed. Please try again.')     | tojson }},
+    payAgain:          {{ _('Pay again')                             | tojson }},
+    paymentSuccess:    {{ _('Payment successful! Confirming booking…')| tojson }},
+    redirecting:       {{ _('Payment successful! Redirecting…')      | tojson }},
+};
+
 (async function () {
     const errBox  = document.getElementById('payment-error');
     const succBox = document.getElementById('payment-success');
@@ -115,7 +117,6 @@
         succBox.classList.add('hidden');
     }
 
-    // ── 1. Create PaymentIntent on the server ───────────────────────────────
     {% if booking %}
     const intentUrl  = '/payments/create-intent/booking/{{ booking.id }}';
     const confirmUrl = '/confirmation?booking_id={{ booking.id }}';
@@ -126,83 +127,53 @@
 
     const token = sessionStorage.getItem('access_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    const authHeaders = {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-    };
+    const authHeaders = { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken };
     if (token) authHeaders['Authorization'] = 'Bearer ' + token;
 
     let clientSecret, publishableKey, paymentIntentId;
     try {
         const res  = await fetch(intentUrl, { method: 'POST', headers: authHeaders });
         const data = await res.json();
-        if (!res.ok) { showError(data.error || 'Could not initialise payment.'); return; }
-        clientSecret     = data.client_secret;
-        publishableKey   = data.publishable_key;
-        // Extract the pi_xxx ID from the client secret (format: pi_xxx_secret_yyy)
-        paymentIntentId  = data.client_secret.split('_secret_')[0];
-    } catch (e) {
-        showError('Network error. Please try again.');
-        return;
-    }
+        if (!res.ok) { showError(data.error || I18N.couldNotInit); return; }
+        clientSecret    = data.client_secret;
+        publishableKey  = data.publishable_key;
+        paymentIntentId = data.client_secret.split('_secret_')[0];
+    } catch { showError(I18N.networkError); return; }
 
-    // ── 2. Mount Stripe Elements ────────────────────────────────────────────
     const stripe   = Stripe(publishableKey);
     const elements = stripe.elements();
     const card = elements.create('card', {
         style: {
-            base: {
-                color: '#F5F0E8',
-                fontFamily: '"DM Sans", sans-serif',
-                fontSize: '14px',
-                '::placeholder': { color: '#666' },
-            },
+            base: { color: '#F5F0E8', fontFamily: '"DM Sans", sans-serif', fontSize: '14px', '::placeholder': { color: '#666' } },
             invalid: { color: '#f87171' },
         }
     });
     card.mount('#card-element');
+    card.on('change', ({ error }) => { if (error) showError(error.message); else errBox.classList.add('hidden'); });
 
-    card.on('change', ({ error }) => {
-        if (error) showError(error.message);
-        else errBox.classList.add('hidden');
-    });
-
-    // ── 3. Confirm payment on button click ──────────────────────────────────
     btn.addEventListener('click', async () => {
         btn.disabled = true;
-        btn.innerHTML = '<i class="bi bi-hourglass-split mr-2"></i>Processing…';
+        btn.innerHTML = '<i class="bi bi-hourglass-split mr-2"></i>' + I18N.processing;
 
-        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: { card }
-        });
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, { payment_method: { card } });
 
         if (error) {
-            showError(error.message || 'Payment failed. Please try again.');
+            showError(error.message || I18N.paymentFailed);
             btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-lock-fill text-sm"></i> Pay again';
+            btn.innerHTML = '<i class="bi bi-lock-fill text-sm"></i> ' + I18N.payAgain;
             return;
         }
 
         if (paymentIntent.status === 'succeeded') {
-            succBox.textContent = 'Payment successful! Confirming booking…';
+            succBox.textContent = I18N.paymentSuccess;
             succBox.classList.remove('hidden');
-
-            // FIX: Confirm the booking on the server immediately.
-            // Stripe webhooks don't reach localhost, so we verify directly
-            // with Stripe via /payments/confirm-payment instead.
             try {
                 await fetch('/payments/confirm-payment', {
-                    method: 'POST',
-                    headers: authHeaders,
+                    method: 'POST', headers: authHeaders,
                     body: JSON.stringify({ payment_intent_id: paymentIntentId })
                 });
-            } catch (e) {
-                // Non-fatal — the booking may still get confirmed via webhook
-                // once webhooks are configured in production.
-                console.warn('confirm-payment call failed:', e);
-            }
-
-            succBox.textContent = 'Payment successful! Redirecting…';
+            } catch (e) { console.warn('confirm-payment call failed:', e); }
+            succBox.textContent = I18N.redirecting;
             setTimeout(() => window.location.href = confirmUrl, 1200);
         }
     });

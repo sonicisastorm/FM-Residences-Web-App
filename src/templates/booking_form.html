@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Submit Reservation{% endblock %}
+{% block title %}{{ _('Submit Reservation') }}{% endblock %}
 
 {% block main %}
 <div class="max-w-5xl mx-auto px-4 py-10">
@@ -24,52 +24,52 @@
 
             <!-- Reservation Summary -->
             <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-xl p-6">
-                <h3 class="font-display text-xl text-cream mb-6 pb-4 border-b border-charcoal-600">Reservation Summary</h3>
+                <h3 class="font-display text-xl text-cream mb-6 pb-4 border-b border-charcoal-600">{{ _('Reservation Summary') }}</h3>
                 <table class="w-full text-sm">
                     <tbody class="divide-y divide-charcoal-600">
                     {% for reservation in reservation_data %}
                         <tr>
-                            <td class="py-2.5 text-cream/50">Room type</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Room type') }}</td>
                             <td class="py-2.5 text-cream text-right font-medium">{{ reservation.room_type }}</td>
                             <input type="hidden" name="room_type" value="{{ reservation.room_type }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Total rooms</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Total rooms') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.total_rooms }}</td>
                             <input type="hidden" name="total_rooms" value="{{ reservation.total_rooms }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Adults</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Adults') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.total_adults }}</td>
                             <input type="hidden" name="total_adults" value="{{ reservation.total_adults }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Children</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Children') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.total_children }}</td>
                             <input type="hidden" name="total_children" value="{{ reservation.total_children }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Check-in</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Check-in') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.from_date.strftime('%d %B') }}</td>
                             <input type="hidden" name="from_date" value="{{ reservation.from_date.strftime('%d-%m-%Y') }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Check-out</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Check-out') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.to_date.strftime('%d %B') }}</td>
                             <input type="hidden" name="to_date" value="{{ reservation.to_date.strftime('%d-%m-%Y') }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Total days</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Total days') }}</td>
                             <td class="py-2.5 text-cream text-right">{{ reservation.total_days }}</td>
                             <input type="hidden" name="total_days" value="{{ reservation.total_days }}">
                         </tr>
                         <tr>
-                            <td class="py-2.5 text-cream/50">Price per day</td>
+                            <td class="py-2.5 text-cream/50">{{ _('Price per day') }}</td>
                             <td class="py-2.5 text-cream text-right">${{ reservation.room_price_per_day }}</td>
                             <input type="hidden" name="room_price_per_day" value="{{ reservation.room_price_per_day }}">
                         </tr>
                         <tr class="border-t-2 border-gold/30">
-                            <td class="py-3 text-gold font-semibold">Total Price</td>
+                            <td class="py-3 text-gold font-semibold">{{ _('Total Price') }}</td>
                             <td class="py-3 text-gold font-bold text-right text-lg">${{ reservation.total_price }}</td>
                             <input type="hidden" name="total_price" value="{{ reservation.total_price }}">
                         </tr>
@@ -80,25 +80,25 @@
 
             <!-- Guest Details -->
             <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-xl p-6">
-                <h3 class="font-display text-xl text-cream mb-6 pb-4 border-b border-charcoal-600">Guest Details</h3>
+                <h3 class="font-display text-xl text-cream mb-6 pb-4 border-b border-charcoal-600">{{ _('Guest Details') }}</h3>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">First Name</label>
-                        <input type="text" name="first_name" required placeholder="First name"
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('First Name') }}</label>
+                        <input type="text" name="first_name" required placeholder="{{ _('First name') }}"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Last Name</label>
-                        <input type="text" name="last_name" required placeholder="Last name"
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Last Name') }}</label>
+                        <input type="text" name="last_name" required placeholder="{{ _('Last name') }}"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Email</label>
-                        <input type="email" name="email" required placeholder="your@email.com"
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Email') }}</label>
+                        <input type="email" name="email" required placeholder="{{ _('your@email.com') }}"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Phone</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Phone') }}</label>
                         <input type="text" name="phone" required placeholder="+1 000 000 0000"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                     </div>
@@ -106,12 +106,12 @@
                     <label class="flex items-center gap-3 cursor-pointer mt-2">
                         <input type="checkbox" required
                                class="w-4 h-4 rounded border-charcoal-500 bg-charcoal-600 accent-gold">
-                        <span class="text-sm text-cream/60">I confirm all reservation data is correct</span>
+                        <span class="text-sm text-cream/60">{{ _('I confirm all reservation data is correct') }}</span>
                     </label>
 
                     <button type="submit"
                             class="mt-4 w-full py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm uppercase tracking-wide">
-                        Book Now
+                        {{ _('Book Now') }}
                     </button>
                 </div>
             </div>

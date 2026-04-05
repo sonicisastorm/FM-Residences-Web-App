@@ -1,69 +1,83 @@
 {% extends "layout.html" %}
-{% block title %}Register Staff{% endblock %}
+{% block title %}{{ _('Register Staff') }}{% endblock %}
 
 {% block main %}
 <div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
     <div class="w-full max-w-md animate-slide-up">
         <div class="bg-charcoal-700 border border-gold/20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="px-8 pt-8 pb-6 border-b border-charcoal-600">
-                <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Admin Panel</p>
-                <h2 class="font-display text-3xl text-cream">Add Staff Account</h2>
-                <p class="text-cream/40 text-sm mt-1">Create a new admin or staff member</p>
+                <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">{{ _('Admin Panel') }}</p>
+                <h2 class="font-display text-3xl text-cream">{{ _('Add Staff Account') }}</h2>
+                <p class="text-cream/40 text-sm mt-1">{{ _('Create a new admin or staff member') }}</p>
             </div>
             <div class="px-8 py-7">
                 <div id="reg-error"   class="hidden mb-4 px-4 py-3 bg-red-900/30 border border-red-700/50 text-red-400 rounded-xl text-sm"></div>
                 <div id="reg-success" class="hidden mb-4 px-4 py-3 bg-green-900/30 border border-green-700/50 text-green-400 rounded-xl text-sm"></div>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Username</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Username') }}</label>
                         <input id="username" type="text" autocomplete="off" autofocus
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Staff username">
+                               placeholder="{{ _('Staff username') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Email</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Email') }}</label>
                         <input id="email" type="email" autocomplete="off"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
                                placeholder="staff@fmresidences.com">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Role</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Role') }}</label>
                         <select id="role"
                                 class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors appearance-none">
-                            <option value="staff">Staff</option>
-                            <option value="admin">Admin</option>
+                            <option value="staff">{{ _('Staff') }}</option>
+                            <option value="admin">{{ _('Admin') }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Password</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Password') }}</label>
                         <input id="password" type="password"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Min. 8 characters">
+                               placeholder="{{ _('Min. 8 characters') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Confirm Password</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Confirm Password') }}</label>
                         <input id="confirm" type="password"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Repeat password">
+                               placeholder="{{ _('Repeat password') }}">
                     </div>
                 </div>
                 <button id="reg-btn"
                         class="mt-6 w-full py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase">
-                    Create Staff Account
+                    {{ _('Create Staff Account') }}
                 </button>
                 <p class="mt-4 text-center text-xs text-cream/20">
-                    <i class="bi bi-shield-lock mr-1"></i>Staff accounts have elevated access.
+                    <i class="bi bi-shield-lock mr-1"></i>{{ _('Staff accounts have elevated access.') }}
                 </p>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+const I18N = {
+    allFieldsRequired:  {{ _('All fields are required.')                | tojson }},
+    passwordMismatch:   {{ _('Passwords do not match.')                 | tojson }},
+    passwordTooShort:   {{ _('Password must be at least 8 characters.') | tojson }},
+    creating:           {{ _('Creating…')                               | tojson }},
+    createStaffAccount: {{ _('Create Staff Account')                    | tojson }},
+    failedToCreate:     {{ _('Failed to create account.')               | tojson }},
+    networkError:       {{ _('Network error.')                          | tojson }},
+    done:               {{ _('Done!')                                   | tojson }},
+};
+
 const btn     = document.getElementById('reg-btn');
 const errBox  = document.getElementById('reg-error');
 const succBox = document.getElementById('reg-success');
-function showError(m)   { errBox.textContent=m;   errBox.classList.remove('hidden');   succBox.classList.add('hidden'); }
+
+function showError(m)   { errBox.textContent=m;  errBox.classList.remove('hidden');  succBox.classList.add('hidden'); }
 function showSuccess(m) { succBox.textContent=m; succBox.classList.remove('hidden'); errBox.classList.add('hidden'); }
+
 btn.addEventListener('click', async () => {
     errBox.classList.add('hidden');
     const username = document.getElementById('username').value.trim();
@@ -71,20 +85,20 @@ btn.addEventListener('click', async () => {
     const role     = document.getElementById('role').value;
     const password = document.getElementById('password').value;
     const confirm  = document.getElementById('confirm').value;
-    if (!username || !email || !password) return showError('All fields are required.');
-    if (password !== confirm) return showError('Passwords do not match.');
-    if (password.length < 8) return showError('Password must be at least 8 characters.');
-    btn.disabled=true; btn.textContent='Creating…';
+    if (!username || !email || !password) return showError(I18N.allFieldsRequired);
+    if (password !== confirm)             return showError(I18N.passwordMismatch);
+    if (password.length < 8)             return showError(I18N.passwordTooShort);
+    btn.disabled=true; btn.textContent=I18N.creating;
     const token = sessionStorage.getItem('access_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = 'Bearer ' + token;
     try {
         const res  = await fetch('/admin/register', { method:'POST', headers, body: JSON.stringify({username,email,password,role}) });
         const data = await res.json();
-        if (!res.ok) showError(data.error || 'Failed to create account.');
-        else { showSuccess(`Staff account "${username}" created successfully.`); btn.textContent='Done!'; return; }
-    } catch { showError('Network error.'); }
-    btn.disabled=false; btn.textContent='Create Staff Account';
+        if (!res.ok) showError(data.error || I18N.failedToCreate);
+        else { showSuccess(`${username} — ${I18N.done}`); btn.textContent=I18N.done; return; }
+    } catch { showError(I18N.networkError); }
+    btn.disabled=false; btn.textContent=I18N.createStaffAccount;
 });
 </script>
 {% endblock %}

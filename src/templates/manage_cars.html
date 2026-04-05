@@ -1,27 +1,25 @@
 {% extends "layout.html" %}
 {% set active_page = "manage_cars" %}
-
-{% block title %}Manage Cars{% endblock %}
+{% block title %}{{ _('Manage Cars') }}{% endblock %}
 
 {% block main %}
 <div class="max-w-5xl mx-auto px-4 py-10 space-y-10">
 
-    <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">Admin Panel</p>
-            <h1 class="font-display text-4xl text-cream">Manage Cars</h1>
+            <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">{{ _('Admin Panel') }}</p>
+            <h1 class="font-display text-4xl text-cream">{{ _('Manage Cars') }}</h1>
         </div>
         <a href="{{ url_for('admin.dashboard') }}" class="text-sm text-cream/40 hover:text-cream transition-colors">
-            ← Back to Dashboard
+            {{ _('← Back to Dashboard') }}
         </a>
     </div>
 
-    <!-- ── Add New Car ───────────────────────────────────────────────────── -->
+    <!-- Add New Car -->
     <section>
         <div class="flex items-center gap-3 mb-6">
             <div class="h-px flex-1 bg-charcoal-600"></div>
-            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">Add New Car</h3>
+            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">{{ _('Add New Car') }}</h3>
             <div class="h-px flex-1 bg-charcoal-600"></div>
         </div>
 
@@ -32,35 +30,35 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Car Model *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Car Model') }} *</label>
                         <input type="text" name="model" required autocomplete="off"
                                placeholder="e.g. Toyota Corolla 2024"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Plate Number *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Plate Number') }} *</label>
                         <input type="text" name="plate_number" required autocomplete="off"
                                placeholder="e.g. FM-004"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Price Per Day ($) *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Price Per Day ($)') }} *</label>
                         <input type="number" name="price_per_day" required min="1" step="0.01"
                                placeholder="e.g. 75.00"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
                     <div class="lg:col-span-2">
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Description</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Description') }}</label>
                         <textarea name="description" rows="3"
                                   class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors resize-none"
-                                  placeholder="e.g. Comfortable family SUV with full insurance included…"></textarea>
+                                  placeholder="{{ _('e.g. Comfortable family SUV with full insurance included…') }}"></textarea>
                     </div>
 
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Car Image</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Car Image') }}</label>
                         <input type="file" name="car_image" accept="image/*"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-gold file:text-charcoal cursor-pointer">
                     </div>
@@ -69,19 +67,19 @@
                 <div>
                     <button type="submit"
                             class="px-8 py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm uppercase tracking-wide">
-                        Add Car
+                        {{ _('Add Car') }}
                     </button>
                 </div>
             </form>
         </div>
     </section>
 
-    <!-- ── Existing Cars ─────────────────────────────────────────────────── -->
+    <!-- Existing Cars -->
     <section>
         <div class="flex items-center gap-3 mb-6">
             <div class="h-px flex-1 bg-charcoal-600"></div>
             <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">
-                Fleet ({{ cars|length }} car{{ 's' if cars|length != 1 }})
+                {{ _('Fleet') }} ({{ cars|length }} {{ _('car') if cars|length == 1 else _('cars') }})
             </h3>
             <div class="h-px flex-1 bg-charcoal-600"></div>
         </div>
@@ -102,14 +100,14 @@
 
                 <div class="p-5">
                     <h4 class="font-display text-lg text-cream mb-1">{{ car.model }}</h4>
-                    <p class="text-xs text-gold mb-1">Plate: {{ car.plate_number }}</p>
-                    <p class="text-xs text-cream/60 mb-3">${{ "%.2f"|format(car.price_per_day) }}/day</p>
+                    <p class="text-xs text-gold mb-1">{{ _('Plate') }}: {{ car.plate_number }}</p>
+                    <p class="text-xs text-cream/60 mb-3">${{ "%.2f"|format(car.price_per_day) }}/{{ _('day') }}</p>
 
                     <div class="flex items-center gap-2 mb-4">
                         {% if car.is_available %}
-                        <span class="px-2.5 py-1 rounded-full text-xs border bg-green-900/40 text-green-400 border-green-700/40">Available</span>
+                        <span class="px-2.5 py-1 rounded-full text-xs border bg-green-900/40 text-green-400 border-green-700/40">{{ _('Available') }}</span>
                         {% else %}
-                        <span class="px-2.5 py-1 rounded-full text-xs border bg-red-900/30 text-red-400 border-red-700/40">Unavailable</span>
+                        <span class="px-2.5 py-1 rounded-full text-xs border bg-red-900/30 text-red-400 border-red-700/40">{{ _('Unavailable') }}</span>
                         {% endif %}
                     </div>
 
@@ -118,11 +116,11 @@
                     {% endif %}
 
                     <form action="{{ url_for('admin.delete_car_submit') }}" method="post"
-                          onsubmit="return confirm('Delete {{ car.model }}? This cannot be undone.')">
+                          onsubmit="return confirm('{{ _('Delete') }} {{ car.model }}? {{ _('This cannot be undone.') }}')">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button name="delete_car" value="{{ car.id }}" type="submit"
                                 class="w-full py-2.5 border border-red-700/60 text-red-400 hover:bg-red-900/30 rounded-xl transition-colors text-sm uppercase tracking-wide font-medium">
-                            Delete Car
+                            {{ _('Delete Car') }}
                         </button>
                     </form>
                 </div>
@@ -133,7 +131,7 @@
         {% else %}
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl p-16 text-center">
             <i class="bi bi-car-front text-5xl text-cream/20 block mb-4"></i>
-            <p class="text-cream/40 text-sm">No cars in the fleet yet. Add one above.</p>
+            <p class="text-cream/40 text-sm">{{ _('No cars in the fleet yet. Add one above.') }}</p>
         </div>
         {% endif %}
     </section>

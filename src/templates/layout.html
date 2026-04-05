@@ -2,33 +2,25 @@
     layout.html — FM Residences base template
     FIX BUG 23: Footer year was hardcoded as {{ 2024 }}. Changed to
                 {{ now.year }} — the app passes `now=datetime.now()` via
-                a context processor (see __init__.py / app.py):
-  
-                  @app.context_processor
-                  def inject_now():
-                      from datetime import datetime
-                      return {"now": datetime.now()}
+                a context processor (see __init__.py / app.py).
+
+    i18n: Language switcher added to desktop nav and mobile drawer.
+          Uses /set-lang/<lang> route (session-based, see __init__.py).
+          All UI strings wrapped with _() for Flask-Babel translation.
   #}
   <!DOCTYPE html>
-  <html lang="en" class="dark">
+  <html lang="{{ current_lang }}" class="dark">
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>{% block title %}FM Residences{% endblock %} — FM Residences</title>
   
-      <!-- Tailwind CSS (CDN build) -->
       <script src="https://cdn.tailwindcss.com"></script>
-  
-      <!-- Bootstrap Icons -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
-      <!-- Bootstrap Datepicker (jQuery required) -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
-  
-      <!-- Google Fonts -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
@@ -68,135 +60,31 @@
       <style>
           body { font-family: 'DM Sans', sans-serif; background: #0A0A0A; color: #F5F0E8; }
           .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
-  
-          /* ── Bootstrap Datepicker – Dark luxury theme ───────────────────── */
-          .datepicker {
-              background: #1E1E1E !important;
-              border: 1px solid #3A3A3A !important;
-              border-radius: 16px !important;
-              padding: 12px !important;
-              box-shadow: 0 20px 60px rgba(0,0,0,0.7) !important;
-              font-family: 'DM Sans', sans-serif !important;
-              z-index: 9999 !important;
-          }
-          .datepicker table {
-              width: 100%;
-          }
-          /* Header row: prev / switch / next */
-          .datepicker table tr th {
-              color: #F5F0E8 !important;
-              font-weight: 500 !important;
-              padding: 6px 4px !important;
-          }
-          .datepicker .datepicker-switch {
-              background: #2A2A2A !important;
-              border-radius: 8px !important;
-              color: #C9A84C !important;
-              font-weight: 600 !important;
-              letter-spacing: 0.02em !important;
-          }
-          .datepicker .datepicker-switch:hover {
-              background: #3A3A3A !important;
-          }
-          .datepicker .prev, .datepicker .next {
-              background: transparent !important;
-              color: #C9A84C !important;
-              font-size: 14px !important;
-              border-radius: 8px !important;
-          }
-          .datepicker .prev:hover, .datepicker .next:hover {
-              background: #2A2A2A !important;
-          }
-          /* Day-of-week header */
-          .datepicker .dow {
-              color: #C9A84C !important;
-              font-size: 11px !important;
-              font-weight: 600 !important;
-              text-transform: uppercase !important;
-              letter-spacing: 0.05em !important;
-              padding: 6px 2px !important;
-          }
-          /* Regular day cells */
-          .datepicker table tr td {
-              color: #F5F0E8 !important;
-              border-radius: 8px !important;
-              padding: 5px !important;
-              font-size: 13px !important;
-              transition: background 0.15s, color 0.15s;
-          }
-          .datepicker table tr td:hover,
-          .datepicker table tr td.focused {
-              background: #2A2A2A !important;
-              cursor: pointer;
-          }
-          /* Today */
-          .datepicker table tr td.today,
-          .datepicker table tr td.today:hover {
-              background: transparent !important;
-              border: 1px solid #C9A84C !important;
-              color: #C9A84C !important;
-              font-weight: 600 !important;
-          }
-          /* Selected / active */
-          .datepicker table tr td.active,
-          .datepicker table tr td.active:hover,
-          .datepicker table tr td.active.highlighted {
-              background: #C9A84C !important;
-              color: #141414 !important;
-              font-weight: 700 !important;
-              border: none !important;
-              box-shadow: 0 2px 8px rgba(201,168,76,0.4) !important;
-          }
-          /* Disabled / old / new month days */
-          .datepicker table tr td.old,
-          .datepicker table tr td.new {
-              color: #3A3A3A !important;
-          }
-          .datepicker table tr td.disabled,
-          .datepicker table tr td.disabled:hover {
-              color: #3A3A3A !important;
-              cursor: not-allowed !important;
-              background: transparent !important;
-          }
-          /* Month/Year pickers */
-          .datepicker .datepicker-months td span,
-          .datepicker .datepicker-years td span,
-          .datepicker .datepicker-decades td span,
-          .datepicker .datepicker-centuries td span {
-              color: #F5F0E8 !important;
-              border-radius: 8px !important;
-          }
-          .datepicker .datepicker-months td span:hover,
-          .datepicker .datepicker-years td span:hover {
-              background: #2A2A2A !important;
-          }
-          .datepicker .datepicker-months td span.active,
-          .datepicker .datepicker-years td span.active {
-              background: #C9A84C !important;
-              color: #141414 !important;
-          }
-          /* Clear button row */
-          .datepicker .datepicker-footer .clear {
-              color: #C9A84C !important;
-              background: #2A2A2A !important;
-              border: 1px solid #3A3A3A !important;
-              border-radius: 8px !important;
-              padding: 4px 12px !important;
-              font-size: 12px !important;
-              cursor: pointer;
-          }
-          .datepicker .datepicker-footer .clear:hover {
-              background: #3A3A3A !important;
-          }
-  
-          /* ── Mobile nav drawer ──────────────────────────────────────────── */
-          #mobile-nav {
-              transform: translateX(-100%);
-              transition: transform 0.3s ease;
-          }
-          #mobile-nav.open {
-              transform: translateX(0);
-          }
+          .datepicker { background:#1E1E1E!important; border:1px solid #3A3A3A!important; border-radius:16px!important; padding:12px!important; box-shadow:0 20px 60px rgba(0,0,0,0.7)!important; font-family:'DM Sans',sans-serif!important; z-index:9999!important; }
+          .datepicker table { width:100%; }
+          .datepicker table tr th { color:#F5F0E8!important; font-weight:500!important; padding:6px 4px!important; }
+          .datepicker .datepicker-switch { background:#2A2A2A!important; border-radius:8px!important; color:#C9A84C!important; font-weight:600!important; letter-spacing:0.02em!important; }
+          .datepicker .datepicker-switch:hover { background:#3A3A3A!important; }
+          .datepicker .prev,.datepicker .next { background:transparent!important; color:#C9A84C!important; font-size:14px!important; border-radius:8px!important; }
+          .datepicker .prev:hover,.datepicker .next:hover { background:#2A2A2A!important; }
+          .datepicker .dow { color:#C9A84C!important; font-size:11px!important; font-weight:600!important; text-transform:uppercase!important; letter-spacing:0.05em!important; padding:6px 2px!important; }
+          .datepicker table tr td { color:#F5F0E8!important; border-radius:8px!important; padding:5px!important; font-size:13px!important; transition:background .15s,color .15s; }
+          .datepicker table tr td:hover,.datepicker table tr td.focused { background:#2A2A2A!important; cursor:pointer; }
+          .datepicker table tr td.today,.datepicker table tr td.today:hover { background:transparent!important; border:1px solid #C9A84C!important; color:#C9A84C!important; font-weight:600!important; }
+          .datepicker table tr td.active,.datepicker table tr td.active:hover,.datepicker table tr td.active.highlighted { background:#C9A84C!important; color:#141414!important; font-weight:700!important; border:none!important; box-shadow:0 2px 8px rgba(201,168,76,0.4)!important; }
+          .datepicker table tr td.old,.datepicker table tr td.new { color:#3A3A3A!important; }
+          .datepicker table tr td.disabled,.datepicker table tr td.disabled:hover { color:#3A3A3A!important; cursor:not-allowed!important; background:transparent!important; }
+          .datepicker .datepicker-months td span,.datepicker .datepicker-years td span,.datepicker .datepicker-decades td span,.datepicker .datepicker-centuries td span { color:#F5F0E8!important; border-radius:8px!important; }
+          .datepicker .datepicker-months td span:hover,.datepicker .datepicker-years td span:hover { background:#2A2A2A!important; }
+          .datepicker .datepicker-months td span.active,.datepicker .datepicker-years td span.active { background:#C9A84C!important; color:#141414!important; }
+          .datepicker .datepicker-footer .clear { color:#C9A84C!important; background:#2A2A2A!important; border:1px solid #3A3A3A!important; border-radius:8px!important; padding:4px 12px!important; font-size:12px!important; cursor:pointer; }
+          .datepicker .datepicker-footer .clear:hover { background:#3A3A3A!important; }
+          #mobile-nav { transform:translateX(-100%); transition:transform 0.3s ease; }
+          #mobile-nav.open { transform:translateX(0); }
+          .lang-btn { font-size:11px; font-weight:600; letter-spacing:0.05em; padding:3px 7px; border-radius:6px; transition:background .15s,color .15s; text-transform:uppercase; }
+          .lang-btn.active { background:#C9A84C; color:#141414; }
+          .lang-btn:not(.active) { color:rgba(245,240,232,0.45); }
+          .lang-btn:not(.active):hover { color:#F5F0E8; background:#2A2A2A; }
       </style>
   
       {% block extra_head %}{% endblock %}
@@ -208,39 +96,42 @@
       <header class="border-b border-charcoal-600 bg-charcoal-800/80 backdrop-blur-sm sticky top-0 z-50">
           <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
   
-              <a href="{{ url_for('index') }}" class="font-display text-xl text-gold tracking-wider">
-                  FM Residences
-              </a>
+              <a href="{{ url_for('index') }}" class="font-display text-xl text-gold tracking-wider">FM Residences</a>
   
               <!-- Desktop nav -->
               <nav class="hidden md:flex items-center gap-6 text-sm text-cream/60">
-                  <a href="{{ url_for('index') }}"                  class="hover:text-cream transition-colors">Rooms</a>
-                  <a href="{{ url_for('bookings.available_cars') }}" class="hover:text-cream transition-colors">Cars</a>
+                  <a href="{{ url_for('index') }}"                  class="hover:text-cream transition-colors">{{ _('Rooms') }}</a>
+                  <a href="{{ url_for('bookings.available_cars') }}" class="hover:text-cream transition-colors">{{ _('Cars') }}</a>
                   {% if session.get('user_id') %}
-                  <a href="{{ url_for('bookings.my_bookings') }}"   class="hover:text-cream transition-colors">My Bookings</a>
+                  <a href="{{ url_for('bookings.my_bookings') }}"   class="hover:text-cream transition-colors">{{ _('My Bookings') }}</a>
                   {% endif %}
                   {% if session.get('role') in ('admin', 'staff') %}
-                  <a href="{{ url_for('admin.dashboard') }}"        class="hover:text-cream transition-colors">Admin</a>
+                  <a href="{{ url_for('admin.dashboard') }}"        class="hover:text-cream transition-colors">{{ _('Admin') }}</a>
                   {% endif %}
+  
+                  <!-- Desktop language switcher -->
+                  <div class="flex items-center gap-1 border-l border-charcoal-500 pl-4 ml-1">
+                      {% for code in supported_languages %}
+                      <a href="{{ url_for('set_language', lang=code) }}"
+                         class="lang-btn {% if current_lang == code %}active{% endif %}">{{ code }}</a>
+                      {% endfor %}
+                  </div>
               </nav>
   
               <div class="flex items-center gap-3">
                   {% if session.get('user_id') %}
                   <span class="text-sm text-cream/40 hidden sm:inline">{{ session.get('username') }}</span>
                   <a href="{{ url_for('auth.logout_get') }}" class="text-sm text-cream/60 hover:text-cream transition-colors hidden md:inline">
-                      <i class="bi bi-box-arrow-right"></i> Logout
+                      <i class="bi bi-box-arrow-right"></i> {{ _('Logout') }}
                   </a>
                   {% else %}
-                  <a href="{{ url_for('auth.login_page') }}"    class="text-sm text-cream/60 hover:text-cream transition-colors hidden md:inline">Login</a>
-                  <a href="{{ url_for('auth.register_page') }}" class="px-4 py-1.5 bg-gold hover:bg-gold-light text-charcoal text-sm font-semibold rounded-xl transition-colors hidden md:inline">
-                      Register
-                  </a>
+                  <a href="{{ url_for('auth.login_page') }}"    class="text-sm text-cream/60 hover:text-cream transition-colors hidden md:inline">{{ _('Login') }}</a>
+                  <a href="{{ url_for('auth.register_page') }}" class="px-4 py-1.5 bg-gold hover:bg-gold-light text-charcoal text-sm font-semibold rounded-xl transition-colors hidden md:inline">{{ _('Register') }}</a>
                   {% endif %}
   
-                  <!-- Hamburger (mobile only) -->
                   <button id="hamburger-btn"
                           class="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg border border-charcoal-500 hover:border-gold/50 transition-colors gap-1.5"
-                          aria-label="Open menu">
+                          aria-label="{{ _('Open menu') }}">
                       <span class="w-4.5 h-px bg-cream/70 block w-[18px]"></span>
                       <span class="w-4.5 h-px bg-cream/70 block w-[18px]"></span>
                       <span class="w-4.5 h-px bg-cream/70 block w-[18px]"></span>
@@ -250,78 +141,78 @@
       </header>
   
       <!-- ─── Mobile nav drawer ──────────────────────────────────────────────── -->
-      <!-- Overlay -->
-      <div id="mobile-overlay"
-           class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"
-           onclick="closeMobileNav()"></div>
+      <div id="mobile-overlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden" onclick="closeMobileNav()"></div>
   
-      <!-- Drawer panel -->
-      <div id="mobile-nav"
-           class="fixed top-0 left-0 h-full w-72 max-w-[85vw] bg-charcoal-800 border-r border-charcoal-600 z-50 flex flex-col md:hidden">
+      <div id="mobile-nav" class="fixed top-0 left-0 h-full w-72 max-w-[85vw] bg-charcoal-800 border-r border-charcoal-600 z-50 flex flex-col md:hidden">
   
-          <!-- Drawer header -->
           <div class="flex items-center justify-between px-5 h-16 border-b border-charcoal-600">
               <span class="font-display text-lg text-gold tracking-wider">FM Residences</span>
               <button onclick="closeMobileNav()"
-                      class="w-8 h-8 flex items-center justify-center rounded-lg text-cream/60 hover:text-cream hover:bg-charcoal-600 transition-colors">
+                      class="w-8 h-8 flex items-center justify-center rounded-lg text-cream/60 hover:text-cream hover:bg-charcoal-600 transition-colors"
+                      aria-label="{{ _('Close menu') }}">
                   <i class="bi bi-x-lg text-base"></i>
               </button>
           </div>
   
-          <!-- Drawer links -->
           <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
               <a href="{{ url_for('index') }}"
                  class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:text-cream hover:bg-charcoal-700 transition-colors text-sm font-medium"
                  onclick="closeMobileNav()">
-                  <i class="bi bi-building text-gold text-base w-5 text-center"></i>
-                  Rooms
+                  <i class="bi bi-building text-gold text-base w-5 text-center"></i> {{ _('Rooms') }}
               </a>
               <a href="{{ url_for('bookings.available_cars') }}"
                  class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:text-cream hover:bg-charcoal-700 transition-colors text-sm font-medium"
                  onclick="closeMobileNav()">
-                  <i class="bi bi-car-front text-gold text-base w-5 text-center"></i>
-                  Cars
+                  <i class="bi bi-car-front text-gold text-base w-5 text-center"></i> {{ _('Cars') }}
               </a>
               {% if session.get('user_id') %}
               <a href="{{ url_for('bookings.my_bookings') }}"
                  class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:text-cream hover:bg-charcoal-700 transition-colors text-sm font-medium"
                  onclick="closeMobileNav()">
-                  <i class="bi bi-calendar-check text-gold text-base w-5 text-center"></i>
-                  My Bookings
+                  <i class="bi bi-calendar-check text-gold text-base w-5 text-center"></i> {{ _('My Bookings') }}
               </a>
               {% endif %}
               {% if session.get('role') in ('admin', 'staff') %}
               <a href="{{ url_for('admin.dashboard') }}"
                  class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:text-cream hover:bg-charcoal-700 transition-colors text-sm font-medium"
                  onclick="closeMobileNav()">
-                  <i class="bi bi-shield-check text-gold text-base w-5 text-center"></i>
-                  Admin
+                  <i class="bi bi-shield-check text-gold text-base w-5 text-center"></i> {{ _('Admin') }}
               </a>
               {% endif %}
+  
+              <!-- Mobile language switcher -->
+              <div class="px-4 pt-4 pb-2">
+                  <p class="text-xs text-cream/30 uppercase tracking-widest mb-3">{{ _('Language') }}</p>
+                  <div class="flex gap-2">
+                      {% for code in supported_languages %}
+                      <a href="{{ url_for('set_language', lang=code) }}"
+                         onclick="closeMobileNav()"
+                         class="flex-1 text-center py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors
+                                {% if current_lang == code %}bg-gold text-charcoal-800
+                                {% else %}border border-charcoal-500 text-cream/40 hover:border-gold/50 hover:text-cream/70{% endif %}">
+                          {{ language_names[code] }}
+                      </a>
+                      {% endfor %}
+                  </div>
+              </div>
           </nav>
   
-          <!-- Drawer footer: auth -->
           <div class="px-4 py-5 border-t border-charcoal-600">
               {% if session.get('user_id') %}
               <div class="px-4 py-2 mb-3 text-sm text-cream/40">
-                  Signed in as <span class="text-cream/60">{{ session.get('username') }}</span>
+                  {{ _('Signed in as') }} <span class="text-cream/60">{{ session.get('username') }}</span>
               </div>
               <a href="{{ url_for('auth.logout_get') }}"
                  class="flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:text-cream hover:bg-charcoal-700 transition-colors text-sm font-medium">
-                  <i class="bi bi-box-arrow-right text-gold text-base w-5 text-center"></i>
-                  Logout
+                  <i class="bi bi-box-arrow-right text-gold text-base w-5 text-center"></i> {{ _('Logout') }}
               </a>
               {% else %}
               <a href="{{ url_for('auth.login_page') }}"
                  class="flex items-center justify-center w-full px-4 py-3 mb-2 rounded-xl border border-charcoal-500 text-cream/70 hover:border-gold hover:text-gold transition-colors text-sm font-medium"
-                 onclick="closeMobileNav()">
-                  Login
-              </a>
+                 onclick="closeMobileNav()">{{ _('Login') }}</a>
               <a href="{{ url_for('auth.register_page') }}"
                  class="flex items-center justify-center w-full px-4 py-3 rounded-xl bg-gold hover:bg-gold-light text-charcoal text-sm font-semibold transition-colors"
-                 onclick="closeMobileNav()">
-                  Register
-              </a>
+                 onclick="closeMobileNav()">{{ _('Register') }}</a>
               {% endif %}
           </div>
       </div>
@@ -350,22 +241,16 @@
       <footer class="border-t border-charcoal-600 bg-charcoal-800 mt-16">
           <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/30">
               <p class="font-display text-sm text-cream/50 tracking-wide">FM Residences</p>
-              <p>
-                  {# FIX BUG 23: was `© {{ 2024 }}` — now uses context_processor-injected `now` #}
-                  &copy; {{ now.year }} FM Residences. All rights reserved.
-              </p>
+              <p>&copy; {{ now.year }} FM Residences. {{ _('All rights reserved.') }}</p>
               <div class="flex gap-4">
-                  <a href="#" class="hover:text-cream transition-colors">Privacy</a>
-                  <a href="#" class="hover:text-cream transition-colors">Terms</a>
-                  <a href="#" class="hover:text-cream transition-colors">Contact</a>
+                  <a href="#" class="hover:text-cream transition-colors">{{ _('Privacy') }}</a>
+                  <a href="#" class="hover:text-cream transition-colors">{{ _('Terms') }}</a>
+                  <a href="#" class="hover:text-cream transition-colors">{{ _('Contact') }}</a>
               </div>
           </div>
       </footer>
   
-      <!-- ─── hotel.js (must come after jQuery which is in <head>) ───────────── -->
       <script src="{{ url_for('static', filename='hotel.js') }}"></script>
-  
-      <!-- ─── Mobile nav toggle ──────────────────────────────────────────────── -->
       <script>
           function openMobileNav() {
               document.getElementById('mobile-nav').classList.add('open');

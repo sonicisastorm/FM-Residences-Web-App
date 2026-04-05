@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Create Account{% endblock %}
+{% block title %}{{ _('Create Account') }}{% endblock %}
 
 {% block main %}
 <div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
@@ -8,8 +8,8 @@
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-2xl overflow-hidden">
             <div class="px-8 pt-8 pb-6 border-b border-charcoal-600">
                 <p class="text-xs text-gold tracking-[0.25em] uppercase mb-2">FM Residences</p>
-                <h2 class="font-display text-3xl text-cream">Create account</h2>
-                <p class="text-cream/40 text-sm mt-1">Join us for seamless bookings</p>
+                <h2 class="font-display text-3xl text-cream">{{ _('Create account') }}</h2>
+                <p class="text-cream/40 text-sm mt-1">{{ _('Join us for seamless bookings') }}</p>
             </div>
 
             <div class="px-8 py-7">
@@ -18,39 +18,39 @@
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Username</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Username') }}</label>
                         <input id="username" type="text" autocomplete="username" autofocus
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Choose a username">
+                               placeholder="{{ _('Choose a username') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Email</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Email') }}</label>
                         <input id="email" type="email" autocomplete="email"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="your@email.com">
+                               placeholder="{{ _('your@email.com') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Password</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Password') }}</label>
                         <input id="password" type="password" autocomplete="new-password"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Min. 8 characters">
+                               placeholder="{{ _('Min. 8 characters') }}">
                     </div>
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">Confirm Password</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-1.5">{{ _('Confirm Password') }}</label>
                         <input id="confirm" type="password" autocomplete="new-password"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors"
-                               placeholder="Repeat password">
+                               placeholder="{{ _('Repeat password') }}">
                     </div>
                 </div>
 
                 <button id="reg-btn"
                         class="mt-6 w-full py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm tracking-wide uppercase">
-                    Create Account
+                    {{ _('Create Account') }}
                 </button>
 
                 <p class="mt-5 text-center text-sm text-cream/40">
-                    Already have an account?
-                    <a href="{{ url_for('auth.login_page') }}" class="text-gold hover:text-gold-light transition-colors">Sign in →</a>
+                    {{ _('Already have an account?') }}
+                    <a href="{{ url_for('auth.login_page') }}" class="text-gold hover:text-gold-light transition-colors">{{ _('Sign in →') }}</a>
                 </p>
             </div>
         </div>
@@ -58,11 +58,23 @@
 </div>
 
 <script>
+const I18N = {
+    allFieldsRequired:   {{ _('All fields are required.')                                          | tojson }},
+    passwordMismatch:    {{ _('Passwords do not match.')                                           | tojson }},
+    passwordTooShort:    {{ _('Password must be at least 8 characters.')                           | tojson }},
+    creatingAccount:     {{ _('Creating account…')                                                 | tojson }},
+    accountCreated:      {{ _('Account created! Check your email to verify, then sign in.')        | tojson }},
+    done:                {{ _('Done!')                                                              | tojson }},
+    registrationFailed:  {{ _('Registration failed.')                                              | tojson }},
+    networkError:        {{ _('Network error. Please try again.')                                  | tojson }},
+    createAccount:       {{ _('Create Account')                                                    | tojson }},
+};
+
 const btn        = document.getElementById('reg-btn');
 const errBox     = document.getElementById('reg-error');
 const successBox = document.getElementById('reg-success');
 
-function showError(msg)   { errBox.textContent=msg; errBox.classList.remove('hidden'); successBox.classList.add('hidden'); }
+function showError(msg)   { errBox.textContent=msg;     errBox.classList.remove('hidden');    successBox.classList.add('hidden'); }
 function showSuccess(msg) { successBox.textContent=msg; successBox.classList.remove('hidden'); errBox.classList.add('hidden'); }
 
 btn.addEventListener('click', async () => {
@@ -71,25 +83,22 @@ btn.addEventListener('click', async () => {
     const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const confirm  = document.getElementById('confirm').value;
-    if (!username || !email || !password) return showError('All fields are required.');
-    if (password !== confirm) return showError('Passwords do not match.');
-    if (password.length < 8) return showError('Password must be at least 8 characters.');
-    btn.disabled=true; btn.textContent='Creating account…';
+    if (!username || !email || !password) return showError(I18N.allFieldsRequired);
+    if (password !== confirm)             return showError(I18N.passwordMismatch);
+    if (password.length < 8)             return showError(I18N.passwordTooShort);
+    btn.disabled=true; btn.textContent=I18N.creatingAccount;
     try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         const res = await fetch('/auth/register', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
             body: JSON.stringify({username, email, password})
         });
         const data = await res.json();
-        if (!res.ok) { showError(data.error || 'Registration failed.'); }
-        else { showSuccess('Account created! Check your email to verify, then sign in.'); btn.textContent='Done!'; return; }
-    } catch { showError('Network error. Please try again.'); }
-    btn.disabled=false; btn.textContent='Create Account';
+        if (!res.ok) { showError(data.error || I18N.registrationFailed); }
+        else { showSuccess(I18N.accountCreated); btn.textContent=I18N.done; return; }
+    } catch { showError(I18N.networkError); }
+    btn.disabled=false; btn.textContent=I18N.createAccount;
 });
 </script>
 {% endblock %}

@@ -1,0 +1,1018 @@
+# FM Residences — translation template
+# This is the master file. Run `pybabel extract` to regenerate it,
+# or add new strings here manually, then copy to each language's messages.po.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FM Residences 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-04 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── Navigation ────────────────────────────────────────────────────────────────
+msgid "Rooms"
+msgstr ""
+
+msgid "Cars"
+msgstr ""
+
+msgid "My Bookings"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Signed in as"
+msgstr ""
+
+# ── Footer ────────────────────────────────────────────────────────────────────
+msgid "Privacy"
+msgstr ""
+
+msgid "Terms"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr ""
+
+# ── Index / Search form ───────────────────────────────────────────────────────
+msgid "Welcome to"
+msgstr ""
+
+msgid "Exceptional stays in the heart of the city. Reserve your perfect room today."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Check In"
+msgstr ""
+
+msgid "Check Out"
+msgstr ""
+
+msgid "Rooms"
+msgstr ""
+
+msgid "Adults"
+msgstr ""
+
+msgid "Children"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "1 Child"
+msgstr ""
+
+msgid "2 Children"
+msgstr ""
+
+msgid "Child 1 Age"
+msgstr ""
+
+msgid "Child 2 Age"
+msgstr ""
+
+msgid "Select age"
+msgstr ""
+
+msgid "0 – 2 years"
+msgstr ""
+
+msgid "2 – 6 years"
+msgstr ""
+
+msgid "7 – 11 years"
+msgstr ""
+
+msgid "Search Availability"
+msgstr ""
+
+msgid "Person"
+msgstr ""
+
+msgid "People"
+msgstr ""
+
+# ── Features strip ────────────────────────────────────────────────────────────
+msgid "Secure Payments"
+msgstr ""
+
+msgid "Free Cancellation"
+msgstr ""
+
+msgid "Free Wi-Fi"
+msgstr ""
+
+msgid "Car Rentals Available"
+msgstr ""
+
+msgid "24/7 Concierge"
+msgstr ""
+
+# ── Login page ────────────────────────────────────────────────────────────────
+msgid "Sign In"
+msgstr ""
+
+msgid "Welcome back"
+msgstr ""
+
+msgid "Sign in to manage your reservations"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Your username"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Your password"
+msgstr ""
+
+msgid "Forgot password?"
+msgstr ""
+
+msgid "Create account →"
+msgstr ""
+
+msgid "Please enter your username and password."
+msgstr ""
+
+msgid "Login failed."
+msgstr ""
+
+msgid "Network error. Please try again."
+msgstr ""
+
+msgid "Signing in…"
+msgstr ""
+
+# ── Register page ─────────────────────────────────────────────────────────────
+msgid "Create Account"
+msgstr ""
+
+msgid "Create account"
+msgstr ""
+
+msgid "Join us for seamless bookings"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Confirm Password"
+msgstr ""
+
+msgid "Choose a username"
+msgstr ""
+
+msgid "your@email.com"
+msgstr ""
+
+msgid "Min. 8 characters"
+msgstr ""
+
+msgid "Repeat password"
+msgstr ""
+
+msgid "Already have an account?"
+msgstr ""
+
+msgid "Sign in →"
+msgstr ""
+
+msgid "All fields are required."
+msgstr ""
+
+msgid "Passwords do not match."
+msgstr ""
+
+msgid "Password must be at least 8 characters."
+msgstr ""
+
+msgid "Creating account…"
+msgstr ""
+
+msgid "Account created! Check your email to verify, then sign in."
+msgstr ""
+
+msgid "Done!"
+msgstr ""
+
+msgid "Registration failed."
+msgstr ""
+
+# ── Forgot password page ──────────────────────────────────────────────────────
+msgid "Forgot Password"
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "We'll send a reset link to your email"
+msgstr ""
+
+msgid "Email Address"
+msgstr ""
+
+msgid "Send Reset Link"
+msgstr ""
+
+msgid "Remembered it?"
+msgstr ""
+
+msgid "Please enter your email."
+msgstr ""
+
+msgid "Sending…"
+msgstr ""
+
+msgid "If that email exists, a reset link has been sent."
+msgstr ""
+
+msgid "Email Sent"
+msgstr ""
+
+msgid "Failed. Please try again."
+msgstr ""
+
+# ── Reset password page ───────────────────────────────────────────────────────
+msgid "Set New Password"
+msgstr ""
+
+msgid "Choose a strong password you haven't used before."
+msgstr ""
+
+msgid "New Password"
+msgstr ""
+
+msgid "At least 8 characters"
+msgstr ""
+
+msgid "Repeat your new password"
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "Back to login"
+msgstr ""
+
+msgid "This reset link is invalid or has expired."
+msgstr ""
+
+msgid "Request a new link"
+msgstr ""
+
+msgid "Please enter a new password."
+msgstr ""
+
+msgid "Resetting…"
+msgstr ""
+
+msgid "Reset failed. Please try again."
+msgstr ""
+
+# ── booking_form.html ─────────────────────────────────────────────────────────
+msgid "Submit Reservation"
+msgstr ""
+
+msgid "Reservation Summary"
+msgstr ""
+
+msgid "Room type"
+msgstr ""
+
+msgid "Total rooms"
+msgstr ""
+
+msgid "Check-in"
+msgstr ""
+
+msgid "Check-out"
+msgstr ""
+
+msgid "Total days"
+msgstr ""
+
+msgid "Price per day"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Guest Details"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "I confirm all reservation data is correct"
+msgstr ""
+
+msgid "Book Now"
+msgstr ""
+
+# ── checkout.html ─────────────────────────────────────────────────────────────
+msgid "Complete Payment"
+msgstr ""
+
+msgid "Secured by Stripe. Your card details never touch our servers."
+msgstr ""
+
+msgid "Room Booking Summary"
+msgstr ""
+
+msgid "Car Rental Summary"
+msgstr ""
+
+msgid "Room"
+msgstr ""
+
+msgid "Nights"
+msgstr ""
+
+msgid "Guests"
+msgstr ""
+
+msgid "Car"
+msgstr ""
+
+msgid "Pickup"
+msgstr ""
+
+msgid "Return"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Card Details"
+msgstr ""
+
+msgid "Pay"
+msgstr ""
+
+msgid "256-bit SSL encryption. Powered by Stripe."
+msgstr ""
+
+msgid "Could not initialise payment."
+msgstr ""
+
+msgid "Processing…"
+msgstr ""
+
+msgid "Payment failed. Please try again."
+msgstr ""
+
+msgid "Pay again"
+msgstr ""
+
+msgid "Payment successful! Confirming booking…"
+msgstr ""
+
+msgid "Payment successful! Redirecting…"
+msgstr ""
+
+# ── confirmation.html ─────────────────────────────────────────────────────────
+msgid "Booking Confirmed"
+msgstr ""
+
+msgid "Rental Confirmed"
+msgstr ""
+
+msgid "Booking Confirmed!"
+msgstr ""
+
+msgid "Rental Confirmed!"
+msgstr ""
+
+msgid "A confirmation has been sent to your email."
+msgstr ""
+
+msgid "Booking #"
+msgstr ""
+
+msgid "Rental #"
+msgstr ""
+
+msgid "Total Paid"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "View My Bookings"
+msgstr ""
+
+msgid "Back to Home"
+msgstr ""
+
+# ── Cars.html ─────────────────────────────────────────────────────────────────
+msgid "Car Rentals"
+msgstr ""
+
+msgid "Rent a Car"
+msgstr ""
+
+msgid "Choose from our fleet. All cars include full insurance."
+msgstr ""
+
+msgid "Plate"
+msgstr ""
+
+msgid "per day"
+msgstr ""
+
+msgid "Full Insurance"
+msgstr ""
+
+msgid "Free Pickup"
+msgstr ""
+
+msgid "Pickup Date"
+msgstr ""
+
+msgid "Return Date"
+msgstr ""
+
+msgid "Rent This Car →"
+msgstr ""
+
+msgid "No cars available right now"
+msgstr ""
+
+msgid "Check back soon — our fleet is always growing."
+msgstr ""
+
+msgid "← Back to Home"
+msgstr ""
+
+# ── My_bookings.html ──────────────────────────────────────────────────────────
+msgid "Your Account"
+msgstr ""
+
+msgid "Room Reservations"
+msgstr ""
+
+msgid "night"
+msgstr ""
+
+msgid "nights"
+msgstr ""
+
+msgid "guest"
+msgstr ""
+
+msgid "guests"
+msgstr ""
+
+msgid "Pending Payment"
+msgstr ""
+
+msgid "Confirmed"
+msgstr ""
+
+msgid "Checked In"
+msgstr ""
+
+msgid "Checked Out"
+msgstr ""
+
+msgid "Cancelled"
+msgstr ""
+
+msgid "Cancel this booking?"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Complete Payment"
+msgstr ""
+
+msgid "No room bookings yet."
+msgstr ""
+
+msgid "Book a Room →"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Returned"
+msgstr ""
+
+msgid "Cancel this car rental?"
+msgstr ""
+
+msgid "No car rentals yet."
+msgstr ""
+
+msgid "Browse Cars →"
+msgstr ""
+
+msgid "day"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+# ── admin_login.html ──────────────────────────────────────────────────────────
+msgid "Admin Login"
+msgstr ""
+
+msgid "Admin Access"
+msgstr ""
+
+msgid "Restricted to authorized staff only"
+msgstr ""
+
+msgid "Admin username"
+msgstr ""
+
+msgid "Admin password"
+msgstr ""
+
+msgid "Sign In to Admin"
+msgstr ""
+
+msgid "All admin actions are logged."
+msgstr ""
+
+msgid "Enter credentials."
+msgstr ""
+
+msgid "Signing in…"
+msgstr ""
+
+msgid "Access denied. Admin only."
+msgstr ""
+
+msgid "Network error."
+msgstr ""
+
+# ── admin_register.html ───────────────────────────────────────────────────────
+msgid "Register Staff"
+msgstr ""
+
+msgid "Admin Panel"
+msgstr ""
+
+msgid "Add Staff Account"
+msgstr ""
+
+msgid "Create a new admin or staff member"
+msgstr ""
+
+msgid "Staff username"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Create Staff Account"
+msgstr ""
+
+msgid "Staff accounts have elevated access."
+msgstr ""
+
+msgid "Creating…"
+msgstr ""
+
+msgid "Failed to create account."
+msgstr ""
+
+# ── admin_dashboard.html ──────────────────────────────────────────────────────
+msgid "Admin Dashboard"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Total Bookings"
+msgstr ""
+
+msgid "Total Rentals"
+msgstr ""
+
+msgid "Total Revenue"
+msgstr ""
+
+msgid "Total Users"
+msgstr ""
+
+msgid "Add Room"
+msgstr ""
+
+msgid "Manage Users"
+msgstr ""
+
+msgid "All Bookings"
+msgstr ""
+
+msgid "All Rentals"
+msgstr ""
+
+msgid "Recent Room Bookings"
+msgstr ""
+
+msgid "Recent Car Rentals"
+msgstr ""
+
+msgid "View all →"
+msgstr ""
+
+msgid "Guest"
+msgstr ""
+
+msgid "Loading…"
+msgstr ""
+
+msgid "No bookings yet."
+msgstr ""
+
+msgid "No rentals yet."
+msgstr ""
+
+# ── admin_panel.html ──────────────────────────────────────────────────────────
+msgid "Management Panel"
+msgstr ""
+
+msgid "Full control over rooms, cars, users and settings"
+msgstr ""
+
+msgid "Create, edit or remove hotel rooms and set pricing."
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgid "Review and manage all room reservations."
+msgstr ""
+
+msgid "View Bookings"
+msgstr ""
+
+msgid "Manage your fleet and all car rental records."
+msgstr ""
+
+msgid "View Rentals"
+msgstr ""
+
+msgid "Manage guest accounts, roles and access levels."
+msgstr ""
+
+msgid "All Users"
+msgstr ""
+
+msgid "Add Staff"
+msgstr ""
+
+msgid "Open Dashboard →"
+msgstr ""
+
+# ── admin_bookings.html ───────────────────────────────────────────────────────
+msgid "Admin — Bookings"
+msgstr ""
+
+msgid "Room Bookings"
+msgstr ""
+
+msgid "← Dashboard"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Check In"
+msgstr ""
+
+msgid "Check Out"
+msgstr ""
+
+msgid "Update failed"
+msgstr ""
+
+# ── admin_rentals.html ────────────────────────────────────────────────────────
+msgid "Admin — Car Rentals"
+msgstr ""
+
+msgid "All Rentals"
+msgstr ""
+
+msgid "Mark Active"
+msgstr ""
+
+msgid "Mark Returned"
+msgstr ""
+
+# ── admin_users.html ──────────────────────────────────────────────────────────
+msgid "registered user"
+msgstr ""
+
+msgid "registered users"
+msgstr ""
+
+msgid "← Back to Dashboard"
+msgstr ""
+
+msgid "Verified"
+msgstr ""
+
+msgid "Joined"
+msgstr ""
+
+msgid "Last Login"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "admin"
+msgstr ""
+
+msgid "staff"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "→ Staff"
+msgstr ""
+
+msgid "→ User"
+msgstr ""
+
+msgid "This cannot be undone."
+msgstr ""
+
+msgid "No users registered yet."
+msgstr ""
+
+msgid "promote to Staff"
+msgstr ""
+
+msgid "demote to User"
+msgstr ""
+
+msgid "is now"
+msgstr ""
+
+# ── offer_rooms.html ──────────────────────────────────────────────────────────
+msgid "Available Rooms"
+msgstr ""
+
+msgid "← Modify search"
+msgstr ""
+
+msgid "room"
+msgstr ""
+
+msgid "rooms"
+msgstr ""
+
+msgid "per night"
+msgstr ""
+
+msgid "Up to"
+msgstr ""
+
+msgid "adult"
+msgstr ""
+
+msgid "adults"
+msgstr ""
+
+msgid "Climate Control"
+msgstr ""
+
+msgid "total for"
+msgstr ""
+
+msgid "Select Room →"
+msgstr ""
+
+msgid "No rooms available"
+msgstr ""
+
+msgid "Try different dates or fewer rooms."
+msgstr ""
+
+msgid "← Modify Search"
+msgstr ""
+
+# ── create_rooms.html ─────────────────────────────────────────────────────────
+msgid "Create Rooms"
+msgstr ""
+
+msgid "Create New Room"
+msgstr ""
+
+msgid "Room Type"
+msgstr ""
+
+msgid "Room Number"
+msgstr ""
+
+msgid "Price Per Night ($)"
+msgstr ""
+
+msgid "Total Rooms of This Type"
+msgstr ""
+
+msgid "Max Guests"
+msgstr ""
+
+msgid "Min Guests"
+msgstr ""
+
+msgid "Max Children"
+msgstr ""
+
+msgid "Room Image"
+msgstr ""
+
+msgid "Room Description"
+msgstr ""
+
+msgid "Describe the room amenities, view, size…"
+msgstr ""
+
+msgid "Create Room"
+msgstr ""
+
+msgid "Created Rooms"
+msgstr ""
+
+msgid "Total of type"
+msgstr ""
+
+msgid "Delete Room"
+msgstr ""
+
+# ── manage_cars.html ──────────────────────────────────────────────────────────
+msgid "Add New Car"
+msgstr ""
+
+msgid "Car Model"
+msgstr ""
+
+msgid "Plate Number"
+msgstr ""
+
+msgid "Price Per Day ($)"
+msgstr ""
+
+msgid "e.g. Comfortable family SUV with full insurance included…"
+msgstr ""
+
+msgid "Car Image"
+msgstr ""
+
+msgid "Add Car"
+msgstr ""
+
+msgid "Fleet"
+msgstr ""
+
+msgid "Available"
+msgstr ""
+
+msgid "Unavailable"
+msgstr ""
+
+msgid "No cars in the fleet yet. Add one above."
+msgstr ""
+
+msgid "Delete Car"
+msgstr ""
+
+# ── availability.html ─────────────────────────────────────────────────────────
+msgid "Room Availability"
+msgstr ""
+
+msgid "14-day availability grid. Green = available, Red = sold out."
+msgstr ""
+
+msgid "left"
+msgstr ""
+
+msgid "sold"
+msgstr ""
+
+msgid "Rooms available (number = count remaining)"
+msgstr ""
+
+msgid "Sold out"
+msgstr ""
+
+msgid "Not configured"
+msgstr ""
+
+msgid "No rooms configured"
+msgstr ""
+
+msgid "Add rooms first, then seed their availability."
+msgstr ""
+
+# ── rate_plans.html / view_rate_plans.html ────────────────────────────────────
+msgid "Rate Plans"
+msgstr ""
+
+msgid "Rate Plan Name"
+msgstr ""
+
+msgid "Date Period"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Adult Price/Day"
+msgstr ""
+
+msgid "Adult price"
+msgstr ""
+
+msgid "Single Adult/Day"
+msgstr ""
+
+msgid "Single adult"
+msgstr ""
+
+msgid "Child <12 Regular Bed"
+msgstr ""
+
+msgid "Children prices for extra beds"
+msgstr ""
+
+msgid "leave blank if N/A"
+msgstr ""
+
+msgid "optional"
+msgstr ""
+
+msgid "+ Add Date Period"
+msgstr ""
+
+msgid "− Remove Period"
+msgstr ""
+
+msgid "Create Rate Plan"
+msgstr ""

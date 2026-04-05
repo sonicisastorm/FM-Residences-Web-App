@@ -1,0 +1,1006 @@
+# FM Residences — Russian translations
+# Language: Russian (ru)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FM Residences 1.0\n"
+"PO-Revision-Date: 2026-04-04 00:00+0000\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# ── Navigation ────────────────────────────────────────────────────────────────
+msgid "Rooms"
+msgstr "Номера"
+
+msgid "Cars"
+msgstr "Автомобили"
+
+msgid "My Bookings"
+msgstr "Мои брони"
+
+msgid "Admin"
+msgstr "Администратор"
+
+msgid "Login"
+msgstr "Войти"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "Logout"
+msgstr "Выйти"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Signed in as"
+msgstr "Вы вошли как"
+
+# ── Footer ────────────────────────────────────────────────────────────────────
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+msgid "Terms"
+msgstr "Условия"
+
+msgid "Contact"
+msgstr "Контакты"
+
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+# ── Index / Search form ───────────────────────────────────────────────────────
+msgid "Welcome to"
+msgstr "Добро пожаловать в"
+
+msgid "Exceptional stays in the heart of the city. Reserve your perfect room today."
+msgstr "Исключительный отдых в сердце города. Забронируйте идеальный номер сегодня."
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Check In"
+msgstr "Заезд"
+
+msgid "Check Out"
+msgstr "Выезд"
+
+msgid "Adults"
+msgstr "Взрослые"
+
+msgid "Children"
+msgstr "Дети"
+
+msgid "None"
+msgstr "Нет"
+
+msgid "1 Child"
+msgstr "1 Ребёнок"
+
+msgid "2 Children"
+msgstr "2 Детей"
+
+msgid "Child 1 Age"
+msgstr "Возраст ребёнка 1"
+
+msgid "Child 2 Age"
+msgstr "Возраст ребёнка 2"
+
+msgid "Select age"
+msgstr "Выберите возраст"
+
+msgid "0 – 2 years"
+msgstr "0 – 2 года"
+
+msgid "2 – 6 years"
+msgstr "2 – 6 лет"
+
+msgid "7 – 11 years"
+msgstr "7 – 11 лет"
+
+msgid "Search Availability"
+msgstr "Проверить наличие"
+
+msgid "Person"
+msgstr "Человек"
+
+msgid "People"
+msgstr "Человека"
+
+# ── Features strip ────────────────────────────────────────────────────────────
+msgid "Secure Payments"
+msgstr "Безопасные платежи"
+
+msgid "Free Cancellation"
+msgstr "Бесплатная отмена"
+
+msgid "Free Wi-Fi"
+msgstr "Бесплатный Wi-Fi"
+
+msgid "Car Rentals Available"
+msgstr "Аренда автомобилей доступна"
+
+msgid "24/7 Concierge"
+msgstr "Консьерж 24/7"
+
+# ── Login page ────────────────────────────────────────────────────────────────
+msgid "Sign In"
+msgstr "Войти"
+
+msgid "Welcome back"
+msgstr "С возвращением"
+
+msgid "Sign in to manage your reservations"
+msgstr "Войдите, чтобы управлять бронированиями"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Your username"
+msgstr "Ваше имя пользователя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Your password"
+msgstr "Ваш пароль"
+
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+msgid "Create account →"
+msgstr "Создать аккаунт →"
+
+msgid "Please enter your username and password."
+msgstr "Пожалуйста, введите имя пользователя и пароль."
+
+msgid "Login failed."
+msgstr "Ошибка входа."
+
+msgid "Network error. Please try again."
+msgstr "Ошибка сети. Попробуйте ещё раз."
+
+msgid "Signing in…"
+msgstr "Вход…"
+
+# ── Register page ─────────────────────────────────────────────────────────────
+msgid "Create Account"
+msgstr "Создать аккаунт"
+
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+msgid "Join us for seamless bookings"
+msgstr "Присоединяйтесь для удобного бронирования"
+
+msgid "Email"
+msgstr "Эл. почта"
+
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+msgid "Choose a username"
+msgstr "Выберите имя пользователя"
+
+msgid "your@email.com"
+msgstr "ваш@email.com"
+
+msgid "Min. 8 characters"
+msgstr "Мин. 8 символов"
+
+msgid "Repeat password"
+msgstr "Повторите пароль"
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+msgid "Sign in →"
+msgstr "Войти →"
+
+msgid "All fields are required."
+msgstr "Все поля обязательны."
+
+msgid "Passwords do not match."
+msgstr "Пароли не совпадают."
+
+msgid "Password must be at least 8 characters."
+msgstr "Пароль должен содержать не менее 8 символов."
+
+msgid "Creating account…"
+msgstr "Создание аккаунта…"
+
+msgid "Account created! Check your email to verify, then sign in."
+msgstr "Аккаунт создан! Проверьте почту для подтверждения, затем войдите."
+
+msgid "Done!"
+msgstr "Готово!"
+
+msgid "Registration failed."
+msgstr "Ошибка регистрации."
+
+# ── Forgot password page ──────────────────────────────────────────────────────
+msgid "Forgot Password"
+msgstr "Забыли пароль"
+
+msgid "Reset Password"
+msgstr "Сбросить пароль"
+
+msgid "We'll send a reset link to your email"
+msgstr "Мы отправим ссылку для сброса на вашу почту"
+
+msgid "Email Address"
+msgstr "Адрес эл. почты"
+
+msgid "Send Reset Link"
+msgstr "Отправить ссылку для сброса"
+
+msgid "Remembered it?"
+msgstr "Вспомнили пароль?"
+
+msgid "Please enter your email."
+msgstr "Пожалуйста, введите ваш email."
+
+msgid "Sending…"
+msgstr "Отправка…"
+
+msgid "If that email exists, a reset link has been sent."
+msgstr "Если этот email существует, ссылка для сброса отправлена."
+
+msgid "Email Sent"
+msgstr "Email отправлен"
+
+msgid "Failed. Please try again."
+msgstr "Ошибка. Попробуйте ещё раз."
+
+# ── Reset password page ───────────────────────────────────────────────────────
+msgid "Set New Password"
+msgstr "Установить новый пароль"
+
+msgid "Choose a strong password you haven't used before."
+msgstr "Выберите надёжный пароль, который вы ещё не использовали."
+
+msgid "New Password"
+msgstr "Новый пароль"
+
+msgid "At least 8 characters"
+msgstr "Не менее 8 символов"
+
+msgid "Repeat your new password"
+msgstr "Повторите новый пароль"
+
+msgid "Back to login"
+msgstr "Вернуться к входу"
+
+msgid "This reset link is invalid or has expired."
+msgstr "Эта ссылка для сброса недействительна или устарела."
+
+msgid "Request a new link"
+msgstr "Запросить новую ссылку"
+
+msgid "Please enter a new password."
+msgstr "Пожалуйста, введите новый пароль."
+
+msgid "Resetting…"
+msgstr "Сброс…"
+
+msgid "Reset failed. Please try again."
+msgstr "Сброс не удался. Попробуйте ещё раз."
+
+# ── booking_form.html ─────────────────────────────────────────────────────────
+msgid "Submit Reservation"
+msgstr "Отправить бронирование"
+
+msgid "Reservation Summary"
+msgstr "Сводка бронирования"
+
+msgid "Room type"
+msgstr "Тип номера"
+
+msgid "Total rooms"
+msgstr "Всего номеров"
+
+msgid "Check-in"
+msgstr "Заезд"
+
+msgid "Check-out"
+msgstr "Выезд"
+
+msgid "Total days"
+msgstr "Всего дней"
+
+msgid "Price per day"
+msgstr "Цена за день"
+
+msgid "Total Price"
+msgstr "Итоговая цена"
+
+msgid "Guest Details"
+msgstr "Данные гостя"
+
+msgid "First Name"
+msgstr "Имя"
+
+msgid "First name"
+msgstr "Ваше имя"
+
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgid "Last name"
+msgstr "Ваша фамилия"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "I confirm all reservation data is correct"
+msgstr "Я подтверждаю, что все данные бронирования верны"
+
+msgid "Book Now"
+msgstr "Забронировать"
+
+# ── checkout.html ─────────────────────────────────────────────────────────────
+msgid "Complete Payment"
+msgstr "Завершить оплату"
+
+msgid "Secured by Stripe. Your card details never touch our servers."
+msgstr "Защищено Stripe. Данные карты не попадают на наши серверы."
+
+msgid "Room Booking Summary"
+msgstr "Сводка бронирования номера"
+
+msgid "Car Rental Summary"
+msgstr "Сводка аренды автомобиля"
+
+msgid "Room"
+msgstr "Номер"
+
+msgid "Nights"
+msgstr "Ночей"
+
+msgid "Guests"
+msgstr "Гостей"
+
+msgid "Car"
+msgstr "Автомобиль"
+
+msgid "Pickup"
+msgstr "Получение"
+
+msgid "Return"
+msgstr "Возврат"
+
+msgid "Days"
+msgstr "Дней"
+
+msgid "Total"
+msgstr "Итого"
+
+msgid "Card Details"
+msgstr "Данные карты"
+
+msgid "Pay"
+msgstr "Оплатить"
+
+msgid "256-bit SSL encryption. Powered by Stripe."
+msgstr "256-битное SSL-шифрование. Работает на Stripe."
+
+msgid "Could not initialise payment."
+msgstr "Не удалось инициализировать платёж."
+
+msgid "Processing…"
+msgstr "Обработка…"
+
+msgid "Payment failed. Please try again."
+msgstr "Ошибка оплаты. Попробуйте ещё раз."
+
+msgid "Pay again"
+msgstr "Оплатить снова"
+
+msgid "Payment successful! Confirming booking…"
+msgstr "Оплата прошла! Подтверждение бронирования…"
+
+msgid "Payment successful! Redirecting…"
+msgstr "Оплата прошла! Перенаправление…"
+
+# ── confirmation.html ─────────────────────────────────────────────────────────
+msgid "Booking Confirmed"
+msgstr "Бронирование подтверждено"
+
+msgid "Rental Confirmed"
+msgstr "Аренда подтверждена"
+
+msgid "Booking Confirmed!"
+msgstr "Бронирование подтверждено!"
+
+msgid "Rental Confirmed!"
+msgstr "Аренда подтверждена!"
+
+msgid "A confirmation has been sent to your email."
+msgstr "Подтверждение отправлено на вашу почту."
+
+msgid "Booking #"
+msgstr "Бронирование №"
+
+msgid "Rental #"
+msgstr "Аренда №"
+
+msgid "Total Paid"
+msgstr "Итого оплачено"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "View My Bookings"
+msgstr "Мои брони"
+
+msgid "Back to Home"
+msgstr "На главную"
+
+# ── Cars.html ─────────────────────────────────────────────────────────────────
+msgid "Car Rentals"
+msgstr "Аренда автомобилей"
+
+msgid "Rent a Car"
+msgstr "Арендовать автомобиль"
+
+msgid "Choose from our fleet. All cars include full insurance."
+msgstr "Выберите из нашего парка. Все автомобили включают полную страховку."
+
+msgid "Plate"
+msgstr "Номер"
+
+msgid "per day"
+msgstr "в день"
+
+msgid "Full Insurance"
+msgstr "Полная страховка"
+
+msgid "Free Pickup"
+msgstr "Бесплатная подача"
+
+msgid "Pickup Date"
+msgstr "Дата получения"
+
+msgid "Return Date"
+msgstr "Дата возврата"
+
+msgid "Rent This Car →"
+msgstr "Арендовать →"
+
+msgid "No cars available right now"
+msgstr "Сейчас нет доступных автомобилей"
+
+msgid "Check back soon — our fleet is always growing."
+msgstr "Заходите позже — наш парк постоянно пополняется."
+
+msgid "← Back to Home"
+msgstr "← На главную"
+
+# ── My_bookings.html ──────────────────────────────────────────────────────────
+msgid "Your Account"
+msgstr "Ваш аккаунт"
+
+msgid "Room Reservations"
+msgstr "Бронирования номеров"
+
+msgid "night"
+msgstr "ночь"
+
+msgid "nights"
+msgstr "ночи"
+
+msgid "guest"
+msgstr "гость"
+
+msgid "guests"
+msgstr "гостей"
+
+msgid "Pending Payment"
+msgstr "Ожидает оплаты"
+
+msgid "Confirmed"
+msgstr "Подтверждено"
+
+msgid "Checked In"
+msgstr "Заселён"
+
+msgid "Checked Out"
+msgstr "Выселен"
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "Cancel this booking?"
+msgstr "Отменить это бронирование?"
+
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "No room bookings yet."
+msgstr "Пока нет бронирований номеров."
+
+msgid "Book a Room →"
+msgstr "Забронировать номер →"
+
+msgid "Active"
+msgstr "Активна"
+
+msgid "Returned"
+msgstr "Возвращён"
+
+msgid "Cancel this car rental?"
+msgstr "Отменить аренду автомобиля?"
+
+msgid "No car rentals yet."
+msgstr "Пока нет аренды автомобилей."
+
+msgid "Browse Cars →"
+msgstr "Смотреть автомобили →"
+
+msgid "day"
+msgstr "день"
+
+msgid "days"
+msgstr "дня"
+
+# ── admin_login.html ──────────────────────────────────────────────────────────
+msgid "Admin Login"
+msgstr "Вход для администратора"
+
+msgid "Admin Access"
+msgstr "Доступ администратора"
+
+msgid "Restricted to authorized staff only"
+msgstr "Только для авторизованного персонала"
+
+msgid "Admin username"
+msgstr "Имя администратора"
+
+msgid "Admin password"
+msgstr "Пароль администратора"
+
+msgid "Sign In to Admin"
+msgstr "Войти в панель администратора"
+
+msgid "All admin actions are logged."
+msgstr "Все действия администратора записываются."
+
+msgid "Enter credentials."
+msgstr "Введите учётные данные."
+
+msgid "Signing in…"
+msgstr "Вход…"
+
+msgid "Access denied. Admin only."
+msgstr "Доступ запрещён. Только для администраторов."
+
+msgid "Network error."
+msgstr "Ошибка сети."
+
+# ── admin_register.html ───────────────────────────────────────────────────────
+msgid "Register Staff"
+msgstr "Регистрация сотрудника"
+
+msgid "Admin Panel"
+msgstr "Панель администратора"
+
+msgid "Add Staff Account"
+msgstr "Добавить аккаунт сотрудника"
+
+msgid "Create a new admin or staff member"
+msgstr "Создать нового администратора или сотрудника"
+
+msgid "Staff username"
+msgstr "Имя пользователя сотрудника"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Staff"
+msgstr "Сотрудник"
+
+msgid "Create Staff Account"
+msgstr "Создать аккаунт сотрудника"
+
+msgid "Staff accounts have elevated access."
+msgstr "Аккаунты сотрудников имеют расширенный доступ."
+
+msgid "Creating…"
+msgstr "Создание…"
+
+msgid "Failed to create account."
+msgstr "Не удалось создать аккаунт."
+
+# ── admin_dashboard.html ──────────────────────────────────────────────────────
+msgid "Admin Dashboard"
+msgstr "Панель администратора"
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Total Bookings"
+msgstr "Всего бронирований"
+
+msgid "Total Rentals"
+msgstr "Всего аренд"
+
+msgid "Total Revenue"
+msgstr "Общий доход"
+
+msgid "Total Users"
+msgstr "Всего пользователей"
+
+msgid "Add Room"
+msgstr "Добавить номер"
+
+msgid "Manage Users"
+msgstr "Управление пользователями"
+
+msgid "All Bookings"
+msgstr "Все бронирования"
+
+msgid "All Rentals"
+msgstr "Все аренды"
+
+msgid "Recent Room Bookings"
+msgstr "Последние бронирования номеров"
+
+msgid "Recent Car Rentals"
+msgstr "Последние аренды автомобилей"
+
+msgid "View all →"
+msgstr "Смотреть все →"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "Loading…"
+msgstr "Загрузка…"
+
+msgid "No bookings yet."
+msgstr "Бронирований пока нет."
+
+msgid "No rentals yet."
+msgstr "Аренд пока нет."
+
+# ── admin_panel.html ──────────────────────────────────────────────────────────
+msgid "Management Panel"
+msgstr "Панель управления"
+
+msgid "Full control over rooms, cars, users and settings"
+msgstr "Полный контроль над номерами, автомобилями, пользователями и настройками"
+
+msgid "Create, edit or remove hotel rooms and set pricing."
+msgstr "Создавайте, редактируйте или удаляйте номера и устанавливайте цены."
+
+msgid "Availability"
+msgstr "Доступность"
+
+msgid "Review and manage all room reservations."
+msgstr "Просматривайте и управляйте всеми бронированиями номеров."
+
+msgid "View Bookings"
+msgstr "Просмотр бронирований"
+
+msgid "Manage your fleet and all car rental records."
+msgstr "Управляйте парком и всеми записями об аренде автомобилей."
+
+msgid "View Rentals"
+msgstr "Просмотр аренд"
+
+msgid "Manage guest accounts, roles and access levels."
+msgstr "Управляйте аккаунтами гостей, ролями и уровнями доступа."
+
+msgid "All Users"
+msgstr "Все пользователи"
+
+msgid "Add Staff"
+msgstr "Добавить сотрудника"
+
+msgid "Open Dashboard →"
+msgstr "Открыть панель управления →"
+
+# ── admin_bookings.html ───────────────────────────────────────────────────────
+msgid "Admin — Bookings"
+msgstr "Администратор — Бронирования"
+
+msgid "Room Bookings"
+msgstr "Бронирования номеров"
+
+msgid "← Dashboard"
+msgstr "← Панель управления"
+
+msgid "Action"
+msgstr "Действие"
+
+msgid "Check In"
+msgstr "Заселить"
+
+msgid "Check Out"
+msgstr "Выселить"
+
+msgid "Update failed"
+msgstr "Ошибка обновления"
+
+# ── admin_rentals.html ────────────────────────────────────────────────────────
+msgid "Admin — Car Rentals"
+msgstr "Администратор — Аренда автомобилей"
+
+msgid "All Rentals"
+msgstr "Все аренды"
+
+msgid "Mark Active"
+msgstr "Отметить активной"
+
+msgid "Mark Returned"
+msgstr "Отметить возвращённой"
+
+# ── admin_users.html ──────────────────────────────────────────────────────────
+msgid "registered user"
+msgstr "зарегистрированный пользователь"
+
+msgid "registered users"
+msgstr "зарегистрированных пользователей"
+
+msgid "← Back to Dashboard"
+msgstr "← Вернуться в панель управления"
+
+msgid "Verified"
+msgstr "Подтверждён"
+
+msgid "Joined"
+msgstr "Зарегистрирован"
+
+msgid "Last Login"
+msgstr "Последний вход"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Never"
+msgstr "Никогда"
+
+msgid "admin"
+msgstr "администратор"
+
+msgid "staff"
+msgstr "сотрудник"
+
+msgid "user"
+msgstr "пользователь"
+
+msgid "→ Staff"
+msgstr "→ Сотрудник"
+
+msgid "→ User"
+msgstr "→ Пользователь"
+
+msgid "This cannot be undone."
+msgstr "Это действие нельзя отменить."
+
+msgid "No users registered yet."
+msgstr "Пока нет зарегистрированных пользователей."
+
+msgid "promote to Staff"
+msgstr "повысить до сотрудника"
+
+msgid "demote to User"
+msgstr "понизить до пользователя"
+
+msgid "is now"
+msgstr "теперь"
+
+# ── offer_rooms.html ──────────────────────────────────────────────────────────
+msgid "Available Rooms"
+msgstr "Доступные номера"
+
+msgid "← Modify search"
+msgstr "← Изменить поиск"
+
+msgid "room"
+msgstr "номер"
+
+msgid "rooms"
+msgstr "номера"
+
+msgid "per night"
+msgstr "за ночь"
+
+msgid "Up to"
+msgstr "До"
+
+msgid "adult"
+msgstr "взрослый"
+
+msgid "adults"
+msgstr "взрослых"
+
+msgid "Climate Control"
+msgstr "Климат-контроль"
+
+msgid "total for"
+msgstr "итого за"
+
+msgid "Select Room →"
+msgstr "Выбрать номер →"
+
+msgid "No rooms available"
+msgstr "Нет доступных номеров"
+
+msgid "Try different dates or fewer rooms."
+msgstr "Попробуйте другие даты или меньше номеров."
+
+msgid "← Modify Search"
+msgstr "← Изменить поиск"
+
+# ── create_rooms.html ─────────────────────────────────────────────────────────
+msgid "Create Rooms"
+msgstr "Создать номера"
+
+msgid "Create New Room"
+msgstr "Создать новый номер"
+
+msgid "Room Type"
+msgstr "Тип номера"
+
+msgid "Room Number"
+msgstr "Номер комнаты"
+
+msgid "Price Per Night ($)"
+msgstr "Цена за ночь ($)"
+
+msgid "Total Rooms of This Type"
+msgstr "Всего номеров этого типа"
+
+msgid "Max Guests"
+msgstr "Макс. гостей"
+
+msgid "Min Guests"
+msgstr "Мин. гостей"
+
+msgid "Max Children"
+msgstr "Макс. детей"
+
+msgid "Room Image"
+msgstr "Фото номера"
+
+msgid "Room Description"
+msgstr "Описание номера"
+
+msgid "Describe the room amenities, view, size…"
+msgstr "Опишите удобства, вид, размер номера…"
+
+msgid "Create Room"
+msgstr "Создать номер"
+
+msgid "Created Rooms"
+msgstr "Созданные номера"
+
+msgid "Total of type"
+msgstr "Всего данного типа"
+
+msgid "Delete Room"
+msgstr "Удалить номер"
+
+# ── manage_cars.html ──────────────────────────────────────────────────────────
+msgid "Add New Car"
+msgstr "Добавить автомобиль"
+
+msgid "Car Model"
+msgstr "Модель автомобиля"
+
+msgid "Plate Number"
+msgstr "Номерной знак"
+
+msgid "Price Per Day ($)"
+msgstr "Цена в день ($)"
+
+msgid "e.g. Comfortable family SUV with full insurance included…"
+msgstr "напр. Комфортный семейный внедорожник с полной страховкой…"
+
+msgid "Car Image"
+msgstr "Фото автомобиля"
+
+msgid "Add Car"
+msgstr "Добавить автомобиль"
+
+msgid "Fleet"
+msgstr "Парк"
+
+msgid "Available"
+msgstr "Доступен"
+
+msgid "Unavailable"
+msgstr "Недоступен"
+
+msgid "No cars in the fleet yet. Add one above."
+msgstr "В парке пока нет автомобилей. Добавьте выше."
+
+msgid "Delete Car"
+msgstr "Удалить автомобиль"
+
+# ── availability.html ─────────────────────────────────────────────────────────
+msgid "Room Availability"
+msgstr "Доступность номеров"
+
+msgid "14-day availability grid. Green = available, Red = sold out."
+msgstr "14-дневная сетка доступности. Зелёный = доступно, Красный = распродано."
+
+msgid "left"
+msgstr "осталось"
+
+msgid "sold"
+msgstr "продано"
+
+msgid "Rooms available (number = count remaining)"
+msgstr "Доступные номера (цифра = количество оставшихся)"
+
+msgid "Sold out"
+msgstr "Распродано"
+
+msgid "Not configured"
+msgstr "Не настроено"
+
+msgid "No rooms configured"
+msgstr "Номера не настроены"
+
+msgid "Add rooms first, then seed their availability."
+msgstr "Сначала добавьте номера, затем настройте их доступность."
+
+# ── rate_plans.html / view_rate_plans.html ────────────────────────────────────
+msgid "Rate Plans"
+msgstr "Тарифные планы"
+
+msgid "Rate Plan Name"
+msgstr "Название тарифного плана"
+
+msgid "Date Period"
+msgstr "Период дат"
+
+msgid "Start Date"
+msgstr "Дата начала"
+
+msgid "End Date"
+msgstr "Дата окончания"
+
+msgid "Adult Price/Day"
+msgstr "Цена взрослого/день"
+
+msgid "Adult price"
+msgstr "Цена взрослого"
+
+msgid "Single Adult/Day"
+msgstr "Одиночный взрослый/день"
+
+msgid "Single adult"
+msgstr "Одиночный взрослый"
+
+msgid "Child <12 Regular Bed"
+msgstr "Ребёнок до 12 лет (обычная кровать)"
+
+msgid "Children prices for extra beds"
+msgstr "Цены для детей на дополнительных кроватях"
+
+msgid "leave blank if N/A"
+msgstr "оставьте пустым, если не применимо"
+
+msgid "optional"
+msgstr "необязательно"
+
+msgid "+ Add Date Period"
+msgstr "+ Добавить период дат"
+
+msgid "− Remove Period"
+msgstr "− Удалить период"
+
+msgid "Create Rate Plan"
+msgstr "Создать тарифный план"

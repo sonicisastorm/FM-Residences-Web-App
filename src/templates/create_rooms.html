@@ -1,113 +1,104 @@
 {% extends "layout.html" %}
 {% set active_page = "create_rooms" %}
-
-{% block title %}Create Rooms{% endblock %}
+{% block title %}{{ _('Create Rooms') }}{% endblock %}
 
 {% block main %}
 <div class="max-w-5xl mx-auto px-4 py-10 space-y-10">
 
-    <!-- ── Create New Room ───────────────────────────────────────────────── -->
+    <!-- Create New Room -->
     <section>
         <div class="flex items-center gap-3 mb-6">
             <div class="h-px flex-1 bg-charcoal-600"></div>
-            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">Create New Room</h3>
+            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">{{ _('Create New Room') }}</h3>
             <div class="h-px flex-1 bg-charcoal-600"></div>
         </div>
 
         <div class="bg-charcoal-700 border border-charcoal-600 rounded-2xl shadow-xl p-8">
-            <!-- FIX: action now points to admin.create_room_submit (POST /admin/create-room) -->
             <form action="{{ url_for('admin.create_room_submit') }}" method="post" enctype="multipart/form-data" class="space-y-6">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <!-- Room type name -->
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Room Type *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Room Type') }} *</label>
                         <input type="text" id="room_type" name="room_type" required autocomplete="off"
                                placeholder="e.g. Deluxe Suite"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
-                    <!-- FIX: Added room_number — was missing from original form -->
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Room Number *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Room Number') }} *</label>
                         <input type="text" id="room_number" name="room_number" required autocomplete="off"
                                placeholder="e.g. 401"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
-                    <!-- FIX: Added price_per_night — was missing from original form -->
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Price Per Night ($) *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Price Per Night ($)') }} *</label>
                         <input type="number" id="price_per_night" name="price_per_night" required min="1" step="0.01"
                                placeholder="e.g. 120.00"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors">
                     </div>
 
-                    <!-- FIX: field name was total_rooms → total_of_this_type to match the API -->
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Total Rooms of This Type *</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Total Rooms of This Type') }} *</label>
                         <input type="number" max="30" min="1" id="total_of_this_type" name="total_of_this_type" required
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                     </div>
 
-                    <!-- Numeric fields -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Max Guests</label>
+                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Max Guests') }}</label>
                             <input type="number" max="9" min="1" id="max_guests" name="max_guests"
                                    class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                         </div>
                         <div>
-                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Min Guests</label>
+                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Min Guests') }}</label>
                             <input type="number" max="9" min="1" id="min_guests" name="min_guests"
                                    class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                         </div>
                         <div>
-                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Max Adults</label>
+                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Max Adults') }}</label>
                             <input type="number" max="9" min="1" id="max_adults" name="max_adults"
                                    class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                         </div>
                         <div>
-                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Max Children</label>
+                            <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Max Children') }}</label>
                             <input type="number" max="9" min="0" id="max_children" name="max_children"
                                    class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold">
                         </div>
                     </div>
 
-                    <!-- Image upload -->
                     <div>
-                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Room Image</label>
+                        <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Room Image') }}</label>
                         <input type="file" id="room_image" name="room_image" accept="image/*"
                                class="w-full bg-charcoal-600 border border-charcoal-500 text-cream rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-gold file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-gold file:text-charcoal cursor-pointer">
                     </div>
                 </div>
 
-                <!-- Description -->
                 <div>
-                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">Room Description</label>
+                    <label class="block text-xs text-cream/50 uppercase tracking-wider mb-2">{{ _('Room Description') }}</label>
                     <textarea id="room_description" name="room_description" rows="4"
                               class="w-full bg-charcoal-600 border border-charcoal-500 text-cream placeholder-cream/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors resize-none"
-                              placeholder="Describe the room amenities, view, size…"></textarea>
+                              placeholder="{{ _('Describe the room amenities, view, size…') }}"></textarea>
                 </div>
 
                 <div>
                     <button type="submit"
                             class="px-8 py-3 bg-gold hover:bg-gold-light text-charcoal font-semibold rounded-xl transition-colors text-sm uppercase tracking-wide">
-                        Create Room
+                        {{ _('Create Room') }}
                     </button>
                 </div>
             </form>
         </div>
     </section>
 
-    <!-- ── Created Rooms ─────────────────────────────────────────────────── -->
+    <!-- Created Rooms -->
     {% if room_info|length > 0 %}
     <section>
         <div class="flex items-center gap-3 mb-6">
             <div class="h-px flex-1 bg-charcoal-600"></div>
-            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">Created Rooms</h3>
+            <h3 class="font-display text-xl text-gold uppercase tracking-widest whitespace-nowrap">{{ _('Created Rooms') }}</h3>
             <div class="h-px flex-1 bg-charcoal-600"></div>
         </div>
 
@@ -126,24 +117,23 @@
 
                 <div class="p-5">
                     <h4 class="font-display text-lg text-cream mb-1">{{ room.room_type }}</h4>
-                    <p class="text-xs text-gold mb-3">Room #{{ room.room_number }} · ${{ room.price_per_night }}/night</p>
+                    <p class="text-xs text-gold mb-3">{{ _('Room') }} #{{ room.room_number }} · ${{ room.price_per_night }}/{{ _('night') }}</p>
                     <div class="grid grid-cols-2 gap-2 text-xs text-cream/60 mb-4">
-                        <span><strong class="text-cream/80">Max Guests:</strong> {{ room.max_guests }}</span>
-                        <span><strong class="text-cream/80">Min Guests:</strong> {{ room.min_guests }}</span>
-                        <span><strong class="text-cream/80">Max Adults:</strong> {{ room.max_adults }}</span>
-                        <span><strong class="text-cream/80">Max Children:</strong> {{ room.max_children }}</span>
-                        <span class="col-span-2"><strong class="text-cream/80">Total of type:</strong> {{ room.total_of_this_type }}</span>
+                        <span><strong class="text-cream/80">{{ _('Max Guests') }}:</strong> {{ room.max_guests }}</span>
+                        <span><strong class="text-cream/80">{{ _('Min Guests') }}:</strong> {{ room.min_guests }}</span>
+                        <span><strong class="text-cream/80">{{ _('Max Adults') }}:</strong> {{ room.max_adults }}</span>
+                        <span><strong class="text-cream/80">{{ _('Max Children') }}:</strong> {{ room.max_children }}</span>
+                        <span class="col-span-2"><strong class="text-cream/80">{{ _('Total of type') }}:</strong> {{ room.total_of_this_type }}</span>
                     </div>
                     {% if room.description %}
                     <p class="text-sm text-cream/50 mb-4 line-clamp-3">{{ room.description }}</p>
                     {% endif %}
 
-                    <!-- FIX: action now points to admin.delete_room_submit (POST /admin/delete-room) -->
                     <form action="{{ url_for('admin.delete_room_submit') }}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button name="delete_room" value="{{ room.id }}" type="submit"
                                 class="w-full py-2.5 border border-red-700/60 text-red-400 hover:bg-red-900/30 rounded-xl transition-colors text-sm uppercase tracking-wide font-medium">
-                            Delete Room
+                            {{ _('Delete Room') }}
                         </button>
                     </form>
                 </div>
